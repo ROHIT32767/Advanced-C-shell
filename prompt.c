@@ -1,16 +1,20 @@
 #include "prompt.h"
 #include "headers.h"
 #include <string.h>
-void prompt() {
-   INT display_size=1000;
-   // printf("OS & NW TAs rock: ");   
-   char* display = (char*)calloc(display_size,sizeof(char));
-   char* user_name=(char*)calloc(200,sizeof(char));
-   char* system_name=(char*)calloc(200,sizeof(char));
-   char* curr_dir=(char*)calloc(200,sizeof(char));
-   user_name=getlogin();
-   gethostname(system_name,200);
-   curr_dir="-";
-   sprintf(display,"%s@%s:%s->",user_name,system_name,curr_dir);
-   write(1,display, strlen(display));
+void prompt(char *char1, char *char2, char *char3, char *char4, char *char5)
+{
+   INT display_size = 1000;
+   // printf("OS & NW TAs rock: ");
+   char *display = (char *)calloc(display_size, sizeof(char));
+
+   if (strstr(char1, char3) == 1)
+   {
+      char* curr_dir = (char *)calloc(300, sizeof(char));
+      curr_dir.append
+   }
+   else
+   {
+      sprintf(display, "%s@%s:%s->", char4, char5, char1);
+      write(1, display, strlen(display));
+   }
 }
