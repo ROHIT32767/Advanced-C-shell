@@ -4,11 +4,11 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     char *semicolon = (char *)calloc(1, sizeof(char));
     semicolon[0] = ' ';
     long long int Token_count = 0;
-    tokens[Token_count] = strtok(input, semicolon);
+    tokens[Token_count] = strtok(input, " \t");
     while (tokens[Token_count] != NULL)
     {
         Token_count++;
-        tokens[Token_count] = strtok(NULL, semicolon);
+        tokens[Token_count] = strtok(NULL, " \t");
     }
     return Token_count;
 }
