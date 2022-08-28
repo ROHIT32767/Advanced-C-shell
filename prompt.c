@@ -4,6 +4,10 @@ void prompt(char *absolute, char *relative, char *correct, char *user, char *sys
    INT display_size = 1000;
    // printf("OS & NW TAs rock: ");
    char *display = (char *)calloc(display_size, sizeof(char));
+   sprintf(display,"%s@%s:%s>",user,system,relative);
+   write(1,display,strlen(display));
+}
+/*
    // char *p = strstr(absolute, char3);
 
    // if (p)
@@ -26,6 +30,4 @@ void prompt(char *absolute, char *relative, char *correct, char *user, char *sys
    //    sprintf(display, "%s@%s:%s->", char4, char5, absolute);
    //    write(1, display, strlen(display));
    // }
-   sprintf(display,"%s@%s:%s>",user,system,relative);
-   write(1,display,strlen(display));
-}
+*/

@@ -12,18 +12,19 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     }
     return Token_count;
 }
-void process_command(char *string, char *relative, char *correct)
+void process_command(char *string, char *relative, char *correct,char* previous)
 {
     char *token[1000];
     INT num_tokens = str_tok_whitespaces(token, string);
-    for(INT i=0;i<num_tokens;i++)
-    {
-        printf("%s\n",token[i]);
-    }
+    // for(INT i=0;i<num_tokens;i++)
+    // {
+    //     printf("%s\n",token[i]);
+    // }
     if (strcmp(token[0], "cd") == 0)
     {
-        cd_func(&token[1], num_tokens-1, relative, correct);
-        printf("Hello\n");
+        cd_func(&token[1], num_tokens-1, relative, correct,previous);
+        strcpy(previous,relative);
+       // printf("Hello\n");
     }
     else
     {

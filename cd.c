@@ -1,15 +1,42 @@
 #include "headers.h"
 
-void cd_func(char *string[], INT num, char *relative, char *correct)
+void cd_func(char *string[], INT num, char *relative, char *correct, char *previous)
 {
-    if (num > 1 || num == 0)
+    if (num > 1)
     {
         perror("Incorrect number of arguments supplied for command cd");
         exit(1);
     }
     else
     {
-        INT dir_ret = chdir(string[0]);
+        INT dir_ret;
+        if (string[0][0] == '~')
+        {
+            char *modify_path = (char *)calloc(600, sizeof(char));
+            strcpy(modify_path, correct);
+            strcat(modify_path, &string[0][1]);
+            dir_ret = chdir(modify_path);
+        }
+        else if (string[0][0] == '-')
+        {
+            if (previous[0] == '#')
+            {
+                perror("OLDPWD NOT SET");
+                return;
+            }
+            else
+            {
+                char *modify_path = (char *)calloc(600, sizeof(char));
+                strcpy(modify_path, previous);
+                strcat(modify_path, &string[0][1]);
+                dir_ret = chdir(modify_path);
+            }
+        }
+        else
+        {
+            dir_ret = chdir(string[0]);
+        }
+
         // printf("directory returns %s\n", string[0]);
         // printf("relative is %s\n",relative);
         // printf("correct is %s\n",correct);
@@ -21,7 +48,7 @@ void cd_func(char *string[], INT num, char *relative, char *correct)
         {
             char *dir_absolute;
             dir_absolute = getcwd(NULL, 300);
-          //  printf("dir_absolute is %s\n",dir_absolute);
+            //  printf("dir_absolute is %s\n",dir_absolute);
             char *p = strstr(dir_absolute, correct);
             if (p)
             {
@@ -36,8 +63,7 @@ void cd_func(char *string[], INT num, char *relative, char *correct)
                 }
                 curr_dir1[i] = '\0';
                 strcpy(relative, curr_dir1);
-               //  printf("%s\n",curr_dir1);
-               
+                //  printf("%s\n",curr_dir1);
             }
             else
             {
