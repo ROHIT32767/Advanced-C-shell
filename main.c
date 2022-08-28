@@ -1,8 +1,5 @@
 #include "headers.h"
-#include "prompt.h"
-#include "process_command.h"
-#include "cd.h"
-#include "PWD.h"
+
 typedef long long int INT;
 int main(int argc, char *argv[])
 {

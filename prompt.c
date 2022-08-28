@@ -4,7 +4,7 @@ void prompt(char *absolute, char *relative, char *correct, char *user, char *sys
    INT display_size = 1000;
    // printf("OS & NW TAs rock: ");
    char *display = (char *)calloc(display_size, sizeof(char));
-   sprintf(display,"\033[32;1m<%s@%s:%s>\033[0m",user,system,relative);
+   sprintf(display,"\033[32;1m<%s@%s:%s> \033[0m",user,system,relative);
    write(1,display,strlen(display));
 }
 /*
