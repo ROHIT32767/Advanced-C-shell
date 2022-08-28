@@ -16,8 +16,20 @@ int main(int argc, char *argv[])
     while (1)
     {
         prompt(absolute_path, relative_path, correct_path, user_name, system_name);
-        char a[20];
-        scanf("%s", a);
+        char *input = (char *)calloc(1000, sizeof(char));
+        char *tokens[1000];
+        scanf("%s", input);
+        INT token_count = 0;
+        tokens[token_count] = strtok(input, ';');
+        while (tokens[token_count] != NULL)
+        {
+            token_count++;
+            tokens[token_count] = strtok(NULL, ';');
+        }
+        for(INT i=0;i<=token_count;i++)
+        {
+            process_command(token[i]);
+        }
         // TAKE INPUT HERE
     }
 }
