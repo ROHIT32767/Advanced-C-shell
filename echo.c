@@ -15,6 +15,7 @@ void echo_func(char *string[], INT num)
     }
     else
     {
-        
+        perror("Incorrect number of arguments supplied to command pwd");
+        exit(1);
     }
 }
