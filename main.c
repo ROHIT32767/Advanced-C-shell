@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     getcwd(correct_path, 300);
     user_name = getlogin();
     gethostname(system_name, 200);
-    relative_path[0] = '-';
+    relative_path[0] = '~';
     relative_path[1] = '\0';
     char *input = (char *)calloc(1000, sizeof(char));
     char *ptr = input;

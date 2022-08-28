@@ -27,16 +27,27 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
             else
             {
                 char *modify_path = (char *)calloc(600, sizeof(char));
-                strcpy(modify_path, previous);
-                strcat(modify_path, &string[0][1]);
-                dir_ret = chdir(modify_path);
+                if (previous[0] == '~')
+                {
+                    char *modify_path1 = (char *)calloc(600, sizeof(char));
+                    strcpy(modify_path1, correct);
+                    strcat(modify_path1, &previous[1]);
+                    printf("modify path is %s\n", modify_path1);
+                    dir_ret = chdir(modify_path1);
+                }
+                else
+                {
+                    strcpy(modify_path, previous);
+                    printf("modify path is %s\n", modify_path);
+                    dir_ret = chdir(modify_path);
+                }
             }
         }
         else
         {
             dir_ret = chdir(string[0]);
         }
-
+        INT Z = 1;
         // printf("directory returns %s\n", string[0]);
         // printf("relative is %s\n",relative);
         // printf("correct is %s\n",correct);
@@ -46,6 +57,8 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
         }
         else
         {
+            
+            strcpy(previous,relative);
             char *dir_absolute;
             dir_absolute = getcwd(NULL, 300);
             //  printf("dir_absolute is %s\n",dir_absolute);
@@ -55,7 +68,7 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
                 INT len1 = strlen(dir_absolute);
                 INT len2 = strlen(correct);
                 char *curr_dir1 = (char *)calloc(len1 - len2 + 2, sizeof(char));
-                curr_dir1[0] = '-';
+                curr_dir1[0] = '~';
                 INT i = 1;
                 for (i = 1; i <= len1 - len2; i++)
                 {

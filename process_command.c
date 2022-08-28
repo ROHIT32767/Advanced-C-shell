@@ -23,7 +23,10 @@ void process_command(char *string, char *relative, char *correct,char* previous)
     if (strcmp(token[0], "cd") == 0)
     {
         cd_func(&token[1], num_tokens-1, relative, correct,previous);
-        strcpy(previous,relative);
+        // strcpy(previous,relative);
+        printf("previous directory is %s\n",previous);
+        INT len=strlen(previous);
+        previous[len]='\0';
        // printf("Hello\n");
     }
     else
