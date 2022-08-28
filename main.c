@@ -1,7 +1,7 @@
 #include "prompt.h"
 #include "headers.h"
 typedef long long int INT;
-int main()
+int main(int argc, char *argv[])
 {
     char *absolute_path = (char *)calloc(300, sizeof(char));
     char *relative_path = (char *)calloc(300, sizeof(char));
