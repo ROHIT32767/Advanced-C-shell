@@ -7,7 +7,7 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
         perror("Incorrect number of arguments supplied for command cd");
         exit(1);
     }
-    else
+    else if (num == 1)
     {
         INT dir_ret;
         if (string[0][0] == '~')
@@ -79,6 +79,44 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
                 strcpy(relative, dir_absolute);
             }
         }
+    }
+    else if (num == 0)
+    {
+        INT dir_ret;
+        char *modify_path = (char *)calloc(600, sizeof(char));
+        strcpy(modify_path, correct);
+        dir_ret = chdir(modify_path);
+        if (dir_ret == -1)
+        {
+            perror("Incorrect directory path supplied to command cd");
+        }
+        else
+        {
+
+            strcpy(previous, relative);
+            char *dir_absolute;
+            dir_absolute = getcwd(NULL, 300);
+            char *p = strstr(dir_absolute, correct);
+            if (p)
+            {
+                INT len1 = strlen(dir_absolute);
+                INT len2 = strlen(correct);
+                char *curr_dir1 = (char *)calloc(len1 - len2 + 2, sizeof(char));
+                curr_dir1[0] = '~';
+                INT i = 1;
+                for (i = 1; i <= len1 - len2; i++)
+                {
+                    curr_dir1[i] = dir_absolute[len2 + i - 1];
+                }
+                curr_dir1[i] = '\0';
+                strcpy(relative, curr_dir1);
+            }
+            else
+            {
+                strcpy(relative, dir_absolute);
+            }
+        }
+        
     }
 }
 /*
