@@ -14,7 +14,7 @@ INT str_tok_whitespaces(char *tokens[], char *input)
 }
 void process_command(char *string, char *relative, char *correct, char *previous)
 {
-    char *token[1000];
+    char *token[1000]; 
     INT num_tokens = str_tok_whitespaces(token, string);
 
     if (strcmp(token[0], "cd") == 0)
@@ -29,6 +29,10 @@ void process_command(char *string, char *relative, char *correct, char *previous
     else if (strcmp(token[0], "pwd") == 0)
     {
         pwd_func(num_tokens-1);
+    }
+    else if(strcmp(token[0],"echo")==0)
+    {
+        echo_func(&token[1], num_tokens - 1);
     }
     else
     {
