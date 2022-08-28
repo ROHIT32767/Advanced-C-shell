@@ -32,13 +32,13 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
                     char *modify_path1 = (char *)calloc(600, sizeof(char));
                     strcpy(modify_path1, correct);
                     strcat(modify_path1, &previous[1]);
-                    printf("modify path is %s\n", modify_path1);
+                  //  printf("modify path is %s\n", modify_path1);
                     dir_ret = chdir(modify_path1);
                 }
                 else
                 {
                     strcpy(modify_path, previous);
-                    printf("modify path is %s\n", modify_path);
+                   // printf("modify path is %s\n", modify_path);
                     dir_ret = chdir(modify_path);
                 }
             }
