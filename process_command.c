@@ -10,13 +10,13 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     }
     return Token_count;
 }
-void process_command(char *string)
+void process_command(char *string,char* relative,char* correct)
 {
     char *token[1000];
     INT num_tokens=str_tok_whitespaces(token, string);
     if(strcmp(token[0],"cd")==0)
     {
-        cd_func(&token[1]);
+        cd_func(&token[1],num_tokens,relative,correct);
     }
 
 

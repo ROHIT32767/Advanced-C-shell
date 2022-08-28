@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         }
         for(INT i=0;i<=token_count;i++)
         {
-            process_command(tokens[i]);
+            process_command(tokens[i],relative_path,correct_path);
         }
         // TAKE INPUT HERE
     }

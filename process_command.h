@@ -2,6 +2,6 @@
 #define __PROMPT_H
 
 long long int str_tok_whitespaces(char* string[],char* string1);
-void process_command(char* string);
+void process_command(char* string,char* string1,char* string2);
 
 #endif
