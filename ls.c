@@ -1,31 +1,49 @@
 #include "headers.h"
 
-INT print_ls(char* string,INT type)
+INT print_ls(char *string, char *correct_path, INT type)
 {
-    if(type==0)
+    char *string1 = (char *)calloc(1000, sizeof(char));
+    if (string[0] == '~')
     {
+        strcpy(string1, correct_path);
+        strcat(string1, &string[1]);
+    }
+    else
+    {
+        strcpy(string1, string);
+    }
+    /**/
+    struct dirent** name_list;
+    if (type == 0)
+    {
+        INT num_directory_entries = scandir(string1,&name_list,NULL,alphasort);
+        for(INT i=0;i<num_directory_entries;i++)
+        {
+            
+        }
 
     }
-    else if(type==1)
+    else if (type == 1)
     {
-
+        INT num_directory_entries = scandir(string1,&name_list,NULL,alphasort);
     }
-    else if(type==2)
+    else if (type == 2)
     {
-
+        INT num_directory_entries = scandir(string1,&name_list,NULL,alphasort);
     }
-    else if(type==3)
+    else if (type == 3)
     {
-
+        INT num_directory_entries = scandir(string1,&name_list,NULL,alphasort);
     }
     else
     {
         perror("Error in print_ls function");
         return 0;
     }
+    free(string1);
 }
 
-void ls_func(char *string[], long long int num_tokens)
+void ls_func(char *string[], char *correct_path, long long int num_tokens)
 {
     INT extra_info = 0;
     INT hidden = 0;
@@ -78,7 +96,7 @@ void ls_func(char *string[], long long int num_tokens)
             {
                 if (string[i][0] != '-')
                 {
-                    print_ls(string[i],3);
+                    print_ls(string[i], 3);
                 }
             }
         }
@@ -88,7 +106,7 @@ void ls_func(char *string[], long long int num_tokens)
             {
                 if (string[i][0] != '-')
                 {
-                    print_ls(string[i],2);
+                    print_ls(string[i], 2);
                 }
             }
         }
@@ -101,7 +119,7 @@ void ls_func(char *string[], long long int num_tokens)
             {
                 if (string[i][0] != '-')
                 {
-                    print_ls(string[i],1);
+                    print_ls(string[i], 1);
                 }
             }
         }
@@ -111,7 +129,7 @@ void ls_func(char *string[], long long int num_tokens)
             {
                 if (string[i][0] != '-')
                 {
-                    print_ls(string[i],0);
+                    print_ls(string[i], 0);
                 }
             }
         }
