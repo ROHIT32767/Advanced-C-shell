@@ -19,7 +19,7 @@ INT print_ls(char *string, char *correct_path, INT type)
         INT num_directory_entries = scandir(string1,&name_list,NULL,alphasort);
         for(INT i=0;i<num_directory_entries;i++)
         {
-            
+
         }
 
     }
