@@ -17,6 +17,8 @@
 #include "user.h"
 #include "PWD.h"
 #include "echo.h"
+#include "ls.h"
+#include <dirent.h>
 typedef long long int INT;
 
 #endif
