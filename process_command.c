@@ -36,7 +36,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
     }
     else if(strcmp(token[0],"ls")==0)
     {
-       // ls_func(&token[1], num_tokens - 1);
+       ls_func(&token[1], num_tokens - 1);
     }
     else
     {
