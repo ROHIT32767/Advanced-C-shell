@@ -1,8 +1,8 @@
 #include "headers.h"
 INT str_tok_whitespaces(char *tokens[], char *input)
 {
-    char *semicolon = (char *)calloc(1, sizeof(char));
-    semicolon[0] = ' ';
+    // char *semicolon = (char *)calloc(1, sizeof(char));
+    // semicolon[0] = ' ';
     long long int Token_count = 0;
     tokens[Token_count] = strtok(input, " \t");
     while (tokens[Token_count] != NULL)
@@ -36,7 +36,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
     }
     else if(strcmp(token[0],"ls")==0)
     {
-       ls_func(&token[1], num_tokens - 1);
+        // not implemented completely
+    //    ls_func(&token[1], num_tokens - 1);
     }
     else
     {

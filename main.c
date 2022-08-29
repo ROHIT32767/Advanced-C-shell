@@ -1,5 +1,4 @@
 #include "headers.h"
-
 typedef long long int INT;
 int main(int argc, char *argv[])
 {
@@ -22,8 +21,8 @@ int main(int argc, char *argv[])
     while (1)
     {
         size_t size = 100;
-        char *semicolon = (char *)calloc(1, sizeof(char));
-        semicolon[0] = ';';
+        // char *semicolon = (char *)calloc(1, sizeof(char));
+        // semicolon[0] = ';';
         prompt(absolute_path, relative_path, correct_path, user_name, system_name);
 
         char *tokens[1000];
@@ -31,18 +30,17 @@ int main(int argc, char *argv[])
         input[Y - 1] = '\0';
         //  printf("input is %s\n",input);
         INT token_count = 0;
-        tokens[token_count] = strtok(input, semicolon);
+        tokens[token_count] = strtok(input,";");
         // printf("%s\n",tokens[0]);
         while (tokens[token_count] != NULL)
         {
             token_count++;
-            tokens[token_count] = strtok(NULL, semicolon);
+            tokens[token_count] = strtok(NULL,";");
         }
         for (INT i = 0; i < token_count; i++)
         {
             // printf("%s\n",tokens[i]);
-            process_command(tokens[i], relative_path, correct_path,previous_path);
-            // printf("Hello\n");
+            str_tok_and(tokens[i], relative_path, correct_path,previous_path);
         }
         // TAKE INPUT HERE
     }
