@@ -31,7 +31,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         }
         for (INT i = 0; i < num_directory_entries; i++)
         {
-            if ((strcmp(name_list[i]->d_name, ".") != 0) && ((strcmp(name_list[i]->d_name, "..") != 0)))
+            if ((strcmp(name_list[i]->d_name[0],'.') != 0) && ((strcmp(name_list[i]->d_name[0],'.') != 0)))
             {
                 printf("%s\n", name_list[i]->d_name);
             }
