@@ -1,6 +1,6 @@
 #include "headers.h"
 
-INT print_ls(char *string, char *correct_path, INT type, INT num_args)
+void print_ls(char *string, char *correct_path, INT type, INT num_args)
 {
     char *string1 = (char *)calloc(1000, sizeof(char));
     if (string[0] == '~')
@@ -16,7 +16,10 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
     struct dirent **name_list;
     if (type == 0) // no l & a
     {
+        // printf("type is %lld\n",type);
+        // printf("string1 is %s\n",string1);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
+        //printf("num_directory_entries is %lld\n",num_directory_entries);
         if (num_directory_entries == -1)
         {
             perror("scandir in type 0");
@@ -32,13 +35,16 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
             {
                 printf("%s\n", name_list[i]->d_name);
             }
-            free(name_list[i]->d_name);
+           free(name_list[i]);
         }
-        free(name_list);
+      free(name_list);
     }
     else if (type == 1) // no l but a is there
     {
+        printf("type is %lld\n",type);
+        printf("string1 is %s\n",string1);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
+        printf("num_directory_entries is %lld\n",num_directory_entries);
         if (num_directory_entries == -1)
         {
             perror("scandir in type 0");
@@ -51,12 +57,13 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
         for (INT i = 0; i < num_directory_entries; i++)
         {
             printf("%s\n", name_list[i]->d_name);
-            free(name_list[i]->d_name);
+            free(name_list[i]);
         }
         free(name_list);
     }
     else if (type == 2) // no a ,only l
     {
+        printf("type is %lld\n",type);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
         if (num_directory_entries == -1)
         {
@@ -68,7 +75,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
             printf("%s:\n", string1);
         }
         struct stat fs;
-        INT R;
+        INT R = 0;
 
         for (INT i = 0; i < num_directory_entries; i++)
         {
@@ -163,7 +170,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
                 {
                     printf("- ");
                 }
-                printf("%s ", fs.st_nlink);
+                printf("%ld ", fs.st_nlink);
                 uid_t user_id = fs.st_uid;
                 if (getpwuid(user_id) != NULL)
                 {
@@ -185,7 +192,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
                     return;
                 }
                 off_t file_size = fs.st_size;
-                printf("%s ", file_size);
+                printf("%ld ", file_size);
                 /*
 
 
@@ -194,14 +201,14 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
 
                 */
                 printf("%s\n", name_list[i]->d_name);
-                free(name_list[i]->d_name);
-                name_list[i]->
+                free(name_list[i]);
             }
         }
         free(name_list);
     }
     else if (type == 3)
     {
+        printf("type is %lld\n",type);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
         if (num_directory_entries == -1)
         {
@@ -213,11 +220,11 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
             printf("%s:\n", string1);
         }
         struct stat fs;
-        INT R;
+        INT R = 0;
 
         for (INT i = 0; i < num_directory_entries; i++)
         {
-            if ((strcmp(name_list[i]->d_name, ".") != 0) && ((strcmp(name_list[i]->d_name, "..") != 0)))
+            if (1)
             {
                 R = stat(name_list[i]->d_name, &fs);
                 if (S_ISDIR(fs.st_mode))
@@ -308,7 +315,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
                 {
                     printf("- ");
                 }
-                printf("%s ", fs.st_nlink);
+                printf("%ld ", fs.st_nlink);
                 uid_t user_id = fs.st_uid;
                 if (getpwuid(user_id) != NULL)
                 {
@@ -330,7 +337,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
                     return;
                 }
                 off_t file_size = fs.st_size;
-                printf("%s ", file_size);
+                printf("%ld ", file_size);
                 /*
 
 
@@ -339,7 +346,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
 
                 */
                 printf("%s\n", name_list[i]->d_name);
-                free(name_list[i]->d_name);
+                free(name_list[i]);
             }
         }
         free(name_list);
@@ -347,7 +354,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
     else
     {
         perror("Error in print_ls function");
-        return 0;
+        return;
     }
     free(string1);
 }
