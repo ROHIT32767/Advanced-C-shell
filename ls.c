@@ -69,13 +69,133 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
         }
         struct stat fs;
         INT R;
-        
+
         for (INT i = 0; i < num_directory_entries; i++)
         {
-            R = stat(string1, &fs);
-            
-            printf("%s\n", name_list[i]->d_name);
-            free(name_list[i]->d_name);
+            if ((strcmp(name_list[i]->d_name, ".") != 0) && ((strcmp(name_list[i]->d_name, "..") != 0)))
+            {
+                R = stat(name_list[i]->d_name, &fs);
+                if (S_ISDIR(fs.st_mode))
+                {
+                    printf("d");
+                }
+                else
+                {
+                    printf("-");
+                }
+                if (fs.st_mode & S_IRUSR)
+                {
+                    printf("r");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IWUSR)
+                {
+                    printf("w");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IXUSR)
+                {
+                    printf("x");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IRGRP)
+                {
+                    printf("r");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IWGRP)
+                {
+                    printf("w");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IXGRP)
+                {
+                    printf("x");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IROTH)
+                {
+                    printf("r");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IWOTH)
+                {
+                    printf("w");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IXOTH)
+                {
+                    printf("x ");
+                }
+                else
+                {
+                    printf("- ");
+                }
+                printf("%s ", fs.st_nlink);
+                uid_t user_id = fs.st_uid;
+                if (getpwuid(user_id) != NULL)
+                {
+                    printf("%s ", getpwuid(user_id)->pw_name);
+                }
+                else
+                {
+                    perror("error in getpwuid");
+                    return;
+                }
+                gid_t group_id = fs.st_gid;
+                if (getgrgid(group_id)!=NULL)
+                {
+                    printf("%s ", getgrgid(group_id)->gr_name);
+                }
+                else
+                {
+                    perror("error in getgrgid");
+                    return;
+                }
+                off_t file_size=fs.st_size;
+                printf("%s ",file_size);
+                
+
+
+
+
+    
+                printf("%s\n", name_list[i]->d_name);
+                free(name_list[i]->d_name);
+                name_list[i]->
+            }
         }
         free(name_list);
     }

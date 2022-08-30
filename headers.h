@@ -18,6 +18,8 @@
 #include "echo.h"
 #include "ls.h"
 #include <dirent.h>
+#include <grp.h>
+#include "time.h"
 #define _DEFAULT_SOURCE
 typedef long long int INT;
 #endif
