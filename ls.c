@@ -175,7 +175,7 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
                     return;
                 }
                 gid_t group_id = fs.st_gid;
-                if (getgrgid(group_id)!=NULL)
+                if (getgrgid(group_id) != NULL)
                 {
                     printf("%s ", getgrgid(group_id)->gr_name);
                 }
@@ -184,14 +184,15 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
                     perror("error in getgrgid");
                     return;
                 }
-                off_t file_size=fs.st_size;
-                printf("%s ",file_size);
-                
+                off_t file_size = fs.st_size;
+                printf("%s ", file_size);
+                /*
 
 
 
 
-    
+
+                */
                 printf("%s\n", name_list[i]->d_name);
                 free(name_list[i]->d_name);
                 name_list[i]->
@@ -202,6 +203,146 @@ INT print_ls(char *string, char *correct_path, INT type, INT num_args)
     else if (type == 3)
     {
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
+        if (num_directory_entries == -1)
+        {
+            perror("scandir in type 0");
+            exit(EXIT_FAILURE);
+        }
+        if (num_args >= 2)
+        {
+            printf("%s:\n", string1);
+        }
+        struct stat fs;
+        INT R;
+
+        for (INT i = 0; i < num_directory_entries; i++)
+        {
+            if ((strcmp(name_list[i]->d_name, ".") != 0) && ((strcmp(name_list[i]->d_name, "..") != 0)))
+            {
+                R = stat(name_list[i]->d_name, &fs);
+                if (S_ISDIR(fs.st_mode))
+                {
+                    printf("d");
+                }
+                else
+                {
+                    printf("-");
+                }
+                if (fs.st_mode & S_IRUSR)
+                {
+                    printf("r");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IWUSR)
+                {
+                    printf("w");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IXUSR)
+                {
+                    printf("x");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IRGRP)
+                {
+                    printf("r");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IWGRP)
+                {
+                    printf("w");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IXGRP)
+                {
+                    printf("x");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IROTH)
+                {
+                    printf("r");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IWOTH)
+                {
+                    printf("w");
+                }
+                else
+                {
+                    printf("-");
+                }
+                /**/
+                if (fs.st_mode & S_IXOTH)
+                {
+                    printf("x ");
+                }
+                else
+                {
+                    printf("- ");
+                }
+                printf("%s ", fs.st_nlink);
+                uid_t user_id = fs.st_uid;
+                if (getpwuid(user_id) != NULL)
+                {
+                    printf("%s ", getpwuid(user_id)->pw_name);
+                }
+                else
+                {
+                    perror("error in getpwuid");
+                    return;
+                }
+                gid_t group_id = fs.st_gid;
+                if (getgrgid(group_id) != NULL)
+                {
+                    printf("%s ", getgrgid(group_id)->gr_name);
+                }
+                else
+                {
+                    perror("error in getgrgid");
+                    return;
+                }
+                off_t file_size = fs.st_size;
+                printf("%s ", file_size);
+                /*
+
+
+
+
+
+                */
+                printf("%s\n", name_list[i]->d_name);
+                free(name_list[i]->d_name);
+            }
+        }
+        free(name_list);
     }
     else
     {
