@@ -18,5 +18,6 @@
 #include "echo.h"
 #include "ls.h"
 #include <dirent.h>
+#define _DEFAULT_SOURCE
 typedef long long int INT;
 #endif
