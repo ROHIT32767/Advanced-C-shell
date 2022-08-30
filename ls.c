@@ -136,7 +136,8 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                         perror("File error in file in type 2\n");
                         exit(1);
                     }
-                    INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    INT E;
+                    E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
                     E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
                     E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
                     E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -186,7 +187,8 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 perror("File error in file in type 2\n");
                 exit(1);
             }
-            INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            INT E;
+            E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
             E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
             E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
             E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -258,7 +260,6 @@ Time
             {
                 if (1)
                 {
-
                     strcat(path, name_list[i]->d_name);
                     // printf("string 1 is %s,name_list is %s path is %s\n", string1, name_list[i]->d_name, path);
                     R = stat(path, &fs);
@@ -267,7 +268,8 @@ Time
                         perror("File error in file in type 3\n");
                         exit(1);
                     }
-                    INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    INT E;
+                    E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
                     E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
                     E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
                     E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -323,7 +325,8 @@ Time
                 perror("File error in file in type 2\n");
                 exit(1);
             }
-            INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            INT E;
+            E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
             E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
             E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
             E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -366,10 +369,12 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
     INT extra_info = 0;
     INT hidden = 0;
     INT num_commands = 0;
+    INT total_commands=0;
     for (INT i = 0; i < num_tokens; i++)
     {
         if (string[i][0] == '-')
         {
+            total_commands++;
 
             if (strcmp(string[i], "-l") == 0)
             {
@@ -398,6 +403,7 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         else
         {
             num_commands++;
+            total_commands++;
         }
     }
     if (extra_info)
