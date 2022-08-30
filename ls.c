@@ -1,5 +1,4 @@
 #include "headers.h"
-
 void print_ls(char *string, char *correct_path, INT type, INT num_args)
 {
     char *string1 = (char *)calloc(1000, sizeof(char));
@@ -15,7 +14,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
     }
     strcpy(path, string1);
     strcat(path, "/");
-    INT len=strlen(path);
+    INT len = strlen(path);
     /**/
     struct dirent **name_list;
     if (type == 0) // no l & a
@@ -130,101 +129,23 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 if ((strcmp(&ch, ".") != 0))
                 {
                     strcat(path, name_list[i]->d_name);
-                    //printf("string 1 is %s,name_list is %s,path is %s\n", string1, name_list[i]->d_name, path);
+                    // printf("string 1 is %s,name_list is %s,path is %s\n", string1, name_list[i]->d_name, path);
                     R = stat(path, &fs);
                     if (R == -1)
                     {
                         perror("File error in file in type 2\n");
                         exit(1);
                     }
-                    if (S_ISDIR(fs.st_mode))
-                    {
-                        printf("d");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    if (fs.st_mode & S_IRUSR)
-                    {
-                        printf("r");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IWUSR)
-                    {
-                        printf("w");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IXUSR)
-                    {
-                        printf("x");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IRGRP)
-                    {
-                        printf("r");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IWGRP)
-                    {
-                        printf("w");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IXGRP)
-                    {
-                        printf("x");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IROTH)
-                    {
-                        printf("r");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IWOTH)
-                    {
-                        printf("w");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IXOTH)
-                    {
-                        printf("x ");
-                    }
-                    else
-                    {
-                        printf("- ");
-                    }
+                    INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
+                    E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
+                    E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
+                    E = (fs.st_mode & S_IRGRP) ? printf("r") : printf("-");
+                    E = (fs.st_mode & S_IWGRP) ? printf("w") : printf("-");
+                    E = (fs.st_mode & S_IXGRP) ? printf("x") : printf("-");
+                    E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
+                    E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
+                    E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
                     printf("%ld ", fs.st_nlink);
                     uid_t user_id = fs.st_uid;
                     if (getpwuid(user_id) != NULL)
@@ -248,16 +169,9 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     }
                     off_t file_size = fs.st_size;
                     printf("%ld ", file_size);
-                    /*
-
-
-
-
-
-                    */
                     printf("%s\n", name_list[i]->d_name);
                     free(name_list[i]);
-                    path[len]='\0';
+                    path[len] = '\0';
                 }
             }
             free(name_list);
@@ -272,94 +186,16 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 perror("File error in file in type 2\n");
                 exit(1);
             }
-            if (S_ISDIR(fs.st_mode))
-            {
-                printf("d");
-            }
-            else
-            {
-                printf("-");
-            }
-            if (fs.st_mode & S_IRUSR)
-            {
-                printf("r");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IWUSR)
-            {
-                printf("w");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IXUSR)
-            {
-                printf("x");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IRGRP)
-            {
-                printf("r");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IWGRP)
-            {
-                printf("w");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IXGRP)
-            {
-                printf("x");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IROTH)
-            {
-                printf("r");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IWOTH)
-            {
-                printf("w");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IXOTH)
-            {
-                printf("x ");
-            }
-            else
-            {
-                printf("- ");
-            }
+            INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
+            E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
+            E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
+            E = (fs.st_mode & S_IRGRP) ? printf("r") : printf("-");
+            E = (fs.st_mode & S_IWGRP) ? printf("w") : printf("-");
+            E = (fs.st_mode & S_IXGRP) ? printf("x") : printf("-");
+            E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
+            E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
+            E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
             printf("%ld ", fs.st_nlink);
             uid_t user_id = fs.st_uid;
             if (getpwuid(user_id) != NULL)
@@ -395,7 +231,7 @@ Time
         INT files = 0;
         // printf("type is %lld\n", type);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
-        //printf("num_directories is %lld for %s\n", num_directory_entries, string);
+        // printf("num_directories is %lld for %s\n", num_directory_entries, string);
         if (num_directory_entries == -1)
         {
             if (errno == ENOTDIR)
@@ -431,95 +267,16 @@ Time
                         perror("File error in file in type 3\n");
                         exit(1);
                     }
-                    /**/
-                    if (S_ISDIR(fs.st_mode))
-                    {
-                        printf("d");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    if (fs.st_mode & S_IRUSR)
-                    {
-                        printf("r");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IWUSR)
-                    {
-                        printf("w");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IXUSR)
-                    {
-                        printf("x");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IRGRP)
-                    {
-                        printf("r");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IWGRP)
-                    {
-                        printf("w");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IXGRP)
-                    {
-                        printf("x");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IROTH)
-                    {
-                        printf("r");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IWOTH)
-                    {
-                        printf("w");
-                    }
-                    else
-                    {
-                        printf("-");
-                    }
-                    /**/
-                    if (fs.st_mode & S_IXOTH)
-                    {
-                        printf("x ");
-                    }
-                    else
-                    {
-                        printf("- ");
-                    }
+                    INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
+                    E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
+                    E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
+                    E = (fs.st_mode & S_IRGRP) ? printf("r") : printf("-");
+                    E = (fs.st_mode & S_IWGRP) ? printf("w") : printf("-");
+                    E = (fs.st_mode & S_IXGRP) ? printf("x") : printf("-");
+                    E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
+                    E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
+                    E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
                     printf("%ld ", fs.st_nlink);
                     uid_t user_id = fs.st_uid;
                     if (getpwuid(user_id) != NULL)
@@ -543,16 +300,9 @@ Time
                     }
                     off_t file_size = fs.st_size;
                     printf("%ld ", file_size);
-                    /*
-
-
-
-
-
-                    */
                     printf("%s\n", name_list[i]->d_name);
                     free(name_list[i]);
-                    path[len]='\0';
+                    path[len] = '\0';
                 }
                 else
                 {
@@ -573,94 +323,16 @@ Time
                 perror("File error in file in type 2\n");
                 exit(1);
             }
-            if (S_ISDIR(fs.st_mode))
-            {
-                printf("d");
-            }
-            else
-            {
-                printf("-");
-            }
-            if (fs.st_mode & S_IRUSR)
-            {
-                printf("r");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IWUSR)
-            {
-                printf("w");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IXUSR)
-            {
-                printf("x");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IRGRP)
-            {
-                printf("r");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IWGRP)
-            {
-                printf("w");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IXGRP)
-            {
-                printf("x");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IROTH)
-            {
-                printf("r");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IWOTH)
-            {
-                printf("w");
-            }
-            else
-            {
-                printf("-");
-            }
-            /**/
-            if (fs.st_mode & S_IXOTH)
-            {
-                printf("x ");
-            }
-            else
-            {
-                printf("- ");
-            }
+            INT E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
+            E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
+            E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
+            E = (fs.st_mode & S_IRGRP) ? printf("r") : printf("-");
+            E = (fs.st_mode & S_IWGRP) ? printf("w") : printf("-");
+            E = (fs.st_mode & S_IXGRP) ? printf("x") : printf("-");
+            E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
+            E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
+            E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
             printf("%ld ", fs.st_nlink);
             uid_t user_id = fs.st_uid;
             if (getpwuid(user_id) != NULL)
@@ -684,9 +356,6 @@ Time
             }
             off_t file_size = fs.st_size;
             printf("%ld ", file_size);
-            /*
-        Time
-            */
             printf("%s\n", string1);
         }
     }
@@ -731,12 +400,6 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
             num_commands++;
         }
     }
-    /*
-    extra_info and hidden=3;
-    extra_info=2;
-    hidden=1;
-    nothing=0;
-    */
     if (extra_info)
     {
         if (hidden)
