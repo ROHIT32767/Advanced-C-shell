@@ -7,7 +7,7 @@ void echo_func(char *string[], INT num)
         {
             printf("%s ", string[i]);
         }
-        printf("%s\n", string[num - 1]);
+        printf("%s%s\033[0m\n",KYEL,string[num - 1]);
     }
     else if(num==0)
     {
