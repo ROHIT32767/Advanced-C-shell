@@ -82,9 +82,11 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
     }
     else if (num == 0)
     {
+
         INT dir_ret;
         char *modify_path = (char *)calloc(600, sizeof(char));
         strcpy(modify_path, correct);
+
         dir_ret = chdir(modify_path);
         if (dir_ret == -1)
         {
@@ -92,10 +94,11 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
         }
         else
         {
-
+            
             strcpy(previous, relative);
             char *dir_absolute;
             dir_absolute = getcwd(NULL, 300);
+            
             char *p = strstr(dir_absolute, correct);
             if (p)
             {
@@ -110,13 +113,13 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
                 }
                 curr_dir1[i] = '\0';
                 strcpy(relative, curr_dir1);
+               // printf("HI\n");
             }
             else
             {
                 strcpy(relative, dir_absolute);
             }
         }
-        
     }
 }
 /*

@@ -1,5 +1,5 @@
 #include "headers.h"
-void str_tok_and(char *string, char *relative, char *correct, char *previous)
+void str_tok_and(char *string, char *relative, char *correct, char *previous,INT len)
 {
     char *tokens[1000];
     INT token_count = 0;
@@ -13,6 +13,6 @@ void str_tok_and(char *string, char *relative, char *correct, char *previous)
     for (INT i = 0; i < token_count; i++)
     {
         // printf("%s\n",tokens[i]);
-        process_command(tokens[i], relative, correct, previous);
+        process_command(tokens[i], relative, correct, previous,len);
     }
 }
