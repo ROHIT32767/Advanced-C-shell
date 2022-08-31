@@ -12,52 +12,58 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     }
     return Token_count;
 }
-void process_command(char *string, char *relative, char *correct, char *previous,INT len)
+void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last)
 {
     char *token[1000];
     INT num_tokens = str_tok_whitespaces(token, string);
-    if ((token[0] != NULL)||(len==0))
+    // if ((token[0] != NULL)||(len==0))
+    // {
+    if (strcmp(token[0], "cd") == 0)
     {
-        if (strcmp(token[0], "cd") == 0)
+
+        if (&token[1] != NULL)
         {
 
-            if (&token[1] != NULL)
-            {
-
-                cd_func(&token[1], num_tokens - 1, relative, correct, previous);
-                // strcpy(previous,relative);
-                // printf("previous directory is %s\n",previous);
-                INT len = strlen(previous);
-                previous[len] = '\0';
-                // printf("Hello\n");
-            }
-            else
-            {
-                perror("syntax error");
-            }
-        }
-        else if (strcmp(token[0], "pwd") == 0)
-        {
-            pwd_func(num_tokens - 1);
-        }
-        else if (strcmp(token[0], "echo") == 0)
-        {
-            echo_func(&token[1], num_tokens - 1);
-        }
-        else if (strcmp(token[0], "ls") == 0)
-        {
-            // not implemented completely
-            ls_func(&token[1], correct, num_tokens - 1);
+            cd_func(&token[1], num_tokens - 1, relative, correct, previous);
+            // strcpy(previous,relative);
+            // printf("previous directory is %s\n",previous);
+            INT len = strlen(previous);
+            previous[len] = '\0';
+            // printf("Hello\n");
         }
         else
         {
-            printf("-1\n");
+            perror("syntax error");
         }
+    }
+    else if (strcmp(token[0], "pwd") == 0)
+    {
+        pwd_func(num_tokens - 1);
+    }
+    else if (strcmp(token[0], "echo") == 0)
+    {
+        echo_func(&token[1], num_tokens - 1);
+    }
+    else if (strcmp(token[0], "ls") == 0)
+    {
+        // not implemented completely
+        ls_func(&token[1], correct, num_tokens - 1);
     }
     else
     {
-        perror("syntax error");
+        if ((strlen(token) != 0))
+        {
+            spec4_func(&token[0], relative, correct, previous, last);
+        }
+        else
+        {
+            perror("syntax error");
+        }
     }
+
+    // else
+    // {
+    //     perror("syntax error");
 }
 /*
   // for(INT i=0;i<num_tokens;i++)

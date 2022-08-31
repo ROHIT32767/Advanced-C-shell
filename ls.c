@@ -602,7 +602,7 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         {
             if (num_commands == 0)
             {
-                print_ls("~", correct_path, 3, 0);
+                print_ls(".", correct_path, 3, 0);
             }
             else
             {
@@ -619,7 +619,7 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         {
             if (num_commands == 0)
             {
-                print_ls("~", correct_path, 2, 0);
+                print_ls(".", correct_path, 2, 0);
             }
             else
             {
@@ -639,7 +639,7 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         {
             if (num_commands == 0)
             {
-                print_ls("~", correct_path, 1, 0);
+                print_ls(".", correct_path, 1, 0);
             }
             else
             {
@@ -656,7 +656,7 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         {
             if (num_commands == 0)
             {
-                print_ls("~", correct_path, 0, 0);
+                print_ls(".", correct_path, 0, 0);
             }
             else
             {
