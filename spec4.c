@@ -21,10 +21,9 @@ void bg_func(char *string[], char *string1, char *string2, char *string3,List* L
         }
         else
         {
-            // num_bg_processes++;
-            // INT Z = num_bg_processes;
-
-            printf("[%lld] %lld\n", num_bg_processes, forkReturn);
+            insert(LIST,forkReturn,string[0]);
+            printf("[%d] %lld\n",find(LIST,forkReturn,string[0])+1, forkReturn);
+            
         }
     }
 }

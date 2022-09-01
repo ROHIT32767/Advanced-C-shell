@@ -8,12 +8,14 @@
 #include <errno.h>
 #include <limits.h>
 #include <unistd.h>
+#include "assert.h"
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <grp.h>
 #include "time.h"
 #include <sys/wait.h>
+#include "linked_list.h"
 #include "prompt.h"
 #include "str_tok_and.h"
 #include "process_command.h"
@@ -22,7 +24,6 @@
 #include "PWD.h"
 #include "echo.h"
 #include "ls.h"
-#include "linked_list.h"
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"

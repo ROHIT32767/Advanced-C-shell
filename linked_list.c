@@ -23,7 +23,7 @@ int get_size(List *L)
 }
 void print_reverse(List *L)
 {
-	NodePtr P, temp;
+	NodePtr P;
 	P = L->tail;
 	while (P != NULL)
 	{
@@ -76,7 +76,7 @@ void insert_at(List *list, int x, int index,char* string)
 	NodePtr newnode = MakeNode(x,string);
 	if (index == get_size(list))
 	{
-		insert(list, x);
+		insert(list, x,string);
 	}
 	else
 	{
@@ -110,7 +110,7 @@ NodePtr MakeNode(int X,char* string)
 	NodePtr P = (NodePtr)malloc(sizeof(struct node));
 	assert(P != NULL);
 	P->Element = X;
-	P_>process_name=(char*)malloc(600,sizeof(char));
+	P->process_name=(char*)malloc(600*sizeof(char));
 	strcpy(P->process_name,string);
 	P->Next = NULL;
 	P->Prev = NULL;
@@ -217,4 +217,5 @@ int find(List *L, int X,char* string)
 		index++;
 		P = P->Next;
 	}
+	return -1;
 }

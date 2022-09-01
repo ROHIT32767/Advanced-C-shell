@@ -11,10 +11,12 @@ struct node{
 	Position Next;
     Position Prev;
 };
+
 typedef struct my_dll{
 struct node* root;
 struct node* tail; 
 }List;
+
 NodePtr MakeNode(int X,char* string); 
 int get_size(List* L);
 void print_reverse(List* L);

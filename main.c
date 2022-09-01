@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
     char *correct_path = (char *)calloc(300, sizeof(char));
     char *user_name = (char *)calloc(200, sizeof(char));
     char *system_name = (char *)calloc(200, sizeof(char));
+    char *Time = (char *)calloc(300, sizeof(char));
+    Time[0] = '\0';
     List *LIST;
     LIST = (List *)malloc(sizeof(List));
     LIST->root = NULL;
@@ -30,7 +32,7 @@ int main(int argc, char *argv[])
         size_t size = 100;
         // char *semicolon = (char *)calloc(1, sizeof(char));
         // semicolon[0] = ';';
-        prompt(absolute_path, relative_path, correct_path, user_name, system_name);
+        prompt(absolute_path, relative_path, correct_path, user_name, system_name, Time);
 
         char *tokens[1000];
         INT Y = getline(&ptr, &size, stdin);
@@ -57,14 +59,21 @@ int main(int argc, char *argv[])
             for (INT i = 0; i < token_count; i++)
             {
                 // printf("%s\n",tokens[i]);
-                str_tok_and(tokens[i], relative_path, correct_path, previous_path, length,LIST);
+                str_tok_and(tokens[i], relative_path, correct_path, previous_path, length, LIST);
             }
         }
         num_bg_processes = 0;
         time_t end_time;
         time(&end_time);
-        printf("time is %ld", end_time - start_seconds);
-
-        // TAKE INPUT HERE
+        long int U=end_time - start_seconds;
+        if (U >= 1)
+        {
+            Time[0] = '\0';
+            sprintf(Time,"took %lds",U);
+        }
+        else
+        {
+            Time[0]='\0';
+        }
     }
 }
