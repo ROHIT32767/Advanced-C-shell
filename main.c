@@ -2,6 +2,7 @@
 INT num_bg_processes;
 time_t start_seconds;
 typedef long long int INT;
+List *LIST;
 int main(int argc, char *argv[])
 {
     char *absolute_path = (char *)calloc(300, sizeof(char));
@@ -12,7 +13,6 @@ int main(int argc, char *argv[])
     char *system_name = (char *)calloc(200, sizeof(char));
     char *Time = (char *)calloc(300, sizeof(char));
     Time[0] = '\0';
-    List *LIST;
     LIST = (List *)malloc(sizeof(List));
     LIST->root = NULL;
     LIST->tail = NULL;

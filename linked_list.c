@@ -46,7 +46,7 @@ void prune(List *L)
 
 		while (Ptr1 != NULL && Ptr2 != NULL)
 		{
-			
+
 			if (Ptr2->Next == NULL)
 			{
 				L->tail = Ptr2->Prev;
@@ -54,7 +54,7 @@ void prune(List *L)
 				free(Ptr2);
 				return;
 			}
-			
+
 			else
 			{
 				Ptr1->Next = Ptr2->Next;
@@ -71,21 +71,21 @@ void prune(List *L)
 	}
 }
 
-void insert_at(List *list, int x, int index,char* string)
+void insert_at(List *list, int x, int index, char *string)
 {
-	NodePtr newnode = MakeNode(x,string);
+	NodePtr newnode = MakeNode(x, string);
 	if (index == get_size(list))
 	{
-		insert(list, x,string);
+		insert(list, x, string);
 	}
 	else
 	{
-	
-		 if (index == 0)
+
+		if (index == 0)
 		{
 			newnode->Next = list->root;
 			list->root = newnode;
-			newnode->Next->Prev=newnode;
+			newnode->Next->Prev = newnode;
 		}
 		else
 		{
@@ -104,80 +104,96 @@ void insert_at(List *list, int x, int index,char* string)
 	}
 }
 
-NodePtr MakeNode(int X,char* string)
+NodePtr MakeNode(int X, char *string)
 {
-
 	NodePtr P = (NodePtr)malloc(sizeof(struct node));
 	assert(P != NULL);
 	P->Element = X;
-	P->process_name=(char*)malloc(600*sizeof(char));
-	strcpy(P->process_name,string);
+	P->process_name = (char *)malloc(600 * sizeof(char));
+	strcpy(P->process_name, string);
+	// printf("process_name is %s and string is %s\n",P->process_name,string);
 	P->Next = NULL;
 	P->Prev = NULL;
-
 	return P;
 }
 
-void Delete (List *L, int index)
+INT Delete(List *L, int index)
 {
 	NodePtr P = L->root;
 	int i = 0;
+
 	if (get_size(L) == 1)
 	{
-		free(P);
-		L->root = NULL;
-		L->tail = NULL;
+		if (index == 0)
+		{
+			free(P);
+			L->root = NULL;
+			L->tail = NULL;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 	else
 	{
-		while (P != NULL)
+		if ((index >= get_size((L)) && (index < 0)))
 		{
-			if (i == index)
+			return -1;
+		}
+		else
+		{
+			while (P != NULL)
 			{
-				if (index == get_size(L) - 1)
+				if (i == index)
 				{
-					L->tail->Next = NULL;
-					L->tail = P->Prev;
-					P->Prev->Next = NULL;
-					free(P);
-				}
-				else
-				{
-					if (index == 0)
+					if (index == get_size(L) - 1)
 					{
-						NodePtr X = L->root;
-						L->root = L->root->Next;
-						L->root->Prev = NULL;
-						free(X);
+						L->tail->Next = NULL;
+						L->tail = P->Prev;
+						P->Prev->Next = NULL;
+						free(P);
+						return 1;
 					}
 					else
 					{
-						P->Next->Prev = P->Prev;
-						P->Prev->Next = P->Next;
-
-						free(P);
+						if (index == 0)
+						{
+							NodePtr X = L->root;
+							L->root = L->root->Next;
+							L->root->Prev = NULL;
+							free(X);
+							return 1;
+						}
+						else
+						{
+							P->Next->Prev = P->Prev;
+							P->Prev->Next = P->Next;
+							free(P);
+							return 1;
+						}
 					}
-				}
 
-				break;
+					break;
+				}
+				P = P->Next;
+				i++;
 			}
-			P = P->Next;
-			i++;
 		}
 	}
 }
 
-void insert(List *L, int x,char* string)
+void insert(List *L, int x, char *string)
 {
 	if (IsEmpty(L))
 	{
-		L->root = MakeNode(x,string);
+		L->root = MakeNode(x, string);
 		L->tail = L->root;
 	}
 	else
 	{
 		NodePtr P = L->tail;
-		P->Next = MakeNode(x,string);
+		P->Next = MakeNode(x, string);
 		P->Next->Prev = P;
 		L->tail = P->Next;
 	}
@@ -188,26 +204,19 @@ void print(List *L)
 	P = L->root;
 	while (P != NULL)
 	{
-		printf("%d ", P->Element);
+		printf("%d %s ", P->Element, P->process_name);
 		P = P->Next;
 	}
 
 	printf("\n");
 }
 
-int find(List *L, int X,char* string)
+int find(List *L, int X, char *string)
 {
 	NodePtr P = L->root;
 	int index = 0;
 	int ans = -1;
-
-	if (P->Element == X)
-	{
-		ans = index;
-		return ans;
-	}
-
-	while (P->Next != NULL)
+	while (P != NULL)
 	{
 		if ((P->Element) == X)
 		{
@@ -218,4 +227,21 @@ int find(List *L, int X,char* string)
 		P = P->Next;
 	}
 	return -1;
+}
+char *find_string(List *L, int X)
+{
+	NodePtr P = L->root;
+	int index = 0;
+	int ans = -1;
+	while (P != NULL)
+	{
+		if ((P->Element) == X)
+		{
+			char *X = P->process_name;
+			return X;
+		}
+		index++;
+		P = P->Next;
+	}
+	return NULL;
 }

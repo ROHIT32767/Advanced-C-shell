@@ -16,6 +16,8 @@
 #include "time.h"
 #include <sys/wait.h>
 #include <signal.h>
+#include <sys/wait.h>
+#include <sys/resource.h>
 #include "linked_list.h"
 #include "prompt.h"
 #include "str_tok_and.h"
