@@ -1,7 +1,7 @@
 #include "headers.h"
 extern INT num_bg_processes;
 extern time_t start_seconds;
-void bg_func(char *string[], char *string1, char *string2, char *string3)
+void bg_func(char *string[], char *string1, char *string2, char *string3,List* LIST)
 {
     INT forkReturn = fork();
     if (forkReturn == -1)
@@ -21,8 +21,9 @@ void bg_func(char *string[], char *string1, char *string2, char *string3)
         }
         else
         {
-            num_bg_processes++;
-            INT Z = num_bg_processes;
+            // num_bg_processes++;
+            // INT Z = num_bg_processes;
+
             printf("[%lld] %lld\n", num_bg_processes, forkReturn);
         }
     }
@@ -54,7 +55,7 @@ void fg_func(char *string[], char *string1, char *string2, char *string3)
     }
 }
 
-void spec4_func(char *string[], char *relative, char *correct, char *previous, long long int last)
+void spec4_func(char *string[], char *relative, char *correct, char *previous, long long int last,List* LIST)
 {
     if (last)
     {
@@ -62,6 +63,6 @@ void spec4_func(char *string[], char *relative, char *correct, char *previous, l
     }
     else
     {
-        bg_func(string, relative, correct, previous);
+        bg_func(string, relative, correct, previous,LIST);
     }
 }

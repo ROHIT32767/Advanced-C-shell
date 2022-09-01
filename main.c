@@ -10,6 +10,10 @@ int main(int argc, char *argv[])
     char *correct_path = (char *)calloc(300, sizeof(char));
     char *user_name = (char *)calloc(200, sizeof(char));
     char *system_name = (char *)calloc(200, sizeof(char));
+    List *LIST;
+    LIST = (List *)malloc(sizeof(List));
+    LIST->root = NULL;
+    LIST->tail = NULL;
     previous_path[0] = '#';
     previous_path[1] = '\0';
     getcwd(absolute_path, 300);
@@ -53,7 +57,7 @@ int main(int argc, char *argv[])
             for (INT i = 0; i < token_count; i++)
             {
                 // printf("%s\n",tokens[i]);
-                str_tok_and(tokens[i], relative_path, correct_path, previous_path, length);
+                str_tok_and(tokens[i], relative_path, correct_path, previous_path, length,LIST);
             }
         }
         num_bg_processes = 0;

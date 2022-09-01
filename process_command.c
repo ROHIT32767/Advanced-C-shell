@@ -12,7 +12,7 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     }
     return Token_count;
 }
-void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last)
+void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last,List* LIST)
 {
     char *token[1000];
     INT num_tokens = str_tok_whitespaces(token, string);
@@ -53,7 +53,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
         {
             if ((strlen(token[0]) != 0))
             {
-                spec4_func(&token[0], relative, correct, previous, last);
+                spec4_func(&token[0], relative, correct, previous, last,LIST);
             }
             else
             {

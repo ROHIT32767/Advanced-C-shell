@@ -71,9 +71,9 @@ void prune(List *L)
 	}
 }
 
-void insert_at(List *list, int x, int index)
+void insert_at(List *list, int x, int index,char* string)
 {
-	NodePtr newnode = MakeNode(x);
+	NodePtr newnode = MakeNode(x,string);
 	if (index == get_size(list))
 	{
 		insert(list, x);
@@ -104,12 +104,14 @@ void insert_at(List *list, int x, int index)
 	}
 }
 
-NodePtr MakeNode(int X)
+NodePtr MakeNode(int X,char* string)
 {
 
 	NodePtr P = (NodePtr)malloc(sizeof(struct node));
 	assert(P != NULL);
 	P->Element = X;
+	P_>process_name=(char*)malloc(600,sizeof(char));
+	strcpy(P->process_name,string);
 	P->Next = NULL;
 	P->Prev = NULL;
 
@@ -165,17 +167,17 @@ void Delete (List *L, int index)
 	}
 }
 
-void insert(List *L, int x)
+void insert(List *L, int x,char* string)
 {
 	if (IsEmpty(L))
 	{
-		L->root = MakeNode(x);
+		L->root = MakeNode(x,string);
 		L->tail = L->root;
 	}
 	else
 	{
 		NodePtr P = L->tail;
-		P->Next = MakeNode(x);
+		P->Next = MakeNode(x,string);
 		P->Next->Prev = P;
 		L->tail = P->Next;
 	}
@@ -193,7 +195,7 @@ void print(List *L)
 	printf("\n");
 }
 
-int find(List *L, int X)
+int find(List *L, int X,char* string)
 {
 	NodePtr P = L->root;
 	int index = 0;
