@@ -26,7 +26,7 @@ void insert_at(List* L,int x,int index,char* string);
 void prune(List* L);
 void print(List* L);
 void insert(List* L,int x,char* string);
-INT Delete(List* L,int index);
+int DELETE(List* L,int index);
 int IsEmpty(List* L);
 
 #endif

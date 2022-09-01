@@ -117,7 +117,7 @@ NodePtr MakeNode(int X, char *string)
 	return P;
 }
 
-INT Delete(List *L, int index)
+int DELETE(List *L, int index)
 {
 	NodePtr P = L->root;
 	int i = 0;
