@@ -1,4 +1,6 @@
 #include "headers.h"
+INT num_bg_processes;
+time_t start_seconds;
 typedef long long int INT;
 int main(int argc, char *argv[])
 {
@@ -18,6 +20,7 @@ int main(int argc, char *argv[])
     relative_path[1] = '\0';
     char *input = (char *)calloc(1000, sizeof(char));
     char *ptr = input;
+    num_bg_processes = 0;
     while (1)
     {
         size_t size = 100;
@@ -27,6 +30,7 @@ int main(int argc, char *argv[])
 
         char *tokens[1000];
         INT Y = getline(&ptr, &size, stdin);
+        time(&start_seconds);
         input[Y - 1] = '\0';
         //  printf("input is %s\n",input);
         INT token_count = 0;
@@ -38,20 +42,24 @@ int main(int argc, char *argv[])
         else
         {
             tokens[token_count] = strtok(input, ";");
-            INT length=strlen(input);
+            INT length = strlen(input);
             // printf("%s\n",tokens[0]);
             while (tokens[token_count] != NULL)
             {
                 token_count++;
                 tokens[token_count] = strtok(NULL, ";");
             }
-          //  printf("token count is %lld\n", token_count);
+            //  printf("token count is %lld\n", token_count);
             for (INT i = 0; i < token_count; i++)
             {
                 // printf("%s\n",tokens[i]);
-                str_tok_and(tokens[i], relative_path, correct_path, previous_path,length);
+                str_tok_and(tokens[i], relative_path, correct_path, previous_path, length);
             }
         }
+        num_bg_processes = 0;
+        time_t end_time;
+        time(&end_time);
+        printf("time is %ld", end_time - start_seconds);
 
         // TAKE INPUT HERE
     }
