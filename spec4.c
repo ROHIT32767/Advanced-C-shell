@@ -23,7 +23,7 @@ void bg_func(char *string[], char *string1, char *string2, char *string3,List* L
         {
             insert(LIST,forkReturn,string[0]);
             printf("[%d] %lld\n",find(LIST,forkReturn,string[0])+1, forkReturn);
-            signal
+            signal(SIGCHLD,interrupt_handler(forkReturn));
         }
     }
 }

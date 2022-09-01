@@ -15,6 +15,7 @@
 #include <grp.h>
 #include "time.h"
 #include <sys/wait.h>
+#include <signal.h>
 #include "linked_list.h"
 #include "prompt.h"
 #include "str_tok_and.h"
@@ -24,6 +25,7 @@
 #include "PWD.h"
 #include "echo.h"
 #include "ls.h"
+#include "sig_handler.h"
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"
