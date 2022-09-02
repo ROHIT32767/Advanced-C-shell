@@ -27,6 +27,7 @@
 #include "PWD.h"
 #include "echo.h"
 #include "ls.h"
+#include "history.h"
 #include "sig_handler.h"
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
@@ -38,4 +39,3 @@
 #define KWHT  "\x1B[37m"
 typedef long long int INT;
 #endif
-

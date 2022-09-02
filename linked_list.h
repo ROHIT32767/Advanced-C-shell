@@ -19,12 +19,12 @@ struct node* tail;
 
 NodePtr MakeNode(int X,char* string); 
 int get_size(List* L);
-void print_reverse(List* L);
+// void print_reverse(List* L);
 int find(List* L,int x,char* string);
 char* find_string(List* L,int x);
-void insert_at(List* L,int x,int index,char* string); 
-void prune(List* L);
-void print(List* L);
+//void insert_at(List* L,int x,int index,char* string); 
+// void prune(List* L);
+//void print(List* L);
 void insert(List* L,int x,char* string);
 int DELETE(List* L,int index);
 int IsEmpty(List* L);

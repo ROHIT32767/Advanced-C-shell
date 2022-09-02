@@ -21,88 +21,88 @@ int get_size(List *L)
 	}
 	return ans;
 }
-void print_reverse(List *L)
-{
-	NodePtr P;
-	P = L->tail;
-	while (P != NULL)
-	{
-		printf("%d ", P->Element);
-		P = P->Prev;
-	}
-}
+// void print_reverse(List *L)
+// {
+// 	NodePtr P;
+// 	P = L->tail;
+// 	while (P != NULL)
+// 	{
+// 		printf("%d ", P->Element);
+// 		P = P->Prev;
+// 	}
+// }
 
-void prune(List *L)
-{
-	if (L->root == NULL)
-	{
-		return;
-	}
-	else
-	{
-		NodePtr Ptr2 = L->root->Next;
-		NodePtr tempPtr;
-		NodePtr Ptr1 = L->root;
+// void prune(List *L)
+// {
+// 	if (L->root == NULL)
+// 	{
+// 		return;
+// 	}
+// 	else
+// 	{
+// 		NodePtr Ptr2 = L->root->Next;
+// 		NodePtr tempPtr;
+// 		NodePtr Ptr1 = L->root;
 
-		while (Ptr1 != NULL && Ptr2 != NULL)
-		{
+// 		while (Ptr1 != NULL && Ptr2 != NULL)
+// 		{
 
-			if (Ptr2->Next == NULL)
-			{
-				L->tail = Ptr2->Prev;
-				Ptr1->Next = NULL;
-				free(Ptr2);
-				return;
-			}
+// 			if (Ptr2->Next == NULL)
+// 			{
+// 				L->tail = Ptr2->Prev;
+// 				Ptr1->Next = NULL;
+// 				free(Ptr2);
+// 				return;
+// 			}
 
-			else
-			{
-				Ptr1->Next = Ptr2->Next;
-				tempPtr = Ptr1;
-				Ptr1 = Ptr1->Next;
-				free(Ptr2);
-				if (Ptr1 != NULL)
-				{
-					Ptr1->Prev = tempPtr;
-					Ptr2 = Ptr1->Next;
-				}
-			}
-		}
-	}
-}
+// 			else
+// 			{
+// 				Ptr1->Next = Ptr2->Next;
+// 				tempPtr = Ptr1;
+// 				Ptr1 = Ptr1->Next;
+// 				free(Ptr2);
+// 				if (Ptr1 != NULL)
+// 				{
+// 					Ptr1->Prev = tempPtr;
+// 					Ptr2 = Ptr1->Next;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
-void insert_at(List *list, int x, int index, char *string)
-{
-	NodePtr newnode = MakeNode(x, string);
-	if (index == get_size(list))
-	{
-		insert(list, x, string);
-	}
-	else
-	{
+// void insert_at(List *list, int x, int index, char *string)
+// {
+// 	NodePtr newnode = MakeNode(x, string);
+// 	if (index == get_size(list))
+// 	{
+// 		insert(list, x, string);
+// 	}
+// 	else
+// 	{
 
-		if (index == 0)
-		{
-			newnode->Next = list->root;
-			list->root = newnode;
-			newnode->Next->Prev = newnode;
-		}
-		else
-		{
-			int i = 0;
-			NodePtr p = list->root;
-			while (i < (index))
-			{
-				p = p->Next;
-				i++;
-			}
-			newnode->Next = p;
-			newnode->Prev = p->Prev;
-			p->Prev->Next = newnode;
-			p->Prev = newnode;
-		}
-	}
-}
+// 		if (index == 0)
+// 		{
+// 			newnode->Next = list->root;
+// 			list->root = newnode;
+// 			newnode->Next->Prev = newnode;
+// 		}
+// 		else
+// 		{
+// 			int i = 0;
+// 			NodePtr p = list->root;
+// 			while (i < (index))
+// 			{
+// 				p = p->Next;
+// 				i++;
+// 			}
+// 			newnode->Next = p;
+// 			newnode->Prev = p->Prev;
+// 			p->Prev->Next = newnode;
+// 			p->Prev = newnode;
+// 		}
+// 	}
+// }
 
 NodePtr MakeNode(int X, char *string)
 {
@@ -198,18 +198,18 @@ void insert(List *L, int x, char *string)
 		L->tail = P->Next;
 	}
 }
-void print(List *L)
-{
-	NodePtr P;
-	P = L->root;
-	while (P != NULL)
-	{
-		printf("%d %s ", P->Element, P->process_name);
-		P = P->Next;
-	}
+// void print(List *L)
+// {
+// 	NodePtr P;
+// 	P = L->root;
+// 	while (P != NULL)
+// 	{
+// 		printf("%d %s ", P->Element, P->process_name);
+// 		P = P->Next;
+// 	}
 
-	printf("\n");
-}
+// 	printf("\n");
+// }
 
 int find(List *L, int X, char *string)
 {

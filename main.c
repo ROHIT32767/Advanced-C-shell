@@ -3,14 +3,21 @@ INT num_bg_processes;
 time_t start_seconds;
 typedef long long int INT;
 List *LIST;
+char* correct_path;
+char *previous_path;
+char *relative_path;
+char *absolute_path;
+char* user_name;
+char* system_name;
+
 int main(int argc, char *argv[])
 {
-    char *absolute_path = (char *)calloc(300, sizeof(char));
-    char *relative_path = (char *)calloc(300, sizeof(char));
-    char *previous_path = (char *)calloc(300, sizeof(char));
-    char *correct_path = (char *)calloc(300, sizeof(char));
-    char *user_name = (char *)calloc(200, sizeof(char));
-    char *system_name = (char *)calloc(200, sizeof(char));
+    absolute_path = (char *)calloc(300, sizeof(char));
+    relative_path = (char *)calloc(300, sizeof(char));
+    previous_path = (char *)calloc(300, sizeof(char));
+    correct_path = (char *)calloc(300, sizeof(char));
+    user_name = (char *)calloc(200, sizeof(char));
+    system_name = (char *)calloc(200, sizeof(char));
     char *Time = (char *)calloc(300, sizeof(char));
     Time[0] = '\0';
     LIST = (List *)malloc(sizeof(List));
@@ -32,8 +39,7 @@ int main(int argc, char *argv[])
         size_t size = 100;
         // char *semicolon = (char *)calloc(1, sizeof(char));
         // semicolon[0] = ';';
-        prompt(absolute_path, relative_path, correct_path, user_name, system_name, Time);
-
+        prompt(Time);
         char *tokens[1000];
         INT Y = getline(&ptr, &size, stdin);
         time(&start_seconds);

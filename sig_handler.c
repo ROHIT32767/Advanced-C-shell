@@ -13,7 +13,7 @@ void interrupt_handler()
             {
                 char *string = (char *)malloc(600 * sizeof(char));
                 string = find_string(LIST, pid);
-                printf("%s exited with  pid %lld exited normally\n", string, pid);
+                printf("%s with  pid %lld exited normally\n", string, pid);
                 DELETE(LIST,find(LIST, pid, string));
                 free(string);
             }
@@ -21,7 +21,7 @@ void interrupt_handler()
             {
                 char *string = (char *)malloc(600 * sizeof(char));
                 string = find_string(LIST, pid);
-                printf("%s exited with  pid %lld exited abnormally\n", string, pid);
+                printf("%s with  pid %lld exited abnormally\n", string, pid);
                 DELETE(LIST,find(LIST, pid, string));
                 free(string);
             }
