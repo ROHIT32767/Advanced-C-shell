@@ -13,6 +13,7 @@ void bg_func(char *string[], char *string1, char *string2, char *string3, List *
 
         if (forkReturn == 0)
         {
+            setpgid(0,0);
             INT exec_return = execvp(string[0], string);
             if (exec_return == -1)
             {

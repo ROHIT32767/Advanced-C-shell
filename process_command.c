@@ -12,7 +12,7 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     }
     return Token_count;
 }
-void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last,List* LIST)
+void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last, List *LIST)
 {
     char *token[1000];
     INT num_tokens = str_tok_whitespaces(token, string);
@@ -49,11 +49,22 @@ void process_command(char *string, char *relative, char *correct, char *previous
             // not implemented completely
             ls_func(&token[1], correct, num_tokens - 1);
         }
+        else if (strcmp(token[0], "history") == 0)
+        {
+            if (num_tokens == 1)
+            {
+                print_history();
+            }
+            else
+            {
+                perror("Too many arguments for history");
+            }
+        }
         else
         {
             if ((strlen(token[0]) != 0))
             {
-                spec4_func(&token[0], relative, correct, previous, last,LIST);
+                spec4_func(&token[0], relative, correct, previous, last, LIST);
             }
             else
             {
@@ -64,7 +75,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
 
     else
     {
-       // perror("syntax error");
+        // perror("syntax error");
     }
 }
 /*

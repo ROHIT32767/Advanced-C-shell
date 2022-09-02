@@ -3,12 +3,16 @@ INT num_bg_processes;
 time_t start_seconds;
 typedef long long int INT;
 List *LIST;
-char* correct_path;
+char *correct_path;
 char *previous_path;
 char *relative_path;
 char *absolute_path;
-char* user_name;
-char* system_name;
+char *user_name;
+char *system_name;
+char *H[20];
+char* history_path;
+INT total_commands=0;
+#define NAME_MAX1 40
 
 int main(int argc, char *argv[])
 {
@@ -19,12 +23,17 @@ int main(int argc, char *argv[])
     user_name = (char *)calloc(200, sizeof(char));
     system_name = (char *)calloc(200, sizeof(char));
     char *Time = (char *)calloc(300, sizeof(char));
+    history_path=(char*)calloc(625,sizeof(char));
     Time[0] = '\0';
     LIST = (List *)malloc(sizeof(List));
     LIST->root = NULL;
     LIST->tail = NULL;
     previous_path[0] = '#';
     previous_path[1] = '\0';
+    for (INT i = 0; i < 20; i++)
+    {
+        H[i] = (char *)calloc(NAME_MAX1, sizeof(char));
+    }
     getcwd(absolute_path, 300);
     getcwd(correct_path, 300);
     user_name = getlogin();
@@ -34,6 +43,11 @@ int main(int argc, char *argv[])
     char *input = (char *)calloc(1000, sizeof(char));
     char *ptr = input;
     num_bg_processes = 0;
+    strcat(history_path,correct_path);
+    strcat(history_path,"/history.txt");
+    INT D=strlen(history_path);
+    history_path[D]='\0';
+    total_commands=readfromhistory();
     while (1)
     {
         size_t size = 100;
@@ -44,6 +58,7 @@ int main(int argc, char *argv[])
         INT Y = getline(&ptr, &size, stdin);
         time(&start_seconds);
         input[Y - 1] = '\0';
+        writetohistory(&H[0],input);
         //  printf("input is %s\n",input);
         INT token_count = 0;
         char *p = strstr(input, ";;");
@@ -71,15 +86,15 @@ int main(int argc, char *argv[])
         num_bg_processes = 0;
         time_t end_time;
         time(&end_time);
-        long int U=end_time - start_seconds;
+        long int U = end_time - start_seconds;
         if (U >= 1)
         {
             Time[0] = '\0';
-            sprintf(Time,"took %lds",U);
+            sprintf(Time, "took %lds", U);
         }
         else
         {
-            Time[0]='\0';
+            Time[0] = '\0';
         }
     }
 }
