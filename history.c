@@ -5,9 +5,19 @@ extern INT total_commands;
 
 void print_history()
 {
-    for (INT i = 0; i < total_commands; i++)
+    if (total_commands <= 10)
     {
-        printf("%s\n", H[i]);
+        for (INT i = 0; i < total_commands; i++)
+        {
+            printf("%s\n", H[i]);
+        }
+    }
+    else
+    {
+        for (INT i = total_commands - 10; i < total_commands; i++)
+        {
+            printf("%s\n", H[i]);
+        }
     }
 }
 INT readfromhistory()
@@ -20,7 +30,7 @@ INT readfromhistory()
         perror("no such file");
         return -1;
     }
-    while (fscanf(fp, "%[^\n]s", H[index]) != EOF)
+    while ((H[index] != NULL) && (fscanf(fp, "%[^\n]s", H[index]) != EOF))
     {
         fgetc(fp);
         INT length = strlen(H[index]);
@@ -87,38 +97,42 @@ INT writetohistory(char *Hist[], char *string)
     }
     else
     {
-        if (strcmp(Hist[total_commands - 1], string) != 0)
+
+        if (total_commands == 20)
         {
-            if (total_commands == 20)
+            if (strcmp(Hist[19], string) != 0)
             {
                 for (INT i = 1; i < 20; i++)
                 {
                     INT len = strlen(H[i]);
                     Hist[i][len] = '\0';
                 }
+                free(Hist[0]);
                 for (INT i = 0; i < 19; i++)
                 {
                     Hist[i] = Hist[i + 1];
                 }
+                Hist[19] = (char *)calloc(40, sizeof(char));
                 strcpy(Hist[19], string);
                 INT len1 = strlen(Hist[19]);
                 Hist[19][len1] = '\0';
-                for (INT i = 0; i < 19; i++)
+                for (INT i = 0; i < 20; i++)
                 {
                     INT len = strlen(Hist[i]);
                     Hist[i][len] = '\0';
                     fprintf(fp, "%s\n", Hist[i]);
                 }
-                fprintf(fp, "%s\n", Hist[19]);
+                //   fprintf(fp, "%s\n", Hist[19]);
                 fclose(fp);
-            }
-            else if (total_commands > 20)
-            {
-                fclose(fp);
-                perror("total commands is greater than 20");
-                return -1;
             }
         }
+        else if (total_commands > 20)
+        {
+            fclose(fp);
+            perror("total commands is greater than 20");
+            return -1;
+        }
+
         return 2;
     }
     return -1;

@@ -1,19 +1,20 @@
-cd
-ls
-cd
-echo
-echo 12 3 4
-echo 1
-echo 2
-echo 1 2 3 4
+echo 11
 history
-cd
-ls
-echo 1
-echo 2 3
-eecho 4 5 6
-echo 4 5 6 7
 pwd
-cd Tutorial-2
-cd ..
+history
+echo 10 11
+echo 11 12
+echo 13 14
+history
+pws
+pwd
+echo hello
+history
+history
+history
+history
+history
+echo
+history
+pwd
 history
