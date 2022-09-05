@@ -35,7 +35,10 @@ void dfs(char *dir_path, char *find_path, int directory, int file, int len)
     while ((dirnt = readdir(dr)) != NULL)
     {
         strcat(string4, dir_path);
-        strcat(string4, "/");
+        if (strcmp(string4, "/") != 0)
+        {
+            strcat(string4, "/");
+        }
         strcat(string4, dirnt->d_name);
         INT R = stat(string4, &fs);
         if (R == -1)
@@ -53,7 +56,10 @@ void dfs(char *dir_path, char *find_path, int directory, int file, int len)
                     if ((strcmp(dirnt->d_name, ".") != 0) && (strcmp(dirnt->d_name, "..") != 0))
                     {
                         strcat(string2, dir_path);
-                        strcat(string2, "/");
+                        if (strcmp(string2, "/") != 0)
+                        {
+                            strcat(string2, "/");
+                        }
                         strcat(string2, dirnt->d_name);
                         if (tilder && strstr(string2, current_directory))
                         {
@@ -74,7 +80,10 @@ void dfs(char *dir_path, char *find_path, int directory, int file, int len)
                     if (strcmp(dirnt->d_name, find_path) == 0)
                     {
                         strcat(string2, dir_path);
-                        strcat(string2, "/");
+                        if (strcmp(string2, "/") != 0)
+                        {
+                            strcat(string2, "/");
+                        }
                         strcat(string2, dirnt->d_name);
                         if (tilder && strstr(string2, current_directory))
                         {
@@ -92,7 +101,10 @@ void dfs(char *dir_path, char *find_path, int directory, int file, int len)
             if ((strcmp(dirnt->d_name, ".") != 0) && (strcmp(dirnt->d_name, "..") != 0))
             {
                 int len = strlen(dir_path);
-                strcat(dir_path, "/");
+                if (strcmp(dir_path, "/") != 0)
+                {
+                    strcat(dir_path, "/");
+                }
                 strcat(dir_path, dirnt->d_name);
                 dfs(dir_path, find_path, directory, file, strlen(dir_path));
                 dir_path[len] = '\0';
@@ -110,7 +122,10 @@ void dfs(char *dir_path, char *find_path, int directory, int file, int len)
                         {
                             char *string1 = (char *)calloc(600, sizeof(char));
                             strcat(string1, dir_path);
-                            strcat(string1, "/");
+                            if (strcmp(string1, "/") != 0)
+                            {
+                                strcat(string1, "/");
+                            }
                             strcat(string1, dirnt->d_name);
                             if (tilder && (strstr(string1, current_directory)))
                             {
@@ -129,7 +144,10 @@ void dfs(char *dir_path, char *find_path, int directory, int file, int len)
                 {
                     char *string1 = (char *)calloc(600, sizeof(char));
                     strcat(string1, dir_path);
-                    strcat(string1, "/");
+                    if (strcmp(string1, "/") != 0)
+                    {
+                        strcat(string1, "/");
+                    }
                     strcat(string1, dirnt->d_name);
                     if (tilder && (strstr(string1, current_directory)))
                     {

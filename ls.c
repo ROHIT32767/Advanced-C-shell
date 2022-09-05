@@ -1,7 +1,7 @@
 #include "headers.h"
-int compare(struct dirent *arg1, struct dirent *arg2)
+int compare(const void *arg1, const void *arg2)
 {
-    return (strcasecmp(arg1->d_name,arg2->d_name));
+    return (strcasecmp((*((struct dirent **) arg1))->d_name,(*((struct dirent **) arg2))->d_name));
 }
 void print_ls(char *string, char *correct_path, INT type, INT num_args)
 {
@@ -37,7 +37,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(struct dirent*), compare);
+        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -132,7 +132,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(struct dirent*), compare);
+        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -222,7 +222,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(struct dirent*), compare);
+        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -308,12 +308,12 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     INT diff = current_time - last_modified_time - six_months;
                     if (diff <= 0)
                     {
-                        strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                        strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
                         printf("%s ", buff);
                     }
                     else
                     {
-                        strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                        strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                         printf("%s ", buff);
                     }
                     if (J)
@@ -398,12 +398,12 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             INT diff = current_time - last_modified_time - six_months;
             if (diff <= 0)
             {
-                strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
                 printf("%s ", buff);
             }
             else
             {
-                strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                 printf("%s ", buff);
             }
 
@@ -441,7 +441,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries,sizeof(struct dirent*), compare);
+        qsort(name_list, num_directory_entries,sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -521,12 +521,12 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     INT diff = current_time - last_modified_time - six_months;
                     if (diff <= 0)
                     {
-                        strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                        strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
                         printf("%s ", buff);
                     }
                     else
                     {
-                        strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                        strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                         printf("%s ", buff);
                     }
 
@@ -618,12 +618,12 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             INT diff = current_time - last_modified_time - six_months;
             if (diff <= 0)
             {
-                strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                strftime(buff, sizeof(buff), "%b %d %H:%M", timeinfo);
                 printf("%s ", buff);
             }
             else
             {
-                strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                 printf("%s ", buff);
             }
 
