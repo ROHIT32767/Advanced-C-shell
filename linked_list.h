@@ -8,6 +8,7 @@ struct node{
 
 	int Element ;
 	char* process_name;
+	int idx;
 	Position Next;
     Position Prev;
 };
@@ -17,7 +18,7 @@ struct node* root;
 struct node* tail; 
 }List;
 
-NodePtr MakeNode(int X,char* string); 
+NodePtr MakeNode(int X,char* string,int index); 
 int get_size(List* L);
 // void print_reverse(List* L);
 int find(List* L,int x,char* string);
@@ -25,9 +26,11 @@ char* find_string(List* L,int x);
 //void insert_at(List* L,int x,int index,char* string); 
 // void prune(List* L);
 //void print(List* L);
-void insert(List* L,int x,char* string);
+void insert(List* L,int x,char* string,int index);
 int DELETE(List* L,int index);
 int IsEmpty(List* L);
+int find_index(List* L);
+
 
 #endif
 

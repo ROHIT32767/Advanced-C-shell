@@ -5,7 +5,7 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
     if (num > 1)
     {
         perror("Incorrect number of arguments supplied for command cd");
-        exit(1);
+        return;
     }
     else if (num == 1)
     {
@@ -32,14 +32,14 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
                     char *modify_path1 = (char *)calloc(600, sizeof(char));
                     strcpy(modify_path1, correct);
                     strcat(modify_path1, &previous[1]);
-
                     dir_ret = chdir(modify_path1);
+                    printf("%s\n",modify_path1);
                 }
                 else
                 {
                     strcpy(modify_path, previous);
-
                     dir_ret = chdir(modify_path);
+                    printf("%s\n",modify_path);
                 }
             }
         }
@@ -50,15 +50,14 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
         INT Z = 1;
         if (dir_ret == -1)
         {
-            perror("Incorrect directory path supplied to command cd");
+            perror(NULL);
+            return;
         }
         else
         {
-
             strcpy(previous, relative);
             char *dir_absolute;
             dir_absolute = getcwd(NULL, 300);
-
             char *p = strstr(dir_absolute, correct);
             if (p)
             {
@@ -90,7 +89,8 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
         dir_ret = chdir(modify_path);
         if (dir_ret == -1)
         {
-            perror("Incorrect directory path supplied to command cd");
+            perror(NULL);
+            return;
         }
         else
         {
@@ -113,7 +113,6 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
                 }
                 curr_dir1[i] = '\0';
                 strcpy(relative, curr_dir1);
-               // printf("HI\n");
             }
             else
             {
@@ -122,16 +121,4 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
         }
     }
 }
-/*
-        // printf("directory returns %s\n", string[0]);
-        // printf("relative is %s\n",relative);
-        // printf("correct is %s\n",correct);
 
-        //  printf("%s\n",curr_dir1);
-
-        //  printf("modify path is %s\n", modify_path1);
-
-        // printf("modify path is %s\n", modify_path);
-
-        //  printf("dir_absolute is %s\n",dir_absolute);
-*/

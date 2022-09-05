@@ -104,13 +104,14 @@ int get_size(List *L)
 // 	}
 // }
 
-NodePtr MakeNode(int X, char *string)
+NodePtr MakeNode(int X, char *string,int index)
 {
 	NodePtr P = (NodePtr)malloc(sizeof(struct node));
 	assert(P != NULL);
 	P->Element = X;
 	P->process_name = (char *)malloc(600 * sizeof(char));
 	strcpy(P->process_name, string);
+	P->idx=index;
 	// printf("process_name is %s and string is %s\n",P->process_name,string);
 	P->Next = NULL;
 	P->Prev = NULL;
@@ -183,17 +184,17 @@ int DELETE(List *L, int index)
 	}
 }
 
-void insert(List *L, int x, char *string)
+void insert(List *L, int x, char *string,int index)
 {
 	if (IsEmpty(L))
 	{
-		L->root = MakeNode(x, string);
+		L->root = MakeNode(x, string,index);
 		L->tail = L->root;
 	}
 	else
 	{
 		NodePtr P = L->tail;
-		P->Next = MakeNode(x, string);
+		P->Next = MakeNode(x, string,index);
 		P->Next->Prev = P;
 		L->tail = P->Next;
 	}
@@ -244,4 +245,12 @@ char *find_string(List *L, int X)
 		P = P->Next;
 	}
 	return NULL;
+}
+int find_index(List* L)
+{
+	if(L!=NULL&&L->root!=NULL&&L->tail!=NULL)
+	{
+		return L->tail->idx+1;
+	}
+	return 1;
 }

@@ -1,4 +1,8 @@
 #include "headers.h"
+int compare(struct dirent *arg1, struct dirent *arg2)
+{
+    return (strcasecmp(arg1->d_name,arg2->d_name));
+}
 void print_ls(char *string, char *correct_path, INT type, INT num_args)
 {
     char *string1 = (char *)calloc(1000, sizeof(char));
@@ -20,10 +24,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
     if (type == 0) // no l & a
     {
         INT files = 0;
-        // printf("type is %lld\n",type);
-        // printf("string1 is %s\n",string1);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
-        // printf("num_directory_entries is %lld\n",num_directory_entries);
         if (num_directory_entries == -1)
         {
             if (errno == ENOTDIR)
@@ -32,10 +33,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             }
             else
             {
-                perror("scandir in type 0");
-                exit(EXIT_FAILURE);
+                perror(NULL);
+                return;
             }
         }
+        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -53,8 +55,8 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     INT R = stat(path, &fs);
                     if (R == -1)
                     {
-                        perror("File error in file in type 2\n");
-                        exit(1);
+                        perror(NULL);
+                        return;
                     }
                     INT J = S_ISDIR(fs.st_mode);
                     INT G = fs.st_mode & S_IXUSR;
@@ -80,7 +82,6 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                             printf("%s%s\033[0m\n", KYEL, name_list[i]->d_name);
                         }
                     }
-                    // printf("%s\n", name_list[i]->d_name);
                     path[len] = '\0';
                 }
                 free(name_list[i]);
@@ -94,8 +95,8 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             R = stat(string1, &fs);
             if (R == -1)
             {
-                perror("File error in file in type 2\n");
-                exit(1);
+                perror(NULL);
+                return;
             }
             INT G = fs.st_mode & S_IXUSR;
             if (S_ISREG(fs.st_mode))
@@ -118,10 +119,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
     else if (type == 1) // no l but a is there
     {
         INT files = 0;
-        // printf("type is %lld\n", type);
-        // printf("string1 is %s\n", string1);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
-        // printf("num_directory_entries is %lld\n", num_directory_entries);
         if (num_directory_entries == -1)
         {
             if (errno == ENOTDIR)
@@ -130,10 +128,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             }
             else
             {
-                perror("scandir in type 1");
-                exit(EXIT_FAILURE);
+                perror(NULL);
+                return;
             }
         }
+        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -147,12 +146,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 INT R = stat(path, &fs);
                 if (R == -1)
                 {
-                    perror("File error in file in type 2\n");
-                    exit(1);
+                    perror(NULL);
+                    return;
                 }
                 INT J = S_ISDIR(fs.st_mode);
                 INT G = fs.st_mode & S_IXUSR;
-                // printf("%s\n", name_list[i]->d_name);
                 if (J)
                 {
                     printf("%s%s\033[0m\n", KBLU, name_list[i]->d_name);
@@ -175,7 +173,6 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                         printf("%s%s\033[0m\n", KYEL, name_list[i]->d_name);
                     }
                 }
-                // printf("%s\n", name_list[i]->d_name);
                 path[len] = '\0';
                 free(name_list[i]);
             }
@@ -188,8 +185,8 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             R = stat(string1, &fs);
             if (R == -1)
             {
-                perror("File error in file in type 2\n");
-                exit(1);
+                perror(NULL);
+                return;
             }
             INT G = fs.st_mode & S_IXUSR;
             if (S_ISREG(fs.st_mode))
@@ -212,7 +209,6 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
     else if (type == 2) // no a ,only l
     {
         INT files = 0;
-        // printf("type is %lld\n", type);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
         if (num_directory_entries == -1)
         {
@@ -222,10 +218,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             }
             else
             {
-                perror("scandir in type 2");
-                exit(EXIT_FAILURE);
+                perror(NULL);
+                return;
             }
         }
+        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -235,6 +232,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
 
         if (!files)
         {
+            INT total = 0;
             for (INT i = 0; i < num_directory_entries; i++)
             {
                 char *ptr = name_list[i]->d_name;
@@ -242,12 +240,29 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 if ((ch != '.'))
                 {
                     strcat(path, name_list[i]->d_name);
-                    // printf("string 1 is %s,name_list is %s,path is %s\n", string1, name_list[i]->d_name, path);
                     R = stat(path, &fs);
                     if (R == -1)
                     {
-                        perror("File error in file in type 2\n");
-                        exit(1);
+                        perror(NULL);
+                        return;
+                    }
+                    total += fs.st_blocks;
+                    path[len] = '\0';
+                }
+            }
+            printf("total %lld\n", total / 2);
+            for (INT i = 0; i < num_directory_entries; i++)
+            {
+                char *ptr = name_list[i]->d_name;
+                char ch = ptr[0];
+                if ((ch != '.'))
+                {
+                    strcat(path, name_list[i]->d_name);
+                    R = stat(path, &fs);
+                    if (R == -1)
+                    {
+                        perror(NULL);
+                        return;
                     }
                     INT E;
                     INT J = S_ISDIR(fs.st_mode);
@@ -262,11 +277,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
                     E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
                     E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
-                    printf("%ld ", fs.st_nlink);
+                    printf("%4ld ", fs.st_nlink);
                     uid_t user_id = fs.st_uid;
                     if (getpwuid(user_id) != NULL)
                     {
-                        printf("%s ", getpwuid(user_id)->pw_name);
+                        printf("%15s ", getpwuid(user_id)->pw_name);
                     }
                     else
                     {
@@ -276,7 +291,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     gid_t group_id = fs.st_gid;
                     if (getgrgid(group_id) != NULL)
                     {
-                        printf("%s ", getgrgid(group_id)->gr_name);
+                        printf("%15s ", getgrgid(group_id)->gr_name);
                     }
                     else
                     {
@@ -284,10 +299,27 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                         return;
                     }
                     off_t file_size = fs.st_size;
-                    printf("%ld ", file_size);
+                    printf("%8ld ", file_size);
+                    char buff[35];
+                    struct tm *timeinfo;
+                    timeinfo = localtime(&(fs.st_mtim.tv_sec));
+                    INT last_modified_time = fs.st_mtim.tv_sec;
+                    INT current_time = time(NULL);
+                    INT six_months = 15780000;
+                    INT diff = current_time - last_modified_time - six_months;
+                    if (diff <= 0)
+                    {
+                        strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                        printf("%s ", buff);
+                    }
+                    else
+                    {
+                        strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                        printf("%s ", buff);
+                    }
                     if (J)
                     {
-                        printf("%s%s\033[0m\n", KBLU, name_list[i]->d_name);
+                        printf("%s%20s\033[0m\n", KBLU, name_list[i]->d_name);
                     }
                     else
                     {
@@ -295,16 +327,16 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                         {
                             if (G)
                             {
-                                printf("%s%s\033[0m\n", KGRN, name_list[i]->d_name);
+                                printf("%s%20s\033[0m\n", KGRN, name_list[i]->d_name);
                             }
                             else
                             {
-                                printf("%s%s\033[0m\n", KWHT, name_list[i]->d_name);
+                                printf("%s%20s\033[0m\n", KWHT, name_list[i]->d_name);
                             }
                         }
                         else
                         {
-                            printf("%s%s\033[0m\n", KYEL, name_list[i]->d_name);
+                            printf("%s%20s\033[0m\n", KYEL, name_list[i]->d_name);
                         }
                     }
                     free(name_list[i]);
@@ -320,8 +352,8 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             R = stat(string1, &fs);
             if (R == -1)
             {
-                perror("File error in file in type 2\n");
-                exit(1);
+                perror(NULL);
+                return;
             }
             INT E;
             INT G = fs.st_mode & S_IXUSR;
@@ -335,11 +367,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
             E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
             E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
-            printf("%ld ", fs.st_nlink);
+            printf("%4ld ", fs.st_nlink);
             uid_t user_id = fs.st_uid;
             if (getpwuid(user_id) != NULL)
             {
-                printf("%s ", getpwuid(user_id)->pw_name);
+                printf("%15s ", getpwuid(user_id)->pw_name);
             }
             else
             {
@@ -349,7 +381,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             gid_t group_id = fs.st_gid;
             if (getgrgid(group_id) != NULL)
             {
-                printf("%s ", getgrgid(group_id)->gr_name);
+                printf("%15s ", getgrgid(group_id)->gr_name);
             }
             else
             {
@@ -357,24 +389,39 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
             off_t file_size = fs.st_size;
-            printf("%ld ", file_size);
-            /*
-Time
-            */
+            printf("%8ld ", file_size);
+            char buff[35];
+            struct tm *timeinfo;
+            timeinfo = localtime(&(fs.st_mtim.tv_sec));
+            INT last_modified_time = fs.st_mtim.tv_sec;
+            INT current_time = time(NULL);
+            INT six_months = 15780000;
+            INT diff = current_time - last_modified_time - six_months;
+            if (diff <= 0)
+            {
+                strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                printf("%s ", buff);
+            }
+            else
+            {
+                strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                printf("%s ", buff);
+            }
+
             if (S_ISREG(fs.st_mode))
             {
                 if (G)
                 {
-                    printf("%s%s\033[0m\n", KGRN, string1);
+                    printf("%s%20s\033[0m\n", KGRN, string1);
                 }
                 else
                 {
-                    printf("%s%s\033[0m\n", KWHT, string1);
+                    printf("%s%20s\033[0m\n", KWHT, string1);
                 }
             }
             else
             {
-                printf("%s%s\033[0m\n", KYEL, string1);
+                printf("%s%20s\033[0m\n", KYEL, string1);
             }
         }
     }
@@ -382,22 +429,20 @@ Time
     else if (type == 3) // both a and l
     {
         INT files = 0;
-        // printf("type is %lld\n", type);
         INT num_directory_entries = scandir(string1, &name_list, NULL, alphasort);
-        // printf("num_directories is %lld for %s\n", num_directory_entries, string);
         if (num_directory_entries == -1)
         {
             if (errno == ENOTDIR)
             {
                 files = 1;
-                // printf("%s is a file\n", string);
             }
             else
             {
-                perror("scandir in type 3");
-                exit(EXIT_FAILURE);
+                perror(NULL);
+                return;
             }
         }
+        qsort(name_list, num_directory_entries,sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -407,17 +452,30 @@ Time
         INT R = 0;
         if (!files)
         {
+            INT total = 0;
+            for (INT i = 0; i < num_directory_entries; i++)
+            {
+                strcat(path, name_list[i]->d_name);
+                R = stat(path, &fs);
+                if (R == -1)
+                {
+                    perror(NULL);
+                    return;
+                }
+                total += fs.st_blocks;
+                path[len] = '\0';
+            }
+            printf("total %lld\n", total / 2);
             for (INT i = 0; i < num_directory_entries; i++)
             {
                 if (1)
                 {
                     strcat(path, name_list[i]->d_name);
-                    // printf("string 1 is %s,name_list is %s path is %s\n", string1, name_list[i]->d_name, path);
                     R = stat(path, &fs);
                     if (R == -1)
                     {
-                        perror("File error in file in type 3\n");
-                        exit(1);
+                        perror(NULL);
+                        return;
                     }
                     INT E;
                     INT J = S_ISDIR(fs.st_mode);
@@ -432,11 +490,11 @@ Time
                     E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
                     E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
                     E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
-                    printf("%ld ", fs.st_nlink);
+                    printf("%4ld ", fs.st_nlink);
                     uid_t user_id = fs.st_uid;
                     if (getpwuid(user_id) != NULL)
                     {
-                        printf("%s ", getpwuid(user_id)->pw_name);
+                        printf("%15s ", getpwuid(user_id)->pw_name);
                     }
                     else
                     {
@@ -446,7 +504,7 @@ Time
                     gid_t group_id = fs.st_gid;
                     if (getgrgid(group_id) != NULL)
                     {
-                        printf("%s ", getgrgid(group_id)->gr_name);
+                        printf("%15s ", getgrgid(group_id)->gr_name);
                     }
                     else
                     {
@@ -454,10 +512,28 @@ Time
                         return;
                     }
                     off_t file_size = fs.st_size;
-                    printf("%ld ", file_size);
+                    printf("%8ld ", file_size);
+                    char buff[35];
+                    struct tm *timeinfo;
+                    timeinfo = localtime(&(fs.st_mtim.tv_sec));
+                    INT last_modified_time = fs.st_mtim.tv_sec;
+                    INT current_time = time(NULL);
+                    INT six_months = 15780000;
+                    INT diff = current_time - last_modified_time - six_months;
+                    if (diff <= 0)
+                    {
+                        strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                        printf("%s ", buff);
+                    }
+                    else
+                    {
+                        strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                        printf("%s ", buff);
+                    }
+
                     if (J)
                     {
-                        printf("%s%s\033[0m\n", KBLU, name_list[i]->d_name);
+                        printf("%s%20s\033[0m\n", KBLU, name_list[i]->d_name);
                     }
                     else
                     {
@@ -465,16 +541,16 @@ Time
                         {
                             if (G)
                             {
-                                printf("%s%s\033[0m\n", KGRN, name_list[i]->d_name);
+                                printf("%s%20s\033[0m\n", KGRN, name_list[i]->d_name);
                             }
                             else
                             {
-                                printf("%s%s\033[0m\n", KWHT, name_list[i]->d_name);
+                                printf("%s%20s\033[0m\n", KWHT, name_list[i]->d_name);
                             }
                         }
                         else
                         {
-                            printf("%s%s\033[0m\n", KYEL, name_list[i]->d_name);
+                            printf("%s%20s\033[0m\n", KYEL, name_list[i]->d_name);
                         }
                     }
 
@@ -486,7 +562,6 @@ Time
                     perror("Error in print_ls function");
                     return;
                 }
-                // free(string1);
             }
             free(name_list);
         }
@@ -497,8 +572,8 @@ Time
             R = stat(string1, &fs);
             if (R == -1)
             {
-                perror("File error in file in type 2\n");
-                exit(1);
+                perror(NULL);
+                return;
             }
             INT E;
             INT G = fs.st_mode & S_IXUSR;
@@ -512,11 +587,11 @@ Time
             E = (fs.st_mode & S_IROTH) ? printf("r") : printf("-");
             E = (fs.st_mode & S_IWOTH) ? printf("w") : printf("-");
             E = (fs.st_mode & S_IXOTH) ? printf("x") : printf("-");
-            printf("%ld ", fs.st_nlink);
+            printf("%4ld ", fs.st_nlink);
             uid_t user_id = fs.st_uid;
             if (getpwuid(user_id) != NULL)
             {
-                printf("%s ", getpwuid(user_id)->pw_name);
+                printf("%15s ", getpwuid(user_id)->pw_name);
             }
             else
             {
@@ -526,7 +601,7 @@ Time
             gid_t group_id = fs.st_gid;
             if (getgrgid(group_id) != NULL)
             {
-                printf("%s ", getgrgid(group_id)->gr_name);
+                printf("%15s ", getgrgid(group_id)->gr_name);
             }
             else
             {
@@ -534,21 +609,39 @@ Time
                 return;
             }
             off_t file_size = fs.st_size;
-            printf("%ld ", file_size);
+            printf("%8ld ", file_size);
+            char buff[35];
+            struct tm *timeinfo;
+            timeinfo = localtime(&(fs.st_mtim.tv_sec));
+            INT last_modified_time = fs.st_mtim.tv_sec;
+            INT current_time = time(NULL);
+            INT six_months = 15780000;
+            INT diff = current_time - last_modified_time - six_months;
+            if (diff <= 0)
+            {
+                strftime(buff, sizeof(buff), "%b %2d %H:%M", timeinfo);
+                printf("%s ", buff);
+            }
+            else
+            {
+                strftime(buff, sizeof(buff), "%b %2d  %Y", timeinfo);
+                printf("%s ", buff);
+            }
+
             if (S_ISREG(fs.st_mode))
             {
                 if (G)
                 {
-                    printf("%s%s\033[0m\n", KGRN, string1);
+                    printf("%s%20s\033[0m\n", KGRN, string1);
                 }
                 else
                 {
-                    printf("%s%s\033[0m\n", KWHT, string1);
+                    printf("%s%20ss\033[0m\n", KWHT, string1);
                 }
             }
             else
             {
-                printf("%s%s\033[0m\n", KYEL, string1);
+                printf("%s%20s\033[0m\n", KYEL, string1);
             }
         }
     }
@@ -671,3 +764,4 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         }
     }
 }
+

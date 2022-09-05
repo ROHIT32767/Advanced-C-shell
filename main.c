@@ -51,35 +51,30 @@ int main(int argc, char *argv[])
     while (1)
     {
         size_t size = 100;
-        // char *semicolon = (char *)calloc(1, sizeof(char));
-        // semicolon[0] = ';';
         prompt(Time);
         char *tokens[1000];
         INT Y = getline(&ptr, &size, stdin);
         time(&start_seconds);
         input[Y - 1] = '\0';
         writetohistory(&H[0],input);
-        //  printf("input is %s\n",input);
         INT token_count = 0;
         char *p = strstr(input, ";;");
         if (p)
         {
             perror("syntax error near unexpected token `;;'");
+            continue;
         }
         else
         {
             tokens[token_count] = strtok(input, ";");
             INT length = strlen(input);
-            // printf("%s\n",tokens[0]);
             while (tokens[token_count] != NULL)
             {
                 token_count++;
                 tokens[token_count] = strtok(NULL, ";");
             }
-            //  printf("token count is %lld\n", token_count);
             for (INT i = 0; i < token_count; i++)
             {
-                // printf("%s\n",tokens[i]);
                 str_tok_and(tokens[i], relative_path, correct_path, previous_path, length, LIST);
             }
         }
@@ -97,4 +92,12 @@ int main(int argc, char *argv[])
             Time[0] = '\0';
         }
     }
+    free(absolute_path);
+    free(relative_path);
+    free(history_path);
+    free(user_name);
+    free(previous_path);
+    free(correct_path);
+    free(system_name);
+    free(Time);
 }

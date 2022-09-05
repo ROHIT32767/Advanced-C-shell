@@ -3,11 +3,12 @@ void echo_func(char *string[], INT num)
 {
     if (num > 0)
     {
+        printf("%s",KYEL);
         for (INT i = 0; i < num - 1; i++)
         {
             printf("%s ", string[i]);
         }
-        printf("%s%s\033[0m\n",KYEL,string[num - 1]);
+        printf("%s\033[0m\n",string[num - 1]);
     }
     else if(num==0)
     {

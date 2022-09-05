@@ -1,53 +1,108 @@
 #include "headers.h"
 extern INT num_bg_processes;
 extern time_t start_seconds;
-void bg_func(char *string[], char *string1, char *string2, char *string3, List *LIST)
+void bg_func(char *string[],char* correct_path, List *LIST,INT num_tokens)
 {
     INT forkReturn = fork();
     if (forkReturn == -1)
     {
-        perror("no child process is created");
+        perror(NULL);
+        return;
     }
     else
     {
 
-        if (forkReturn == 0)
+        if (forkReturn == 0) 
         {
             setpgid(0,0);
-            INT exec_return = execvp(string[0], string);
+            char* modify[num_tokens+1];
+            for(INT i=0;i<num_tokens;i++)
+            {
+                modify[i]=(char*)calloc(600,sizeof(char));
+            }
+            modify[num_tokens]=NULL;
+            for(INT i=0;i<num_tokens;i++)
+            {
+                if(string[i][0]=='~')
+                {
+                    strcat(modify[i],correct_path);
+                    INT len=strlen(modify[i]);
+                    modify[i][len]='\0';
+                    strcat(modify[i],&string[i][1]);
+                    len=strlen(modify[i]);
+                    modify[i][len]='\0';
+                }
+                else
+                {
+                    strcpy(modify[i],string[i]);
+                    INT len=strlen(modify[i]);
+                    modify[i][len]='\0';
+                }
+            }
+            INT exec_return = execvp(modify[0],modify);
             if (exec_return == -1)
             {
-                perror("exec functions returns to the calling process image, an error has occurred");
+                perror(NULL);
                 return;
+            }
+            for(INT i=0;i<num_tokens;i++)
+            {
+                free(modify[i]);
             }
         }
         else
         {
-          // printf("string is %s\n", string[0]);
-            insert(LIST, forkReturn, string[0]);
-         //  print(LIST);
-          // printf("\n");
-            printf("[%d] %lld\n", find(LIST, forkReturn, string[0]) + 1, forkReturn);
+            printf("[%d] %lld\n", find_index(LIST), forkReturn);
+            insert(LIST, forkReturn, string[0],find_index(LIST));
             signal(SIGCHLD, interrupt_handler);
         }
     }
 }
-void fg_func(char *string[], char *string1, char *string2, char *string3)
+void fg_func(char *string[], char* correct_path,INT num_tokens)
 {
     pid_t forkReturn = fork();
     if (forkReturn == -1) 
     {
-        perror("no child process is created");
+        perror(NULL);
+        return;
     }
     else
     {
         if (forkReturn == 0)
         {
-            INT exec_return = execvp(string[0], string);
+            char* modify[num_tokens+1];
+            for(INT i=0;i<num_tokens;i++)
+            {
+                modify[i]=(char*)calloc(600,sizeof(char));
+            }
+            modify[num_tokens]=NULL;
+            for(INT i=0;i<num_tokens;i++)
+            {
+                if(string[i][0]=='~')
+                {
+                    strcat(modify[i],correct_path);
+                    INT len=strlen(modify[i]);
+                    modify[i][len]='\0';
+                    strcat(modify[i],&string[i][1]);
+                    len=strlen(modify[i]);
+                    modify[i][len]='\0';
+                }
+                else
+                {
+                    strcpy(modify[i],string[i]);
+                    INT len=strlen(modify[i]);
+                    modify[i][len]='\0';
+                }
+            }
+            INT exec_return = execvp(modify[0],modify);
             if (exec_return == -1)
             {
-                perror("exec functions returns to the calling process image, an error has occurred");
+                perror(NULL);
                 return;
+            }
+            for(INT i=0;i<num_tokens;i++)
+            {
+                free(modify[i]);
             }
         }
         else
@@ -59,14 +114,14 @@ void fg_func(char *string[], char *string1, char *string2, char *string3)
     }
 }
 
-void spec4_func(char *string[], char *relative, char *correct, char *previous, long long int last, List *LIST)
+void spec4_func(char *string[], char *correct, long long int last, List *LIST,INT num_tokens)
 {
     if (last)
     {
-        fg_func(string, relative, correct, previous);
+        fg_func(string, correct,num_tokens);
     }
     else
     {
-        bg_func(string, relative, correct, previous, LIST);
+        bg_func(string,correct, LIST,num_tokens);
     }
 }

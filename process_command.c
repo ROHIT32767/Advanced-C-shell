@@ -1,8 +1,6 @@
 #include "headers.h"
 INT str_tok_whitespaces(char *tokens[], char *input)
 {
-    // char *semicolon = (char *)calloc(1, sizeof(char));
-    // semicolon[0] = ' ';
     long long int Token_count = 0;
     tokens[Token_count] = strtok(input, " \t");
     while (tokens[Token_count] != NULL)
@@ -20,20 +18,16 @@ void process_command(char *string, char *relative, char *correct, char *previous
     {
         if (strcmp(token[0], "cd") == 0)
         {
-
             if (&token[1] != NULL)
             {
-
                 cd_func(&token[1], num_tokens - 1, relative, correct, previous);
-                // strcpy(previous,relative);
-                // printf("previous directory is %s\n",previous);
                 INT len = strlen(previous);
                 previous[len] = '\0';
-                // printf("Hello\n");
             }
             else
             {
                 perror("syntax error");
+                return;
             }
         }
         else if (strcmp(token[0], "pwd") == 0)
@@ -46,7 +40,6 @@ void process_command(char *string, char *relative, char *correct, char *previous
         }
         else if (strcmp(token[0], "ls") == 0)
         {
-            // not implemented completely
             ls_func(&token[1], correct, num_tokens - 1);
         }
         else if (strcmp(token[0], "history") == 0)
@@ -58,44 +51,37 @@ void process_command(char *string, char *relative, char *correct, char *previous
             else
             {
                 perror("Too many arguments for history");
+                return;
+            }
+        }
+        else if (strcmp(token[0], "discover") == 0)
+        {
+
+            discover_func(&token[1], correct, num_tokens - 1);
+        }
+        else if (strcmp(token[0], "pinfo") == 0)
+        {
+            if (num_tokens <= 2)
+            {
+                pinfo(&token[1], num_tokens - 1, correct);
+            }
+            else
+            {
+                perror("Too many arguments for command pinfo");
+                return;
             }
         }
         else
         {
             if ((strlen(token[0]) != 0))
             {
-                spec4_func(&token[0], relative, correct, previous, last, LIST);
+                spec4_func(&token[0],correct, last, LIST,num_tokens);
             }
             else
             {
                 perror("syntax error");
+                return;
             }
         }
-    }
-
-    else
-    {
-        // perror("syntax error");
     }
 }
-/*
-  // for(INT i=0;i<num_tokens;i++)
-    // {
-    //     printf("%s\n",token[i]);
-    // }
-
-if ((strlen(token[0]) != 0))
-        {
-            printf("last value is %lld ",last);
-            for(INT i=0;i<num_tokens;i++)
-            {
-                printf("%s ",token[i]);
-            }
-            printf("\n");
-            //spec4_func(&token[0], relative, correct, previous, last);
-        }
-        else
-        {
-            perror("syntax error");
-        }
-*/

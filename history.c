@@ -27,7 +27,7 @@ INT readfromhistory()
     fp = fopen(history_path, "r");
     if (fp == NULL)
     {
-        perror("no such file");
+        perror(NULL);
         return -1;
     }
     while ((H[index] != NULL) && (fscanf(fp, "%[^\n]s", H[index]) != EOF))
@@ -56,7 +56,7 @@ INT writetohistory(char *Hist[], char *string)
     fp = fopen(history_path, "w");
     if (fp == NULL)
     {
-        perror("no such file");
+        perror(NULL);
         return -1;
     }
     if (total_commands < 20)
