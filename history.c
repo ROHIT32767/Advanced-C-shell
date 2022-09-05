@@ -54,7 +54,6 @@ INT writetohistory(char *Hist[], char *string)
     if (string != NULL)
     {
         FILE *fp;
-        //  printf("%s\n",history_path);
         fp = fopen(history_path, "w");
         if (fp == NULL)
         {
@@ -124,7 +123,6 @@ INT writetohistory(char *Hist[], char *string)
                         Hist[i][len] = '\0';
                         fprintf(fp, "%s\n", Hist[i]);
                     }
-                    //   fprintf(fp, "%s\n", Hist[19]);
                     fclose(fp);
                 }
             }

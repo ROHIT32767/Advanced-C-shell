@@ -58,6 +58,11 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
             strcpy(previous, relative);
             char *dir_absolute;
             dir_absolute = getcwd(NULL, 300);
+            if(dir_absolute==NULL)
+            {
+                perror(NULL);
+                return;
+            }
             char *p = strstr(dir_absolute, correct);
             if (p)
             {
@@ -98,7 +103,11 @@ void cd_func(char *string[], INT num, char *relative, char *correct, char *previ
             strcpy(previous, relative);
             char *dir_absolute;
             dir_absolute = getcwd(NULL, 300);
-            
+            if(dir_absolute==NULL)
+            {
+                perror(NULL);
+                return;
+            }
             char *p = strstr(dir_absolute, correct);
             if (p)
             {

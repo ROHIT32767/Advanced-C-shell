@@ -10,11 +10,10 @@ char *absolute_path;
 char *user_name;
 char *system_name;
 char *H[20];
-char* history_path;
-INT total_commands=0;
+char *history_path;
+INT total_commands = 0;
 #define NAME_MAX1 100
 INT prompt_wait;
-
 int main(int argc, char *argv[])
 {
     absolute_path = (char *)calloc(300, sizeof(char));
@@ -24,7 +23,7 @@ int main(int argc, char *argv[])
     user_name = (char *)calloc(200, sizeof(char));
     system_name = (char *)calloc(200, sizeof(char));
     char *Time = (char *)calloc(300, sizeof(char));
-    history_path=(char*)calloc(625,sizeof(char));
+    history_path = (char *)calloc(625, sizeof(char));
     Time[0] = '\0';
     LIST = (List *)malloc(sizeof(List));
     LIST->root = NULL;
@@ -44,24 +43,100 @@ int main(int argc, char *argv[])
     char *input = (char *)calloc(1000, sizeof(char));
     char *ptr = input;
     num_bg_processes = 0;
-    strcat(history_path,correct_path);
-    strcat(history_path,"/history.txt");
-    INT D=strlen(history_path);
-    history_path[D]='\0';
-    total_commands=readfromhistory();
-    prompt_wait=0;
+    strcat(history_path, correct_path);
+    strcat(history_path, "/history.txt");
+    INT D = strlen(history_path);
+    history_path[D] = '\0';
+    total_commands = readfromhistory();
+    prompt_wait = 0;
     while (1)
     {
         size_t size = 100;
         prompt(Time);
         char *tokens[1000];
-        prompt_wait=1;
+        prompt_wait = 1;
         INT Y = getline(&ptr, &size, stdin);
-        prompt_wait=0;
+        prompt_wait = 0;
         time(&start_seconds);
         input[Y - 1] = '\0';
-        writetohistory(&H[0],input);
+        INT flag6 = 1;
+        for (INT i = 0; i < Y - 1; i++)
+        {
+            for (INT j = i + 1; j < Y - 1; j++)
+            {
+                if ((input[i] == ';') && (input[j] == ';'))
+                {
+                    for (INT k = i + 1; k < j; k++)
+                    {
+                        if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
+                        {
+                            flag6 = 0;
+                            break;
+                        }
+                    }
+                    if (!flag6)
+                    {
+                        break;
+                    }
+                }
+                else if ((input[i] == ';') && (input[j] == '&'))
+                {
+                    for (INT k = i + 1; k < j; k++)
+                    {
+                        if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
+                        {
+                            flag6 = 0;
+                            break;
+                        }
+                    }
+                    if (!flag6)
+                    {
+                        break;
+                    }
+                }
+                else if ((input[i] == '&') && (input[j] == ';'))
+                {
+                    for (INT k = i + 1; k < j; k++)
+                    {
+                        if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
+                        {
+                            flag6 = 0;
+                            break;
+                        }
+                    }
+                    if (!flag6)
+                    {
+                        break;
+                    }
+                }
+                else if ((input[i] == '&') && (input[j] == '&'))
+                {
+                    for (INT k = i + 1; k < j; k++)
+                    {
+                        if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
+                        {
+                            flag6 = 0;
+                            break;
+                        }
+                    }
+                    if (!flag6)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (!flag6)
+            {
+                break;
+            }
+        }
+        writetohistory(&H[0], input);
         INT token_count = 0;
+        if (flag6)
+        {
+            perror("invalid syntax given as input");
+            continue;
+        }
         char *p = strstr(input, ";;");
         if (p)
         {
@@ -82,7 +157,7 @@ int main(int argc, char *argv[])
                 str_tok_and(tokens[i], relative_path, correct_path, previous_path, length, LIST);
             }
         }
-        prompt_wait=1;
+        prompt_wait = 1;
         num_bg_processes = 0;
         time_t end_time;
         time(&end_time);
