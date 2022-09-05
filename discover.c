@@ -278,6 +278,14 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                 s2[0] = '\0';
                 strcpy(s2, &given_find[0]);
                 INT len = strlen(s1);
+                if (len != 1)
+                {
+                    if (s1[len - 1] == '/')
+                    {
+                        s1[len - 1] = '\0';
+                        len--;
+                    }
+                }
                 dfs(s1, s2, 1, 1, len);
                 tilder = 0;
                 free(s1);
@@ -314,6 +322,14 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                 s2[0] = '\0';
                 strcpy(s2, &given_find[0]);
                 INT len = strlen(s1);
+                if (len != 1)
+                {
+                    if (s1[len - 1] == '/')
+                    {
+                        s1[len - 1] = '\0';
+                        len--;
+                    }
+                }
                 dfs(s1, s2, 0, 1, len);
                 free(s1);
                 free(s2);
@@ -337,6 +353,14 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                 s2[0] = '\0';
                 strcpy(s2, &given_find[0]);
                 INT len = strlen(s1);
+                if (len != 1)
+                {
+                    if (s1[len - 1] == '/')
+                    {
+                        s1[len - 1] = '\0';
+                        len--;
+                    }
+                }
                 dfs(s1, s2, 1, 0, len);
                 free(s1);
                 free(s2);
@@ -363,6 +387,15 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                 {
                     strcpy(s1, string[0]);
                     tilder = 0;
+                }
+                INT len = strlen(s1);
+                if (len != 1)
+                {
+                    if (s1[len - 1] == '/')
+                    {
+                        s1[len - 1] = '\0';
+                        len--;
+                    }
                 }
                 dfs(s1, given_find, 1, 1, strlen(s1));
                 free(s1);
@@ -414,7 +447,16 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                     tilder = 0;
                     strcpy(s1, string[0]);
                 }
-                dfs(s1, NULL, 1, 1, len);
+                INT len4 = strlen(s1);
+                if (len4 != 1)
+                {
+                    if (s1[len4 - 1] == '/')
+                    {
+                        s1[len4 - 1] = '\0';
+                        len4--;
+                    }
+                }
+                dfs(s1, NULL, 1, 1, len4);
             }
         }
         else if (num_tokens == 2) // discover folder -f , discover folder -d ,disscover -d -f
@@ -443,6 +485,15 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                     tilder = 0;
                     strcpy(s1, string[0]);
                 }
+                INT len = strlen(s1);
+                if (len != 1)
+                {
+                    if (s1[len - 1] == '/')
+                    {
+                        s1[len - 1] = '\0';
+                        len--;
+                    }
+                }
                 dfs(s1, NULL, 0, 1, strlen(s1));
             }
             else if (directory)
@@ -459,6 +510,15 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
                 {
                     tilder = 0;
                     strcpy(s1, string[0]);
+                }
+                INT len = strlen(s1);
+                if (len != 1)
+                {
+                    if (s1[len - 1] == '/')
+                    {
+                        s1[len - 1] = '\0';
+                        len--;
+                    }
                 }
                 dfs(s1, NULL, 1, 0, strlen(s1));
             }
@@ -482,6 +542,15 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
             {
                 tilder = 0;
                 strcpy(s1, string[0]);
+            }
+            INT len = strlen(s1);
+            if (len != 1)
+            {
+                if (s1[len - 1] == '/')
+                {
+                    s1[len - 1] = '\0';
+                    len--;
+                }
             }
             dfs(s1, NULL, 1, 1, strlen(s1));
         }

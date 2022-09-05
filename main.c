@@ -12,7 +12,8 @@ char *system_name;
 char *H[20];
 char* history_path;
 INT total_commands=0;
-#define NAME_MAX1 40
+#define NAME_MAX1 100
+INT prompt_wait;
 
 int main(int argc, char *argv[])
 {
@@ -48,12 +49,15 @@ int main(int argc, char *argv[])
     INT D=strlen(history_path);
     history_path[D]='\0';
     total_commands=readfromhistory();
+    prompt_wait=0;
     while (1)
     {
         size_t size = 100;
         prompt(Time);
         char *tokens[1000];
+        prompt_wait=1;
         INT Y = getline(&ptr, &size, stdin);
+        prompt_wait=0;
         time(&start_seconds);
         input[Y - 1] = '\0';
         writetohistory(&H[0],input);
@@ -78,6 +82,7 @@ int main(int argc, char *argv[])
                 str_tok_and(tokens[i], relative_path, correct_path, previous_path, length, LIST);
             }
         }
+        prompt_wait=1;
         num_bg_processes = 0;
         time_t end_time;
         time(&end_time);

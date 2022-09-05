@@ -37,7 +37,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
+        qsort(name_list, num_directory_entries, sizeof(struct dirent*), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -132,7 +132,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
+        qsort(name_list, num_directory_entries, sizeof(struct dirent*), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -222,14 +222,13 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
+        qsort(name_list, num_directory_entries, sizeof(struct dirent*), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
         }
         struct stat fs;
         INT R = 0;
-
         if (!files)
         {
             INT total = 0;
@@ -442,7 +441,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries,sizeof(name_list[0]), compare);
+        qsort(name_list, num_directory_entries,sizeof(struct dirent*), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
