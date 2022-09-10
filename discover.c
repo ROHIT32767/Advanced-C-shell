@@ -194,18 +194,24 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
             }
             else
             {
-                perror("Incorrect argument supplied to command ls");
+                perror("Incorrect argument supplied to command discover");
                 return;
             }
         }
         else
         {
-            if (string[i][0] == '"')
+            num_commands++;
+            total_commands++;
+        }
+    }
+    for(INT i=0;i<num_tokens;i++)
+    {
+        for(INT j=0;j<strlen(string[i]);j++)
+        {
+            if(string[i][j]=='"')
             {
                 quotes++;
             }
-            num_commands++;
-            total_commands++;
         }
     }
     if (num_commands > 2)
@@ -385,7 +391,7 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
             }
             else
             {
-                perror("num_tokens is 3");
+                perror("Incorrect format of arguments supplied");
                 return;
             }
         }
@@ -420,7 +426,7 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
             }
             else
             {
-                perror("Incorrect arguments supplied");
+                perror("Incorrect format of arguments supplied");
                 return;
             }
         }
@@ -542,7 +548,7 @@ void discover_func(char *string[], char *correct_path, long long int num_tokens)
             }
             else
             {
-                perror("num_token is 2 but no find_path");
+                perror("Incorrect format of arguments supplied");
                 return;
             }
         }

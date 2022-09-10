@@ -43,7 +43,7 @@ void bg_func(char *string[],char* correct_path, List *LIST,INT num_tokens)
             if (exec_return == -1)
             {
                 perror(NULL);
-                return;
+                exit(1);
             }
             for(INT i=0;i<num_tokens;i++)
             {

@@ -21,89 +21,6 @@ int get_size(List *L)
 	}
 	return ans;
 }
-// void print_reverse(List *L)
-// {
-// 	NodePtr P;
-// 	P = L->tail;
-// 	while (P != NULL)
-// 	{
-// 		printf("%d ", P->Element);
-// 		P = P->Prev;
-// 	}
-// }
-
-// void prune(List *L)
-// {
-// 	if (L->root == NULL)
-// 	{
-// 		return;
-// 	}
-// 	else
-// 	{
-// 		NodePtr Ptr2 = L->root->Next;
-// 		NodePtr tempPtr;
-// 		NodePtr Ptr1 = L->root;
-
-// 		while (Ptr1 != NULL && Ptr2 != NULL)
-// 		{
-
-// 			if (Ptr2->Next == NULL)
-// 			{
-// 				L->tail = Ptr2->Prev;
-// 				Ptr1->Next = NULL;
-// 				free(Ptr2);
-// 				return;
-// 			}
-
-// 			else
-// 			{
-// 				Ptr1->Next = Ptr2->Next;
-// 				tempPtr = Ptr1;
-// 				Ptr1 = Ptr1->Next;
-// 				free(Ptr2);
-// 				if (Ptr1 != NULL)
-// 				{
-// 					Ptr1->Prev = tempPtr;
-// 					Ptr2 = Ptr1->Next;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// void insert_at(List *list, int x, int index, char *string)
-// {
-// 	NodePtr newnode = MakeNode(x, string);
-// 	if (index == get_size(list))
-// 	{
-// 		insert(list, x, string);
-// 	}
-// 	else
-// 	{
-
-// 		if (index == 0)
-// 		{
-// 			newnode->Next = list->root;
-// 			list->root = newnode;
-// 			newnode->Next->Prev = newnode;
-// 		}
-// 		else
-// 		{
-// 			int i = 0;
-// 			NodePtr p = list->root;
-// 			while (i < (index))
-// 			{
-// 				p = p->Next;
-// 				i++;
-// 			}
-// 			newnode->Next = p;
-// 			newnode->Prev = p->Prev;
-// 			p->Prev->Next = newnode;
-// 			p->Prev = newnode;
-// 		}
-// 	}
-// }
-
 NodePtr MakeNode(int X, char *string,int index)
 {
 	NodePtr P = (NodePtr)malloc(sizeof(struct node));
@@ -112,7 +29,6 @@ NodePtr MakeNode(int X, char *string,int index)
 	P->process_name = (char *)malloc(600 * sizeof(char));
 	strcpy(P->process_name, string);
 	P->idx=index;
-	// printf("process_name is %s and string is %s\n",P->process_name,string);
 	P->Next = NULL;
 	P->Prev = NULL;
 	return P;
@@ -182,6 +98,7 @@ int DELETE(List *L, int index)
 			}
 		}
 	}
+	return -1;
 }
 
 void insert(List *L, int x, char *string,int index)
@@ -199,19 +116,6 @@ void insert(List *L, int x, char *string,int index)
 		L->tail = P->Next;
 	}
 }
-// void print(List *L)
-// {
-// 	NodePtr P;
-// 	P = L->root;
-// 	while (P != NULL)
-// 	{
-// 		printf("%d %s ", P->Element, P->process_name);
-// 		P = P->Next;
-// 	}
-
-// 	printf("\n");
-// }
-
 int find(List *L, int X, char *string)
 {
 	NodePtr P = L->root;

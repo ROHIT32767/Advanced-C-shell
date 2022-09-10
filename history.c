@@ -51,7 +51,7 @@ INT readfromhistory()
 }
 INT writetohistory(char *Hist[], char *string)
 {
-    if (string != NULL)
+    if (string != NULL && strlen(string)!=0)
     {
         FILE *fp;
         fp = fopen(history_path, "w");
@@ -113,7 +113,7 @@ INT writetohistory(char *Hist[], char *string)
                     {
                         Hist[i] = Hist[i + 1];
                     }
-                    Hist[19] = (char *)calloc(40, sizeof(char));
+                    Hist[19] = (char *)calloc(400, sizeof(char));
                     strcpy(Hist[19], string);
                     INT len1 = strlen(Hist[19]);
                     Hist[19][len1] = '\0';

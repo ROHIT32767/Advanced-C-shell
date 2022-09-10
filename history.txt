@@ -1,3 +1,5 @@
-cd ;     ;
-cd ;;;;;;;;
-\cd ;;       ;;
+discover ~ -f
+cd .. : echo 12 3;pwd ; discover .. -d ; history ; ls echo.c -l ; pinfo ;
+history
+cd ; echo 1 2 3 ;; pwd
+gedit &

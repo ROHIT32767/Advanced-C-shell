@@ -1,7 +1,7 @@
 #include "headers.h"
 int compare(const void *arg1, const void *arg2)
 {
-    return (strcasecmp((*((struct dirent **) arg1))->d_name,(*((struct dirent **) arg2))->d_name));
+    return (strcasecmp((*((struct dirent **)arg1))->d_name, (*((struct dirent **)arg2))->d_name));
 }
 void print_ls(char *string, char *correct_path, INT type, INT num_args)
 {
@@ -37,13 +37,13 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
         }
         if (!files)
         {
+            qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
             for (INT i = 0; i < num_directory_entries; i++)
             {
                 char *ptr = name_list[i]->d_name;
@@ -52,7 +52,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 {
                     struct stat fs;
                     strcat(path, name_list[i]->d_name);
-                    INT R = stat(path, &fs);
+                    INT R = lstat(path, &fs);
                     if (R == -1)
                     {
                         perror(NULL);
@@ -60,7 +60,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     }
                     INT J = S_ISDIR(fs.st_mode);
                     INT G = fs.st_mode & S_IXUSR;
-                    if (J)
+                    if (S_ISLNK(fs.st_mode))
+                    {
+                        printf("%s%s\033[0m\n",KRED,name_list[i]->d_name);
+                    }
+                    else if (J)
                     {
                         printf("%s%s\033[0m\n", KBLU, name_list[i]->d_name);
                     }
@@ -92,14 +96,18 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         {
             INT R = 0;
             struct stat fs;
-            R = stat(string1, &fs);
+            R = lstat(string1, &fs);
             if (R == -1)
             {
                 perror(NULL);
                 return;
             }
             INT G = fs.st_mode & S_IXUSR;
-            if (S_ISREG(fs.st_mode))
+            if (S_ISLNK(fs.st_mode))
+            {
+                printf("%s%s\033[0m\n", KRED, string1);
+            }
+            else if (S_ISREG(fs.st_mode))
             {
                 if (G)
                 {
@@ -132,18 +140,18 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
         }
         if (!files)
         {
+            qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
             for (INT i = 0; i < num_directory_entries; i++)
             {
                 struct stat fs;
                 strcat(path, name_list[i]->d_name);
-                INT R = stat(path, &fs);
+                INT R = lstat(path, &fs);
                 if (R == -1)
                 {
                     perror(NULL);
@@ -151,7 +159,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 }
                 INT J = S_ISDIR(fs.st_mode);
                 INT G = fs.st_mode & S_IXUSR;
-                if (J)
+                if (S_ISLNK(fs.st_mode))
+                {
+                    printf("%s%s\033[0m\n", KRED, name_list[i]->d_name);
+                }
+                else if (J)
                 {
                     printf("%s%s\033[0m\n", KBLU, name_list[i]->d_name);
                 }
@@ -182,14 +194,18 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         {
             INT R = 0;
             struct stat fs;
-            R = stat(string1, &fs);
+            R = lstat(string1, &fs);
             if (R == -1)
             {
                 perror(NULL);
                 return;
             }
             INT G = fs.st_mode & S_IXUSR;
-            if (S_ISREG(fs.st_mode))
+            if (S_ISLNK(fs.st_mode))
+            {
+                printf("%s%s\033[0m\n", KRED, string1);
+            }
+            else if (S_ISREG(fs.st_mode))
             {
                 if (G)
                 {
@@ -222,7 +238,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
+
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -231,6 +247,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         INT R = 0;
         if (!files)
         {
+            qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
             INT total = 0;
             for (INT i = 0; i < num_directory_entries; i++)
             {
@@ -239,7 +256,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 if ((ch != '.'))
                 {
                     strcat(path, name_list[i]->d_name);
-                    R = stat(path, &fs);
+                    R = lstat(path, &fs);
                     if (R == -1)
                     {
                         perror(NULL);
@@ -257,7 +274,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 if ((ch != '.'))
                 {
                     strcat(path, name_list[i]->d_name);
-                    R = stat(path, &fs);
+                    R = lstat(path, &fs);
                     if (R == -1)
                     {
                         perror(NULL);
@@ -266,7 +283,14 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     INT E;
                     INT J = S_ISDIR(fs.st_mode);
                     INT G = fs.st_mode & S_IXUSR;
-                    E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    if (S_ISLNK(fs.st_mode))
+                    {
+                        printf("l");
+                    }
+                    else
+                    {
+                        E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    }
                     E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
                     E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
                     E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -316,7 +340,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                         strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                         printf("%s ", buff);
                     }
-                    if (J)
+                    if (S_ISLNK(fs.st_mode))
+                    {
+                        printf("%s%20s\033[0m\n",KRED,name_list[i]->d_name);
+                    }
+                    else if (J)
                     {
                         printf("%s%20s\033[0m\n", KBLU, name_list[i]->d_name);
                     }
@@ -348,7 +376,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         {
             INT R = 0;
             struct stat fs;
-            R = stat(string1, &fs);
+            R = lstat(string1, &fs);
             if (R == -1)
             {
                 perror(NULL);
@@ -356,7 +384,14 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             }
             INT E;
             INT G = fs.st_mode & S_IXUSR;
-            E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            if (S_ISLNK(fs.st_mode))
+            {
+                printf("l");
+            }
+            else
+            {
+                E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            }
             E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
             E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
             E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -406,8 +441,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                 printf("%s ", buff);
             }
-
-            if (S_ISREG(fs.st_mode))
+            if (S_ISLNK(fs.st_mode))
+            {
+                printf("%s%20s\033[0m\n", KRED, string1);
+            }
+            else if (S_ISREG(fs.st_mode))
             {
                 if (G)
                 {
@@ -441,7 +479,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 return;
             }
         }
-        qsort(name_list, num_directory_entries,sizeof(name_list[0]), compare);
+
         if (num_args >= 2 && files != 1)
         {
             printf("%s:\n", string1);
@@ -451,11 +489,12 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         INT R = 0;
         if (!files)
         {
+            qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare);
             INT total = 0;
             for (INT i = 0; i < num_directory_entries; i++)
             {
                 strcat(path, name_list[i]->d_name);
-                R = stat(path, &fs);
+                R = lstat(path, &fs);
                 if (R == -1)
                 {
                     perror(NULL);
@@ -470,7 +509,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 if (1)
                 {
                     strcat(path, name_list[i]->d_name);
-                    R = stat(path, &fs);
+                    R = lstat(path, &fs);
                     if (R == -1)
                     {
                         perror(NULL);
@@ -479,7 +518,14 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                     INT E;
                     INT J = S_ISDIR(fs.st_mode);
                     INT G = fs.st_mode & S_IXUSR;
-                    E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    if (S_ISLNK(fs.st_mode))
+                    {
+                        printf("l");
+                    }
+                    else
+                    {
+                        E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+                    }
                     E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
                     E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
                     E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -529,8 +575,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                         strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                         printf("%s ", buff);
                     }
-
-                    if (J)
+                    if (S_ISLNK(fs.st_mode))
+                    {
+                        printf("%s%20s\033[0m\n", KRED, name_list[i]->d_name);
+                    }
+                    else if (J)
                     {
                         printf("%s%20s\033[0m\n", KBLU, name_list[i]->d_name);
                     }
@@ -568,7 +617,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
         {
             INT R = 0;
             struct stat fs;
-            R = stat(string1, &fs);
+            R = lstat(string1, &fs);
             if (R == -1)
             {
                 perror(NULL);
@@ -576,7 +625,14 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
             }
             INT E;
             INT G = fs.st_mode & S_IXUSR;
-            E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            if (S_ISLNK(fs.st_mode))
+            {
+                printf("l");
+            }
+            else
+            {
+                E = S_ISDIR(fs.st_mode) ? printf("d") : printf("-");
+            }
             E = (fs.st_mode & S_IRUSR) ? printf("r") : printf("-");
             E = (fs.st_mode & S_IWUSR) ? printf("w") : printf("-");
             E = (fs.st_mode & S_IXUSR) ? printf("x") : printf("-");
@@ -626,8 +682,11 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 strftime(buff, sizeof(buff), "%b %d  %Y", timeinfo);
                 printf("%s ", buff);
             }
-
-            if (S_ISREG(fs.st_mode))
+            if (S_ISLNK(fs.st_mode))
+            {
+                printf("%s%20s\033[0m\n", KRED, string1);
+            }
+            else if (S_ISREG(fs.st_mode))
             {
                 if (G)
                 {
@@ -635,7 +694,7 @@ void print_ls(char *string, char *correct_path, INT type, INT num_args)
                 }
                 else
                 {
-                    printf("%s%20ss\033[0m\n", KWHT, string1);
+                    printf("%s%20s\033[0m\n", KWHT, string1);
                 }
             }
             else
@@ -763,4 +822,3 @@ void ls_func(char *string[], char *correct_path, long long int num_tokens)
         }
     }
 }
-

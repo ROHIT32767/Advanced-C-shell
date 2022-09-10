@@ -6,16 +6,46 @@
 
 >##### All these commands are tested on Ubuntu Version 20.04.3 LTS (Focal Fossa) 
 ```
-
-
+2021101113_Assignment2
+├── cd.c
+├── cd.h
+├── discover.c
+├── discover.h
+├── echo.c
+├── echo.h
+├── headers.h
+├── history.c
+├── history.h
+├── history.txt
+├── linked_list.c
+├── linked_list.h
+├── linked_main.c
+├── ls.c
+├── ls.h
+├── main.c
+├── makefile
+├── pinfo.c
+├── pinfo.h
+├── process_command.c
+├── process_command.h
+├── prompt.c
+├── prompt.h
+├── PWD.c
+├── PWD.h
+├── README.md
+├── sig_handler.c
+├── sig_handler.h
+├── spec4.c
+├── spec4.h
+├── str_tok_and.c
+└── str_tok_and.h
 ```
 
 * >Commands to be executed
 
  `$ make`  
  `$ ./main`
-
-     
+* > Neglect all warnings during execution of make file-they are just errors due to unused variables
 <hr>
 
 ```
@@ -136,6 +166,8 @@ g) commands like fork(),waitpid(),execvp(),signal() are used in addition to use 
 
 h) It is assumed that strlen(any argument) <= 600
 
+i) Total time = Total time taken by foreground processes (sum of times)
+
 ```
 ```
 Specification 5: pinfo command
@@ -167,6 +199,7 @@ a) DFS is used along with opendir() and readdir() to implement the discover comm
 b) scandir command may not be prefered to iterate over the directory entries as scanddir automatically mallocs the name_list thereby causing a possibility of stack_frame to pile-up and give rise to seg_fault
 c) perror is displayed if one of the paths redirected to is invalid 
 d) Some of the syntax-error cases in discover command are not handled
+e) I have not handled cases like discover -df and discover -fd as those cases are not mentioned in the document as its mentioned that -d searches for all directories and -f searches for all files but there is no definition for -df and -fd which are not defined.
 
 ```
 ```
@@ -179,6 +212,6 @@ c) command is not stored in history if it is the exactly same as the previously 
 d) empty commands and commands with just whitespace characters are not handled properly
 e) oldest commands are overwritten if more than 20 commands are entered
 f) The commands are tracked across multiple sessions of shell
-g) It is assumed that strlen(command) < 40 to be able to display it in history.txt
+g) It is assumed that strlen(command) < 400 to be able to display it in history.txt
 
 ```

@@ -12,7 +12,7 @@ char *system_name;
 char *H[20];
 char *history_path;
 INT total_commands = 0;
-#define NAME_MAX1 100
+#define NAME_MAX1 300
 INT prompt_wait;
 int main(int argc, char *argv[])
 {
@@ -60,12 +60,14 @@ int main(int argc, char *argv[])
         time(&start_seconds);
         input[Y - 1] = '\0';
         INT flag6 = 1;
+        INT flag7 = 0;
         for (INT i = 0; i < Y - 1; i++)
         {
             for (INT j = i + 1; j < Y - 1; j++)
             {
                 if ((input[i] == ';') && (input[j] == ';'))
                 {
+                    flag7=1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -81,6 +83,7 @@ int main(int argc, char *argv[])
                 }
                 else if ((input[i] == ';') && (input[j] == '&'))
                 {
+                    flag7=1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -96,6 +99,7 @@ int main(int argc, char *argv[])
                 }
                 else if ((input[i] == '&') && (input[j] == ';'))
                 {
+                    flag7=1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -111,6 +115,7 @@ int main(int argc, char *argv[])
                 }
                 else if ((input[i] == '&') && (input[j] == '&'))
                 {
+                    flag7=1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -132,7 +137,7 @@ int main(int argc, char *argv[])
         }
         writetohistory(&H[0], input);
         INT token_count = 0;
-        if (flag6)
+        if (flag6&&flag7)
         {
             perror("invalid syntax given as input");
             continue;
