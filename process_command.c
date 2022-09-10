@@ -14,10 +14,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
 {
     char *token[1000];
     INT num_tokens = str_tok_whitespaces(token, string);
-    INT redirect_type = 0;
     if ((token[0] != NULL) || (len == 0))
     {
-        // char *io_type[2]; // storing string of io
         INT io_index[2]; // storing index
         io_index[0] = -1;
         io_index[1] = -1;
@@ -26,13 +24,6 @@ void process_command(char *string, char *relative, char *correct, char *previous
         type_io[1] = -1;
         INT num_io_type = 0;
         INT io_flag = 0;
-        // < for 0
-        // > for 1
-        // >> for 2
-        // for (INT i = 0; i < 2; i++)
-        // {
-        //     io_type[i] = (char *)calloc(3, sizeof(char));
-        // }
         INT less_than = 0;
         INT greater_than = 0;
         INT double_greater_than = 0;
@@ -119,8 +110,105 @@ void process_command(char *string, char *relative, char *correct, char *previous
         }
         if (io_flag)
         {
-            io_redirect(&token[0], num_tokens, type_io, io_index, num_io_type);
-            
+            INT std_out = dup(1);
+            INT std_in = dup(0);
+            INT io_return = io_redirect(&token[0], num_tokens, type_io, io_index, num_io_type);
+            if (io_return == -1)
+            {
+                dup2(std_in, 0);
+                dup2(std_out, 1);
+                return;
+            }
+            else if (io_return == 0)
+            {
+                INT num_new_tokens = 0;
+                char *tokens_new[num_tokens];
+                for (INT i = 0; i < num_tokens; i++)
+                {
+                    if ((strcmp(token[i], "<") == 0) || (strcmp(token[i], ">") == 0) || (strcmp(token[i], ">>") == 0))
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        tokens_new[num_new_tokens] = token[i];
+                        num_new_tokens++;
+                    }
+                }
+                //
+                if (strcmp(tokens_new[0], "cd") == 0)
+                {
+                    if (&tokens_new[1] != NULL)
+                    {
+                        cd_func(&tokens_new[1], num_new_tokens - 1, relative, correct, previous);
+                        INT len = strlen(previous);
+                        previous[len] = '\0';
+                    }
+                    else
+                    {
+                        perror("syntax error");
+                        return;
+                    }
+                }
+                else if (strcmp(tokens_new[0], "pwd") == 0)
+                {
+                    pwd_func(num_new_tokens - 1);
+                }
+                else if (strcmp(tokens_new[0], "echo") == 0)
+                {
+                    echo_func(&tokens_new[1], num_new_tokens - 1);
+                }
+                else if (strcmp(tokens_new[0], "ls") == 0)
+                {
+                    ls_func(&tokens_new[1], correct, num_new_tokens - 1);
+                }
+                else if (strcmp(tokens_new[0], "history") == 0)
+                {
+                    if (num_new_tokens == 1)
+                    {
+                        print_history();
+                    }
+                    else
+                    {
+                        perror("Too many arguments for history");
+                        return;
+                    }
+                }
+                else if (strcmp(tokens_new[0], "discover") == 0)
+                {
+
+                    discover_func(&tokens_new[1], correct, num_new_tokens - 1);
+                }
+                else if (strcmp(tokens_new[0], "pinfo") == 0)
+                {
+                    if (num_new_tokens <= 2)
+                    {
+                        pinfo(&token[1], num_new_tokens - 1, correct);
+                    }
+                    else
+                    {
+                        perror("Too many arguments for command pinfo");
+                        return;
+                    }
+                }
+                else
+                {
+                    if ((strlen(tokens_new[0]) != 0))
+                    {
+                        spec4_func(&tokens_new[0], correct, last, LIST, num_new_tokens);
+                    }
+                    else
+                    {
+                        perror("syntax error");
+                        return;
+                    }
+                }
+                fflush(stdout);
+                dup2(std_in, 0);
+                dup2(std_out, 1);
+                close(std_in);
+                close(std_out);
+            }
         }
         else
         {

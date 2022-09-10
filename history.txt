@@ -1,5 +1,15 @@
-discover ~ -f
-cd .. : echo 12 3;pwd ; discover .. -d ; history ; ls echo.c -l ; pinfo ;
-history
-cd ; echo 1 2 3 ;; pwd
-gedit &
+echo hello1234 > output.txt
+echo hello12345 > output.txt
+echo hello123456 > output.txt
+echo hello1234567 > output.txt
+echo hello > output.txt
+cat < output.txt
+sort < output.txt > output1.txt
+echo hello > output.txt
+sort < output.txt > output1.txt
+echo hello > output.txt
+echo hello >> output.txt
+sort < output.txt > test.txt
+echo helloy > output.txt
+echo abc > output.txt
+echo 123 >> output.txt
