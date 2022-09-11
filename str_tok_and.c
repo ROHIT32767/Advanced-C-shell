@@ -16,7 +16,7 @@ void str_tok_and(char *string, char *relative, char *correct, char *previous, IN
     }
     for (INT i = 0; i < token_count - 1; i++)
     {
-        process_command(tokens[i], relative, correct, previous, len, 0,LIST);
+        pipe_to_process_command(tokens[i], relative, correct, previous, len, 0,LIST);
     }
-    process_command(tokens[token_count - 1], relative, correct, previous, len, 1,LIST);
+    pipe_to_process_command(tokens[token_count - 1], relative, correct, previous, len, 1,LIST);
 }

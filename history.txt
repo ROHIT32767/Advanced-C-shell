@@ -1,15 +1,6 @@
-echo hello1234 > output.txt
-echo hello12345 > output.txt
-echo hello123456 > output.txt
-echo hello1234567 > output.txt
-echo hello > output.txt
-cat < output.txt
-sort < output.txt > output1.txt
-echo hello > output.txt
-sort < output.txt > output1.txt
-echo hello > output.txt
-echo hello >> output.txt
-sort < output.txt > test.txt
-echo helloy > output.txt
-echo abc > output.txt
-echo 123 >> output.txt
+cat sample.txt | wc | wc -l
+cat sample.txt
+cat sample.txt | wc
+cat sample.txt | wc | wc -l
+cat main.c | grep include | wc
+cat sample.txt | head -7 | tail -5

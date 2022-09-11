@@ -11,7 +11,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[0] + 1], O_RDONLY);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return -1;
                 }
@@ -20,6 +19,7 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
 
                     dup2(fd, 0);
                     close(fd);
+                    return 0;
                 }
             }
             else
@@ -35,7 +35,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[0] + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return-1;
                 }
@@ -43,6 +42,7 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 {
                     dup2(fd, 1);
                     close(fd);
+                    return 0;
                 }
             }
             else
@@ -58,7 +58,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[0] + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return -1;
                 }
@@ -66,6 +65,7 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 {
                     dup2(fd, 1);
                     close(fd);
+                    return 0;
                 }
             }
             else
@@ -82,7 +82,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[1] + 1], O_RDONLY);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return -1;
                 }
@@ -106,7 +105,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[1] + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return -1;
                 }
@@ -130,7 +128,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[1] + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return -1;
                 }
@@ -157,7 +154,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 INT fd = open(string[io_index[0] + 1], O_RDONLY);
                 if (fd == -1)
                 {
-                    close(fd);
                     perror(NULL);
                     return -1;
                 }
