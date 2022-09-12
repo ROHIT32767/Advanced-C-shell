@@ -1,6 +1,20 @@
-cat sample.txt | wc | wc -l
+cat echo.h
+cat echo.h | wc
+cat echo.h | wc | wc -l
+cat > sample.txt
+cat < sample.txt
 cat sample.txt
-cat sample.txt | wc
-cat sample.txt | wc | wc -l
-cat main.c | grep include | wc
+cat output.txt
+cat output.txt > sample.txt
+cat output.txt
+cat output.txt > sample.txt
+echo "hello123\n > sample.txt
+cat < sample.txt
+echo hello >> sample.txt
+cat headers.h | wc
+cat headers.h | wc | wc -l
 cat sample.txt | head -7 | tail -5
+ls grep*.txt | sample.txt
+ls grep *.txt | sample.txt
+cat sample.txt | wc -l > output.txt
+ls | grep *.txt > sample.txt

@@ -183,7 +183,55 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 {
                     if (num_new_tokens <= 2)
                     {
-                        pinfo(&token[1], num_new_tokens - 1, correct);
+                        pinfo(&tokens_new[1], num_new_tokens - 1, correct);
+                    }
+                    else
+                    {
+                        perror("Too many arguments for command pinfo");
+                        return;
+                    }
+                }
+                else if (strcmp(tokens_new[0], "jobs") == 0)
+                {
+                    if (num_new_tokens <= 2)
+                    {
+                        jobs(&tokens_new[1], num_new_tokens - 1, LIST);
+                    }
+                    else
+                    {
+                        perror("Too many arguments for command pinfo");
+                        return;
+                    }
+                }
+                else if (strcmp(tokens_new[0], "sig") == 0)
+                {
+                    if (num_new_tokens == 3)
+                    {
+                        sig_func(&tokens_new[1], num_new_tokens - 1, LIST);
+                    }
+                    else
+                    {
+                        perror("Too many arguments for command pinfo");
+                        return;
+                    }
+                }
+                else if (strcmp(tokens_new[0], "fg") == 0)
+                {
+                    if (num_new_tokens == 2)
+                    {
+                        FG(&tokens_new[1], num_new_tokens - 1, LIST);
+                    }
+                    else
+                    {
+                        perror("Too many arguments for command pinfo");
+                        return;
+                    }
+                }
+                else if (strcmp(tokens_new[0], "bg") == 0)
+                {
+                    if (num_new_tokens == 2)
+                    {
+                        BG(&tokens_new[1], num_new_tokens - 1, LIST);
                     }
                     else
                     {
@@ -261,6 +309,54 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 if (num_tokens <= 2)
                 {
                     pinfo(&token[1], num_tokens - 1, correct);
+                }
+                else
+                {
+                    perror("Too many arguments for command pinfo");
+                    return;
+                }
+            }
+            else if (strcmp(token[0], "jobs") == 0)
+            {
+                if (num_tokens <= 2)
+                {
+                    jobs(&token[1], num_tokens - 1, LIST);
+                }
+                else
+                {
+                    perror("Too many arguments for command pinfo");
+                    return;
+                }
+            }
+            else if (strcmp(token[0], "sig") == 0)
+            {
+                if (num_tokens == 3)
+                {
+                    sig_func(&token[1], num_tokens - 1, LIST);
+                }
+                else
+                {
+                    perror("Too many arguments for command pinfo");
+                    return;
+                }
+            }
+            else if (strcmp(token[0], "fg") == 0)
+            {
+                if (num_tokens == 2)
+                {
+                    FG(&token[1], num_tokens - 1, LIST);
+                }
+                else
+                {
+                    perror("Too many arguments for command pinfo");
+                    return;
+                }
+            }
+            else if (strcmp(token[0], "bg") == 0)
+            {
+                if (num_tokens == 2)
+                {
+                    BG(&token[1], num_tokens - 1, LIST);
                 }
                 else
                 {

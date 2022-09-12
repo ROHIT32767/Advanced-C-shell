@@ -1,7 +1,6 @@
 #include "headers.h"
 INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2], INT num_types)
 {
-
     if (num_types == 2)
     {
         if (type_io[0] == 0)
@@ -36,7 +35,7 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 if (fd == -1)
                 {
                     perror(NULL);
-                    return-1;
+                    return -1;
                 }
                 else
                 {
@@ -217,7 +216,6 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 return -1;
             }
         }
-       
     }
-     return -1;
+    return -1;
 }

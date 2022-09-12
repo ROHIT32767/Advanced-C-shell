@@ -18,7 +18,6 @@ void pipe_to_process_command(char *string, char *relative, char *correct, char *
     {
         char *token[1000];
         INT num_tokens = str_tok_pipe(token, string);
-        //   printf("num_tokens is %lld\n",num_tokens);
         if ((token[0] != NULL) || (len == 0))
         {
             if (num_tokens > 0)
@@ -55,7 +54,7 @@ void pipe_to_process_command(char *string, char *relative, char *correct, char *
                     dup2(new_out, 1);
                     close(new_out);
                 }
-                INT new_in=dup(0);
+                INT new_in = dup(0);
                 dup2(pipe_fd[num_tokens - 2][0], 0);
                 close(pipe_fd[num_tokens - 2][0]);
                 process_command(token[num_tokens - 1], relative, correct, previous, len, last, LIST);
