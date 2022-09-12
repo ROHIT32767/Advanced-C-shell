@@ -1,7 +1,7 @@
 #include "headers.h"
 int compare1(const void *arg1, const void *arg2)
 {
-    return (strcmp((*((struct node *)arg1)).process_name, (*((struct node *)arg2)).process_name));
+    return (strcmp((*((struct node **)arg1))->process_name, (*((struct node **)arg2))->process_name));
 }
 INT jobs(char *string[], INT num_tokens, List *LIST)
 {
@@ -54,6 +54,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
             char *number_to_string = (char *)calloc(15, sizeof(char));
             for (INT i = 0; i < list_size; i++)
             {
+                stat_path[len1] = '\0';
                 pid = nodeptr_array[i]->Element;
                 sprintf(number_to_string, "%lld", pid);
                 INT len = strlen(number_to_string);
@@ -67,7 +68,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                 FILE *fp = fopen(stat_path, "r");
                 if (fp == NULL)
                 {
-                    perror(NULL);
+                    perror("problem in fp");
                     return -1;
                 }
                 else
@@ -88,21 +89,17 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                     char *process_status = line[2];
                     char *print_process_status = (char *)calloc(15, sizeof(char));
                     print_process_status[0] = '\0';
-                    if (strcmp(process_status, "S") == 0)
+                    if (strcmp(process_status, "T") == 0)
                     {
                         strcat(print_process_status, "Stopped");
                         INT len3 = strlen(print_process_status);
                         print_process_status[len3] = '\0';
                     }
-                    else if (strcmp(process_status, "R") == 0)
+                    else
                     {
                         strcat(print_process_status, "Running");
                         INT len3 = strlen(print_process_status);
                         print_process_status[len3] = '\0';
-                    }
-                    else
-                    {
-                        continue;
                     }
                     printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->process_name, nodeptr_array[i]->Element);
                 }
@@ -114,6 +111,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
             char *number_to_string = (char *)calloc(15, sizeof(char));
             for (INT i = 0; i < list_size; i++)
             {
+                stat_path[len1] = '\0';
                 pid = nodeptr_array[i]->Element;
                 sprintf(number_to_string, "%lld", pid);
                 INT len = strlen(number_to_string);
@@ -168,6 +166,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
             char *number_to_string = (char *)calloc(15, sizeof(char));
             for (INT i = 0; i < list_size; i++)
             {
+                stat_path[len1] = '\0';
                 pid = nodeptr_array[i]->Element;
                 sprintf(number_to_string, "%lld", pid);
                 INT len = strlen(number_to_string);
@@ -202,7 +201,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                     char *process_status = line[2];
                     char *print_process_status = (char *)calloc(15, sizeof(char));
                     print_process_status[0] = '\0';
-                    if (strcmp(process_status, "S") == 0)
+                    if (strcmp(process_status, "T") == 0)
                     {
                         strcat(print_process_status, "Stopped");
                         INT len3 = strlen(print_process_status);

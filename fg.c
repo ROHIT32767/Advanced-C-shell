@@ -15,8 +15,8 @@ void FG(char *string[], long long int num_tokens, List *LIST)
                 setpgid(pid, calling_group_id);
                 signal(SIGTTOU, SIG_IGN);
                 signal(SIGTTIN, SIG_IGN);
-                INT tc_return1=tcsetpgrp(0,pid);
-                if(tc_return1==-1)
+                INT tc_return1 = tcsetpgrp(0, pid);
+                if (tc_return1 == -1)
                 {
                     perror(NULL);
                     return;
@@ -28,15 +28,19 @@ void FG(char *string[], long long int num_tokens, List *LIST)
                     return;
                 }
                 int status;
-                pid = waitpid(-1, &status, WNOHANG | WUNTRACED);
-                INT tc_return2=tcsetpgrp(0,getpgid(0));
-                if(tc_return2==-1)
+                waitpid(pid, &status, WUNTRACED|WSTOPPED);
+                INT tc_return2 = tcsetpgrp(0, getpgid(0));
+                if (tc_return2 == -1)
                 {
                     perror(NULL);
                     return;
                 }
                 signal(SIGTTIN, SIG_DFL);
                 signal(SIGTTOU, SIG_DFL);
+                char *string2 = (char *)malloc(600 * sizeof(char));
+                string2 = find_string(LIST, head->Element);
+                DELETE(LIST, find(LIST, head->Element, string2));
+                free(string2);
                 return;
             }
             head = head->Next;

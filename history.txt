@@ -1,20 +1,20 @@
-cat echo.h
-cat echo.h | wc
-cat echo.h | wc | wc -l
-cat > sample.txt
-cat < sample.txt
-cat sample.txt
-cat output.txt
-cat output.txt > sample.txt
-cat output.txt
-cat output.txt > sample.txt
-echo "hello123\n > sample.txt
-cat < sample.txt
-echo hello >> sample.txt
-cat headers.h | wc
-cat headers.h | wc | wc -l
-cat sample.txt | head -7 | tail -5
-ls grep*.txt | sample.txt
-ls grep *.txt | sample.txt
-cat sample.txt | wc -l > output.txt
-ls | grep *.txt > sample.txt
+sig 1 19
+jobs
+bg 1
+jobs
+fg 1
+sleep 30 &
+sig 1 9
+jobs
+ls | grep *.txt
+ls -l > sample.txt
+gedit &
+sleep 100 &
+sig 1 9
+jobs
+gedit &
+jobs
+sleep 30 &
+gedit &
+nano &
+jobs
