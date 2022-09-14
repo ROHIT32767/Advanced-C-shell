@@ -54,8 +54,15 @@ int main(int argc, char *argv[])
         size_t size = 100;
         prompt(Time);
         char *tokens[1000];
+        signal(SIGINT,ctrlc);
         prompt_wait = 1;
         INT Y = getline(&ptr, &size, stdin);
+        // ctrld
+        if(Y==-1)
+        {
+            printf("\n");
+            exit(0);
+        }
         prompt_wait = 0;
         time(&start_seconds);
         input[Y - 1] = '\0';

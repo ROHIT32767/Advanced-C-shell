@@ -26,7 +26,7 @@ void interrupt_handler()
                     char *display = (char *)calloc(display_size, sizeof(char));
                     sprintf(display, "%s<%s@%s:%s>\033[0m", KMAG, user_name, system_name, relative_path);
                     write(1, display, strlen(display));
-                }
+                } 
             }
             else if (!exit_status)
             {

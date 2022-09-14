@@ -1,5 +1,3 @@
-sig 1 19
-jobs
 bg 1
 jobs
 fg 1
@@ -17,4 +15,6 @@ jobs
 sleep 30 &
 gedit &
 nano &
+jobs
+sleep 100
 jobs
