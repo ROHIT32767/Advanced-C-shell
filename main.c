@@ -76,6 +76,42 @@ int main(int argc, char *argv[])
     char c;
     while (1)
     {
+        INT inp_len = strlen(inp);
+        INT start_index = 0;
+        INT end_index = 0;
+        INT space_flag = 1;
+        for (INT i = 0; i < inp_len; i++)
+        {
+            if (inp[i] == ' ')
+            {
+                space_flag = 1;
+            }
+            else
+            {
+                if (space_flag)
+                {
+                    start_index = i;
+                    end_index = i;
+                    space_flag = 0;
+                }
+                else
+                {
+                    end_index++;
+                }
+            }
+        }
+        INT slash_index = start_index-1;
+        INT empty_index = -1;
+        INT slash_flag = 0;
+        for (INT u = end_index; u >= start_index; u--)
+        {
+            if (inp[u] == '/')
+            {
+                slash_flag = 1;
+                slash_index = u;
+                break;
+            }
+        }
         setbuf(stdout, NULL);
         enableRawMode();
         memset(inp, '\0', 1000);
@@ -121,37 +157,11 @@ int main(int argc, char *argv[])
                 }
                 else if (c == 9)
                 { // TAB character
-                    // inp[pt++] = c;
-                    // for (int i = 0; i < 8; i++)
-                    // { // TABS should be 8 spaces
-                    //     printf(" ");
-                    // }
-                    INT inp_len = strlen(inp);
-                    INT slash_index = strlen(inp) - 1;
-                    INT empty_index = -1;
-                    INT slash_flag = 0;
-                    for (INT u = inp_len - 1; u >= 0; u--)
-                    {
-                        if (inp[u] == ' ')
-                        {
-                            empty_index = u;
-                            break;
-                        }
-                    }
-                    for (INT u = inp_len - 1; u >= 0; u--)
-                    {
-                        if (inp[u] == '/')
-                        {
-                            slash_flag = 1;
-                            slash_index = u;
-                            break;
-                        }
-                    }
                     if (slash_flag)
                     {
                         INT tab_dir_length = 0;
                         char *tab_dir_string = (char *)calloc(1000, sizeof(char));
-                        for (INT l = empty_index + 1; l <= slash_index; l++)
+                        for (INT l = start_index; l <= slash_index; l++)
                         {
                             tab_dir_string[tab_dir_length] = inp[l];
                             tab_dir_length++;
@@ -159,17 +169,12 @@ int main(int argc, char *argv[])
                         tab_dir_string[tab_dir_length] = '\0';
                         INT find_length = 0;
                         char *find_string = (char *)calloc(1000, sizeof(char));
-                        for (INT l = slash_index + 1; l < inp_len; l++)
+                        for (INT l = slash_index + 1; l <= end_index; l++)
                         {
                             find_string[find_length] = inp[l];
                             find_length++;
                         }
                         find_string[find_length] = '\0';
-                        if (find_length == 0)
-                        {
-                            perror("Empty find argument for command autocompletion");
-                            break;
-                        }
                         if (tab_dir_string[0] == '~')
                         {
                             char *final_tab_dir_string = (char *)calloc(1100, sizeof(char));
@@ -177,32 +182,27 @@ int main(int argc, char *argv[])
                             INT final_length = strlen(final_tab_dir_string);
                             final_tab_dir_string[final_length] = '\0';
                             strcat(final_tab_dir_string, &tab_dir_string[1]);
-                            autocomplete(final_tab_dir_string, find_string, correct_path);
+                            autocomplete(final_tab_dir_string, find_string, slash_index, input, end_index);
                         }
                         else
                         {
-                            autocomplete(tab_dir_string, find_string, correct_path);
+                            autocomplete(tab_dir_string, find_string, slash_index, input, end_index);
                         }
                     }
                     else
                     {
                         INT find_length = 0;
                         char *find_string = (char *)calloc(1000, sizeof(char));
-                        for (INT l = slash_index + 1; l < inp_len; l++)
+                        for (INT l = slash_index + 1; l <= end_index; l++)
                         {
                             find_string[find_length] = inp[l];
                             find_length++;
                         }
                         find_string[find_length] = '\0';
-                        if (find_length == 0)
-                        {
-                            perror("Empty find argument for command autocompletion");
-                            break;
-                        }
-                        char* dir = (char*)calloc(2,sizeof(char));
-                        dir[0]='.';
-                        dir[1]='\0';
-                        autocomplete(dir,find_string,correct_path);
+                        char *dir = (char *)calloc(2, sizeof(char));
+                        dir[0] = '.';
+                        dir[1] = '\0';
+                        autocomplete(dir, find_string, slash_index, input, end_index);
                     }
                 }
                 else if (c == 4)
