@@ -20,6 +20,7 @@
 #include <sys/resource.h>
 #include <termios.h>
 #include <ctype.h>
+#include "autocompletion.h"
 #include "linked_list.h"
 #include "prompt.h"
 #include "str_tok_and.h"

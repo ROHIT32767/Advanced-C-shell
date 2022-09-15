@@ -37,7 +37,6 @@ void enableRawMode()
         die("tcsetattr");
 }
 
-
 int main(int argc, char *argv[])
 {
     absolute_path = (char *)calloc(300, sizeof(char));
@@ -73,29 +72,167 @@ int main(int argc, char *argv[])
     history_path[D] = '\0';
     total_commands = readfromhistory();
     prompt_wait = 0;
+    char *inp = malloc(sizeof(char) * 1000);
+    char c;
     while (1)
     {
+        setbuf(stdout, NULL);
+        enableRawMode();
+        memset(inp, '\0', 1000);
+        int pt = 0;
         size_t size = 100;
         prompt(Time);
         char *tokens[1000];
         signal(SIGINT, ctrlc);
         signal(SIGTSTP, ctrlz);
         prompt_wait = 1;
-        INT Y = getline(&ptr, &size, stdin);
-        // ctrld
-        if (Y == -1)
+
+        /**********************************************/
+
+        while (read(STDIN_FILENO, &c, 1) == 1)
         {
-            printf("\n");
-            exit(0);
+            if (iscntrl(c))
+            {
+                if (c == 10)
+                    break;
+                else if (c == 27)
+                {
+                    char buf[3];
+                    buf[2] = 0;
+                    if (read(STDIN_FILENO, buf, 2) == 2)
+                    { // length of escape code
+                        printf("\rarrow key: %s", buf);
+                    }
+                }
+                else if (c == 127)
+                { // backspace
+                    if (pt > 0)
+                    {
+                        if (inp[pt - 1] == 9)
+                        {
+                            for (int i = 0; i < 7; i++)
+                            {
+                                printf("\b");
+                            }
+                        }
+                        inp[--pt] = '\0';
+                        printf("\b \b");
+                    }
+                }
+                else if (c == 9)
+                { // TAB character
+                    // inp[pt++] = c;
+                    // for (int i = 0; i < 8; i++)
+                    // { // TABS should be 8 spaces
+                    //     printf(" ");
+                    // }
+                    INT inp_len = strlen(inp);
+                    INT slash_index = strlen(inp) - 1;
+                    INT empty_index = -1;
+                    INT slash_flag = 0;
+                    for (INT u = inp_len - 1; u >= 0; u--)
+                    {
+                        if (inp[u] == ' ')
+                        {
+                            empty_index = u;
+                            break;
+                        }
+                    }
+                    for (INT u = inp_len - 1; u >= 0; u--)
+                    {
+                        if (inp[u] == '/')
+                        {
+                            slash_flag = 1;
+                            slash_index = u;
+                            break;
+                        }
+                    }
+                    if (slash_flag)
+                    {
+                        INT tab_dir_length = 0;
+                        char *tab_dir_string = (char *)calloc(1000, sizeof(char));
+                        for (INT l = empty_index + 1; l <= slash_index; l++)
+                        {
+                            tab_dir_string[tab_dir_length] = inp[l];
+                            tab_dir_length++;
+                        }
+                        tab_dir_string[tab_dir_length] = '\0';
+                        INT find_length = 0;
+                        char *find_string = (char *)calloc(1000, sizeof(char));
+                        for (INT l = slash_index + 1; l < inp_len; l++)
+                        {
+                            find_string[find_length] = inp[l];
+                            find_length++;
+                        }
+                        find_string[find_length] = '\0';
+                        if (find_length == 0)
+                        {
+                            perror("Empty find argument for command autocompletion");
+                            break;
+                        }
+                        if (tab_dir_string[0] == '~')
+                        {
+                            char *final_tab_dir_string = (char *)calloc(1100, sizeof(char));
+                            strcat(final_tab_dir_string, correct_path);
+                            INT final_length = strlen(final_tab_dir_string);
+                            final_tab_dir_string[final_length] = '\0';
+                            strcat(final_tab_dir_string, &tab_dir_string[1]);
+                            autocomplete(final_tab_dir_string, find_string, correct_path);
+                        }
+                        else
+                        {
+                            autocomplete(tab_dir_string, find_string, correct_path);
+                        }
+                    }
+                    else
+                    {
+                        INT find_length = 0;
+                        char *find_string = (char *)calloc(1000, sizeof(char));
+                        for (INT l = slash_index + 1; l < inp_len; l++)
+                        {
+                            find_string[find_length] = inp[l];
+                            find_length++;
+                        }
+                        find_string[find_length] = '\0';
+                        if (find_length == 0)
+                        {
+                            perror("Empty find argument for command autocompletion");
+                            break;
+                        }
+                        char* dir = (char*)calloc(2,sizeof(char));
+                        dir[0]='.';
+                        dir[1]='\0';
+                        autocomplete(dir,find_string,correct_path);
+                    }
+                }
+                else if (c == 4)
+                {
+                    exit(0);
+                }
+                else
+                {
+                    printf("%d\n", c);
+                }
+            }
+            else
+            {
+                inp[pt++] = c;
+                printf("%c", c);
+            }
         }
+        disableRawMode();
+
+        /*************************************************/
+        strcpy(input, inp);
+        INT Y = strlen(input);
         prompt_wait = 0;
         time(&start_seconds);
-        input[Y - 1] = '\0';
+        input[Y] = '\0';
         INT flag6 = 1;
         INT flag7 = 0;
-        for (INT i = 0; i < Y - 1; i++)
+        for (INT i = 0; i < Y; i++)
         {
-            for (INT j = i + 1; j < Y - 1; j++)
+            for (INT j = i + 1; j < Y; j++)
             {
                 if ((input[i] == ';') && (input[j] == ';'))
                 {
