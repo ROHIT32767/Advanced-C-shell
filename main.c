@@ -14,6 +14,30 @@ char *history_path;
 INT total_commands = 0;
 #define NAME_MAX1 300
 INT prompt_wait;
+void die(const char *s)
+{
+    perror(s);
+    exit(1);
+}
+struct termios orig_termios;
+
+void disableRawMode()
+{
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
+        die("tcsetattr");
+}
+void enableRawMode()
+{
+    if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
+        die("tcgetattr");
+    atexit(disableRawMode);
+    struct termios raw = orig_termios;
+    raw.c_lflag &= ~(ICANON | ECHO);
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
+        die("tcsetattr");
+}
+
+
 int main(int argc, char *argv[])
 {
     absolute_path = (char *)calloc(300, sizeof(char));
@@ -54,11 +78,12 @@ int main(int argc, char *argv[])
         size_t size = 100;
         prompt(Time);
         char *tokens[1000];
-        signal(SIGINT,ctrlc);
+        signal(SIGINT, ctrlc);
+        signal(SIGTSTP, ctrlz);
         prompt_wait = 1;
         INT Y = getline(&ptr, &size, stdin);
         // ctrld
-        if(Y==-1)
+        if (Y == -1)
         {
             printf("\n");
             exit(0);
@@ -74,7 +99,7 @@ int main(int argc, char *argv[])
             {
                 if ((input[i] == ';') && (input[j] == ';'))
                 {
-                    flag7=1;
+                    flag7 = 1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -90,7 +115,7 @@ int main(int argc, char *argv[])
                 }
                 else if ((input[i] == ';') && (input[j] == '&'))
                 {
-                    flag7=1;
+                    flag7 = 1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -106,7 +131,7 @@ int main(int argc, char *argv[])
                 }
                 else if ((input[i] == '&') && (input[j] == ';'))
                 {
-                    flag7=1;
+                    flag7 = 1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -122,7 +147,7 @@ int main(int argc, char *argv[])
                 }
                 else if ((input[i] == '&') && (input[j] == '&'))
                 {
-                    flag7=1;
+                    flag7 = 1;
                     for (INT k = i + 1; k < j; k++)
                     {
                         if ((input[k] != '\t') && (input[k] != ' ') && (input[k] != '\n'))
@@ -144,7 +169,7 @@ int main(int argc, char *argv[])
         }
         writetohistory(&H[0], input);
         INT token_count = 0;
-        if (flag6&&flag7)
+        if (flag6 && flag7)
         {
             perror("invalid syntax given as input");
             continue;
