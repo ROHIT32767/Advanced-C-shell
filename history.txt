@@ -1,20 +1,12 @@
-sleep 30 &
-sig 1 9
-jobs
-ls | grep *.txt
-ls -l > sample.txt
-gedit &
-sleep 100 &
-sig 1 9
-jobs
-gedit &
-jobs
-sleep 30 &
-gedit &
-nano &
-jobs
-sleep 100
-jobs
-ls
-ls | cat
-ls | grep main.c
+cd discover.c
+ls discover.c
+ls discover.
+ls discover.c -l
+cd discover.c -l
+ls discover.c -l
+ls io/
+ls bonus.c -l
+ls bonus.c 
+ls bonus.c -l
+ls io123/
+ls ctrlc.c -l

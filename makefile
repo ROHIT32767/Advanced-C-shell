@@ -76,9 +76,8 @@ ctrlz.o: ctrlz.c
 autocompletion.o: autocompletion.c
 	gcc $(flags) -c autocompletion.c
 
-clean:
-    rm *.o
-
+# clean:
+#     rm *.o
 
 # process_creation.o: Helpers/process_creation.c
 #     gcc $(flags) -c Helpers/process_creation.c

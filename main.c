@@ -76,42 +76,6 @@ int main(int argc, char *argv[])
     char c;
     while (1)
     {
-        INT inp_len = strlen(inp);
-        INT start_index = 0;
-        INT end_index = 0;
-        INT space_flag = 1;
-        for (INT i = 0; i < inp_len; i++)
-        {
-            if (inp[i] == ' ')
-            {
-                space_flag = 1;
-            }
-            else
-            {
-                if (space_flag)
-                {
-                    start_index = i;
-                    end_index = i;
-                    space_flag = 0;
-                }
-                else
-                {
-                    end_index++;
-                }
-            }
-        }
-        INT slash_index = start_index-1;
-        INT empty_index = -1;
-        INT slash_flag = 0;
-        for (INT u = end_index; u >= start_index; u--)
-        {
-            if (inp[u] == '/')
-            {
-                slash_flag = 1;
-                slash_index = u;
-                break;
-            }
-        }
         setbuf(stdout, NULL);
         enableRawMode();
         memset(inp, '\0', 1000);
@@ -122,11 +86,48 @@ int main(int argc, char *argv[])
         signal(SIGINT, ctrlc);
         signal(SIGTSTP, ctrlz);
         prompt_wait = 1;
+        INT return_value = 0;
 
         /**********************************************/
 
         while (read(STDIN_FILENO, &c, 1) == 1)
         {
+            INT inp_len = strlen(inp);
+            INT start_index = 0;
+            INT end_index = 0;
+            INT space_flag = 1;
+            for (INT i = 0; i < inp_len; i++)
+            {
+                if (inp[i] == ' ')
+                {
+                    space_flag = 1;
+                }
+                else
+                {
+                    if (space_flag)
+                    {
+                        start_index = i;
+                        end_index = i;
+                        space_flag = 0;
+                    }
+                    else
+                    {
+                        end_index++;
+                    }
+                }
+            }
+            INT slash_index = start_index - 1;
+            INT empty_index = -1;
+            INT slash_flag = 0;
+            for (INT u = end_index; u >= start_index; u--)
+            {
+                if (inp[u] == '/')
+                {
+                    slash_flag = 1;
+                    slash_index = u;
+                    break;
+                }
+            }
             if (iscntrl(c))
             {
                 if (c == 10)
@@ -182,11 +183,21 @@ int main(int argc, char *argv[])
                             INT final_length = strlen(final_tab_dir_string);
                             final_tab_dir_string[final_length] = '\0';
                             strcat(final_tab_dir_string, &tab_dir_string[1]);
-                            autocomplete(final_tab_dir_string, find_string, slash_index, input, end_index);
+                            return_value = autocomplete(final_tab_dir_string, find_string, inp, slash_index, end_index);
+                            if (return_value == -2)
+                            {
+                                break;
+                            }
+                            pt = strlen(inp);
                         }
                         else
                         {
-                            autocomplete(tab_dir_string, find_string, slash_index, input, end_index);
+                            return_value = autocomplete(tab_dir_string, find_string, inp, slash_index, end_index);
+                            if (return_value == -2)
+                            {
+                                break;
+                            }
+                            pt = strlen(inp);
                         }
                     }
                     else
@@ -198,11 +209,18 @@ int main(int argc, char *argv[])
                             find_string[find_length] = inp[l];
                             find_length++;
                         }
+                      //  printf("start_index is %lld slash_index is %lld  and end_index is %lld\n", start_index, slash_index, end_index);
                         find_string[find_length] = '\0';
+                      //  printf("find_string is %s\n", find_string);
                         char *dir = (char *)calloc(2, sizeof(char));
                         dir[0] = '.';
                         dir[1] = '\0';
-                        autocomplete(dir, find_string, slash_index, input, end_index);
+                        return_value = autocomplete(dir, find_string, inp, slash_index, end_index);
+                        if (return_value == -2)
+                        {
+                            break;
+                        }
+                        pt = strlen(inp);
                     }
                 }
                 else if (c == 4)
@@ -211,7 +229,7 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    printf("%d\n", c);
+                    printf("%c\n", c);
                 }
             }
             else
@@ -219,6 +237,10 @@ int main(int argc, char *argv[])
                 inp[pt++] = c;
                 printf("%c", c);
             }
+        }
+        if (return_value == -2)
+        {
+            continue;
         }
         disableRawMode();
 

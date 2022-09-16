@@ -16,12 +16,14 @@ int sortstring(const void *str1, const void *str2)
 -2 for perrors
 
 */
-long long int autocomplete(char *dir, char *input_find, INT slash_index, char *input,INT end_index)
+long long int autocomplete(char *dir, char *input_find,char *input,INT slash_index,INT end_index)
 {
+   // printf("Hello\n");
     char *print_string = (char *)calloc(1000, sizeof(char));
     print_string[0] = '\0';
     struct dirent **name_list;
     INT num_directory_entries = scandir(dir, &name_list, NULL, alphasort);
+  //  printf("num_directory entries is %lld\n",num_directory_entries);
     if (num_directory_entries == -1)
     {
         if (errno == ENOTDIR)
@@ -64,6 +66,7 @@ long long int autocomplete(char *dir, char *input_find, INT slash_index, char *i
             dir_index = i;
         }
     }
+  //  printf("found_strings_index is %lld\n",found_strings_index);
     if (found_strings_index == 1)
     {
         char *string = (char *)calloc(1000, sizeof(char));
@@ -74,7 +77,7 @@ long long int autocomplete(char *dir, char *input_find, INT slash_index, char *i
         if (R == -1)
         {
             perror("Invalid path to lstat in autocompletion");
-            return;
+            return -2;
         }
         INT J = S_ISDIR(fs.st_mode);
         INT F = S_ISREG(fs.st_mode);
@@ -84,18 +87,19 @@ long long int autocomplete(char *dir, char *input_find, INT slash_index, char *i
             INT print_length = strlen(print_string);
             print_string[print_length] = '/';
             print_string[print_length + 1] = '\0';
-            INT diff=end_index-slash_index;
-            printf("%s",input[diff]);
+            input[slash_index + 1] = '\0';
+            strcat(input, print_string);
+            printf("%s",&input[end_index+1]);
         }
         else if (F)
         {
             strcat(print_string, &(name_list[dir_index]->d_name)[0]);
             INT print_length = strlen(print_string);
-            print_string[print_length] = '\0';
+            print_string[print_length] = ' ';
+            print_string[print_length+1] = '\0';
             input[slash_index + 1] = '\0';
             strcat(input, print_string);
-            INT diff=end_index-slash_index;
-            printf("%s",input[diff]);
+            printf("%s ",&input[end_index+1]);
         }
     }
     else
@@ -106,23 +110,23 @@ long long int autocomplete(char *dir, char *input_find, INT slash_index, char *i
         {
             char *string = (char *)calloc(1000, sizeof(char));
             strcpy(string, &dir[0]);
-            strcpy(string, &(name_list[i]->d_name)[0]);
+            strcpy(string, found_strings[i]);
             struct stat fs;
             INT R = lstat(string, &fs);
             if (R == -1)
             {
                 perror("Invalid path to lstat in autocompletion");
-                return;
+                return -2;
             }
             INT J = S_ISDIR(fs.st_mode);
             INT F = S_ISREG(fs.st_mode);
             if (J)
             {
-                printf("%s/\n", name_list[i]->d_name);
+                printf("%s/\n", found_strings[i]);
             }
             else if (F)
             {
-                printf("%s\n", name_list[i]->d_name);
+                printf("%s\n", found_strings[i]);
             }
         }
         INT len1 = strlen(found_strings[0]);
@@ -142,7 +146,7 @@ long long int autocomplete(char *dir, char *input_find, INT slash_index, char *i
         }
         INT display_size = 1000;
         char *display = (char *)calloc(display_size, sizeof(char));
-        sprintf(display, "%s<%s@%s:%s%s>\033[0m", KMAG, user_name, system_name, relative_path, time);
+        sprintf(display, "%s<%s@%s:%s>\033[0m", KMAG, user_name, system_name, relative_path);
         write(1, display, strlen(display));
         input[slash_index + 1] = '\0';
         strcat(input, print_string);
@@ -151,4 +155,5 @@ long long int autocomplete(char *dir, char *input_find, INT slash_index, char *i
         printf("%s", input);
         free(print_string);
     }
+    return 0;
 }
