@@ -101,6 +101,11 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
             input[slash_index + 1] = '\0';
             strcat(input, print_string);
             printf("%s", &input[end_index + 1]);
+            INT display_size = 1000;
+            char *display = (char *)calloc(display_size, sizeof(char));
+            sprintf(display, "\r%s<%s@%s:%s>\033[0m", KMAG, user_name, system_name, relative_path);
+            write(1, display, strlen(display));
+            printf("%s", input);
         }
         else if (F)
         {
@@ -110,7 +115,13 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
             print_string[print_length + 1] = '\0';
             input[slash_index + 1] = '\0';
             strcat(input, print_string);
-            printf("%s", &input[end_index + 1]);
+            INT display_size = 1000;
+            char *display = (char *)calloc(display_size, sizeof(char));
+            sprintf(display, "\r%s<%s@%s:%s>\033[0m", KMAG, user_name, system_name, relative_path);
+            write(1, display, strlen(display));
+            printf("%s", input);
+
+            // printf("%s", &input[end_index + 1]);
         }
     }
     else
