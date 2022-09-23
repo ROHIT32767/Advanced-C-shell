@@ -18,7 +18,7 @@ int sortstring(const void *str1, const void *str2)
 */
 long long int autocomplete(char *dir, char *input_find, char *input, INT slash_index, INT end_index)
 {
-    // printf("Hello\n");
+
     char *print_string = (char *)calloc(1000, sizeof(char));
     print_string[0] = '\0';
     struct dirent **name_list;
@@ -28,6 +28,7 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
     {
         if (errno == ENOTDIR)
         {
+            printf("\n");
             perror("Directory not found in autocomplete : ");
             return -2;
         }
@@ -39,7 +40,8 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
     }
     if (num_directory_entries == 0)
     {
-        perror("NUmber of directory entries is 0 in autocompletion");
+        printf("\n");
+        perror("Number of directory entries is 0 in autocompletion");
         return -2;
     }
     qsort(name_list, num_directory_entries, sizeof(name_list[0]), compare2);
@@ -53,13 +55,13 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
     INT dir_index = -1;
     for (INT i = 0; i < num_directory_entries; i++)
     {
-        if (strlen(input_find) == 0)
+        if (strlen(input_find) == 0 && (strcmp(name_list[i]->d_name, ".") != 0) && (strcmp(name_list[i]->d_name, "..") != 0))
         {
             strcpy(found_strings[found_strings_index], name_list[i]->d_name);
             found_strings_index++;
             dir_index = i;
         }
-        else if (strncmp(input_find, name_list[i]->d_name, find_len) == 0)
+        else if (strncmp(input_find, name_list[i]->d_name, find_len) == 0 && (strcmp(name_list[i]->d_name, ".") != 0) && (strcmp(name_list[i]->d_name, "..") != 0))
         {
             strcpy(found_strings[found_strings_index], name_list[i]->d_name);
             found_strings_index++;
@@ -75,11 +77,16 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
     {
         char *string = (char *)calloc(1000, sizeof(char));
         strcpy(string, &dir[0]);
-        strcpy(string, &(name_list[dir_index]->d_name)[0]);
+        if (strcmp(&dir[0], ".") == 0)
+        {
+            strcat(string, "/");
+        }
+        strcat(string, &(name_list[dir_index]->d_name)[0]);
         struct stat fs;
         INT R = lstat(string, &fs);
         if (R == -1)
         {
+            printf("string is %s\n", string);
             perror("Invalid path to lstat in autocompletion");
             return -2;
         }
@@ -115,12 +122,17 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
         {
             char *string = (char *)calloc(1000, sizeof(char));
             strcpy(string, &dir[0]);
-            strcpy(string, found_strings[i]);
+            if (strcmp(&dir[0], ".") == 0)
+            {
+                strcat(string, "/");
+            }
+            strcat(string, found_strings[i]);
             struct stat fs;
             INT R = lstat(string, &fs);
             if (R == -1)
             {
-                perror("Invalid path to lstat in autocompletion");
+                printf("dir is %s and string is %s\n", &dir[0], string);
+                perror("Invalid directory in lstat in autocompletion");
                 return -2;
             }
             INT J = S_ISDIR(fs.st_mode);

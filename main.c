@@ -228,7 +228,6 @@ int main(int argc, char *argv[])
                 }
                 else if (c == 4)
                 {
-                    printf("ENTER KEY is entered\n");
                     printf("\n");
                     exit(0);
                 }
