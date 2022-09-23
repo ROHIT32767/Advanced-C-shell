@@ -98,7 +98,7 @@ void fg_func(char *string[], char *correct_path, INT num_tokens, List *LIST,char
             if (exec_return == -1)
             {
                 perror(NULL);
-                return;
+                exit(0);
             }
             for (INT i = 0; i < num_tokens; i++)
             {
