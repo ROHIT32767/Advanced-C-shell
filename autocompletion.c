@@ -120,8 +120,6 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
             sprintf(display, "\r%s<%s@%s:%s>\033[0m", KMAG, user_name, system_name, relative_path);
             write(1, display, strlen(display));
             printf("%s", input);
-
-            // printf("%s", &input[end_index + 1]);
         }
     }
     else
