@@ -1,20 +1,20 @@
-ls historytxt
-ls history.txt
-ls history.h 
-sleep 100 &
-jobs
-gedit           &
-jobs
-sleep 2 ; sleep 3
-sleep 10 ; sleep 20
-sleep 10;sleep 20 ;sleep 3
-sleep 10
-sleep 100 & sleep 200
 sleep 10
 jobs
-sleep 100 & sleep 200
+sleep 10 & sleep 20
 jobs
-cd io123
-ls ./i2
-ls ./i2/i3
-ls io123/i2/i3/
+sleep 10 &
+cd ;;
+cd ;       ;
+sleep 10 &
+sleep 0
+jobs
+sleep 5
+jobs
+sleep 5 & sleep 10
+jobs
+fg 1
+jobs
+sleep 10
+jobs
+l
+a
