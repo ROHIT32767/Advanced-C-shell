@@ -83,7 +83,7 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
         }
         strcat(string, &(name_list[dir_index]->d_name)[0]);
         struct stat fs;
-        INT R = lstat(string, &fs);
+        INT R = stat(string, &fs);
         if (R == -1)
         {
             printf("string is %s\n", string);
@@ -137,7 +137,7 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
             }
             strcat(string, found_strings[i]);
             struct stat fs;
-            INT R = lstat(string, &fs);
+            INT R = stat(string, &fs);
             if (R == -1)
             {
                 printf("dir is %s and string is %s\n", &dir[0], string);

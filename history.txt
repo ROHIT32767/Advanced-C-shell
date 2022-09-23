@@ -1,7 +1,3 @@
-cd first
-ls d
-cd first
-cd first/
 ls di1
 cd ..
 cd io123
@@ -18,3 +14,7 @@ ls
 cd rohit172
 ls
 ls Downloads/
+ls
+cd /
+ls
+cd /
