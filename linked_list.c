@@ -21,13 +21,15 @@ int get_size(List *L)
 	}
 	return ans;
 }
-NodePtr MakeNode(int X, char *string,int index)
+NodePtr MakeNode(int X, char *string,char* full_process_name,int index)
 {
 	NodePtr P = (NodePtr)malloc(sizeof(struct node));
 	assert(P != NULL);
 	P->Element = X;
 	P->process_name = (char *)malloc(600 * sizeof(char));
+	P->full_name=(char*)malloc(700*sizeof(char));
 	strcpy(P->process_name, string);
+	strcpy(P->full_name,full_process_name);
 	P->idx=index;
 	P->Next = NULL;
 	P->Prev = NULL;
@@ -101,17 +103,17 @@ int DELETE(List *L, int index)
 	return -1;
 }
 
-void insert(List *L, int x, char *string,int index)
+void insert(List *L, int x, char *string,char* full_name,int index)
 {
 	if (IsEmpty(L))
 	{
-		L->root = MakeNode(x, string,index);
+		L->root = MakeNode(x, string,full_name,index);
 		L->tail = L->root;
 	}
 	else
 	{
 		NodePtr P = L->tail;
-		P->Next = MakeNode(x, string,index);
+		P->Next = MakeNode(x, string,full_name,index);
 		P->Next->Prev = P;
 		L->tail = P->Next;
 	}
@@ -142,8 +144,8 @@ char *find_string(List *L, int X)
 	{
 		if ((P->Element) == X)
 		{
-			char *X = P->process_name;
-			return X;
+			char *Y = P->process_name;
+			return Y;
 		}
 		index++;
 		P = P->Next;
@@ -157,4 +159,21 @@ int find_index(List* L)
 		return L->tail->idx+1;
 	}
 	return 1;
+}
+char *find_full_name(List *L, int X)
+{
+	NodePtr P = L->root;
+	int index = 0;
+	int ans = -1;
+	while (P != NULL)
+	{
+		if ((P->Element) == X)
+		{
+			char *Y = P->full_name;
+			return Y;
+		}
+		index++;
+		P = P->Next;
+	}
+	return NULL;
 }

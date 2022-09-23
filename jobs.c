@@ -101,7 +101,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                         INT len3 = strlen(print_process_status);
                         print_process_status[len3] = '\0';
                     }
-                    printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->process_name, nodeptr_array[i]->Element);
+                    printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->full_name, nodeptr_array[i]->Element);
                 }
             }
         }
@@ -156,7 +156,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                     {
                         continue;
                     }
-                    printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->process_name, nodeptr_array[i]->Element);
+                    printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->full_name, nodeptr_array[i]->Element);
                 }
             }
         }
@@ -211,7 +211,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                     {
                         continue;
                     }
-                    printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->process_name, nodeptr_array[i]->Element);
+                    printf("[%d] %s %s [%d]\n", nodeptr_array[i]->idx, print_process_status, nodeptr_array[i]->full_name, nodeptr_array[i]->Element);
                 }
             }
         }

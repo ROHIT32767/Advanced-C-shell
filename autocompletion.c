@@ -16,14 +16,14 @@ int sortstring(const void *str1, const void *str2)
 -2 for perrors
 
 */
-long long int autocomplete(char *dir, char *input_find,char *input,INT slash_index,INT end_index)
+long long int autocomplete(char *dir, char *input_find, char *input, INT slash_index, INT end_index)
 {
-   // printf("Hello\n");
+    // printf("Hello\n");
     char *print_string = (char *)calloc(1000, sizeof(char));
     print_string[0] = '\0';
     struct dirent **name_list;
     INT num_directory_entries = scandir(dir, &name_list, NULL, alphasort);
-  //  printf("num_directory entries is %lld\n",num_directory_entries);
+    //  printf("num_directory entries is %lld\n",num_directory_entries);
     if (num_directory_entries == -1)
     {
         if (errno == ENOTDIR)
@@ -66,8 +66,12 @@ long long int autocomplete(char *dir, char *input_find,char *input,INT slash_ind
             dir_index = i;
         }
     }
-  //  printf("found_strings_index is %lld\n",found_strings_index);
-    if (found_strings_index == 1)
+    //  printf("found_strings_index is %lld\n",found_strings_index);
+    if (found_strings_index == 0)
+    {
+        return;
+    }
+    else if (found_strings_index == 1)
     {
         char *string = (char *)calloc(1000, sizeof(char));
         strcpy(string, &dir[0]);
@@ -89,23 +93,24 @@ long long int autocomplete(char *dir, char *input_find,char *input,INT slash_ind
             print_string[print_length + 1] = '\0';
             input[slash_index + 1] = '\0';
             strcat(input, print_string);
-            printf("%s",&input[end_index+1]);
+            printf("%s", &input[end_index + 1]);
         }
         else if (F)
         {
             strcat(print_string, &(name_list[dir_index]->d_name)[0]);
             INT print_length = strlen(print_string);
             print_string[print_length] = ' ';
-            print_string[print_length+1] = '\0';
+            print_string[print_length + 1] = '\0';
             input[slash_index + 1] = '\0';
             strcat(input, print_string);
-            printf("%s ",&input[end_index+1]);
+            printf("%s", &input[end_index + 1]);
         }
     }
     else
     {
         qsort(found_strings, found_strings_index, sizeof(found_strings[0]), sortstring);
         INT same_prefix;
+        printf("\n");
         for (INT i = 0; i < found_strings_index; i++)
         {
             char *string = (char *)calloc(1000, sizeof(char));

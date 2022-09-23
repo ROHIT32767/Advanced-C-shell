@@ -1,12 +1,16 @@
-cd discover.c
-ls discover.c
-ls discover.
-ls discover.c -l
-cd discover.c -l
-ls discover.c -l
-ls io/
-ls bonus.c -l
-ls bonus.c 
-ls bonus.c -l
-ls io123/
-ls ctrlc.c -l
+cd ~/io123
+ls history.c
+ls ~/hist
+ls ~/history.c
+cd /
+cd ~
+ls /
+cd /
+cd ~
+ls historytxt
+ls history.txt
+ls history.h 
+sleep 100 &
+jobs
+gedit           &
+jobs

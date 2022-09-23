@@ -131,7 +131,10 @@ int main(int argc, char *argv[])
             if (iscntrl(c))
             {
                 if (c == 10)
+                {
+                    printf("\n");
                     break;
+                }
                 else if (c == 27)
                 {
                     char buf[3];
@@ -209,9 +212,9 @@ int main(int argc, char *argv[])
                             find_string[find_length] = inp[l];
                             find_length++;
                         }
-                      //  printf("start_index is %lld slash_index is %lld  and end_index is %lld\n", start_index, slash_index, end_index);
+                        //  printf("start_index is %lld slash_index is %lld  and end_index is %lld\n", start_index, slash_index, end_index);
                         find_string[find_length] = '\0';
-                      //  printf("find_string is %s\n", find_string);
+                        //  printf("find_string is %s\n", find_string);
                         char *dir = (char *)calloc(2, sizeof(char));
                         dir[0] = '.';
                         dir[1] = '\0';
@@ -225,11 +228,13 @@ int main(int argc, char *argv[])
                 }
                 else if (c == 4)
                 {
+                    printf("ENTER KEY is entered\n");
+                    printf("\n");
                     exit(0);
                 }
                 else
                 {
-                    printf("%c\n", c);
+                    printf("%d\n", c);
                 }
             }
             else
@@ -240,6 +245,7 @@ int main(int argc, char *argv[])
         }
         if (return_value == -2)
         {
+            return_value = 0;
             continue;
         }
         disableRawMode();

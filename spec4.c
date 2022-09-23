@@ -1,7 +1,7 @@
 #include "headers.h"
 extern INT num_bg_processes;
 extern time_t start_seconds;
-void bg_func(char *string[], char *correct_path, List *LIST, INT num_tokens)
+void bg_func(char *string[], char *correct_path, List *LIST, INT num_tokens,char* full_name)
 {
     INT forkReturn = fork();
     if (forkReturn == -1)
@@ -53,12 +53,12 @@ void bg_func(char *string[], char *correct_path, List *LIST, INT num_tokens)
         else
         {
             printf("[%d] %lld\n", find_index(LIST), forkReturn);
-            insert(LIST, forkReturn, string[0], find_index(LIST));
+            insert(LIST, forkReturn, string[0],full_name,find_index(LIST));
             signal(SIGCHLD, interrupt_handler);
         }
     }
 }
-void fg_func(char *string[], char *correct_path, INT num_tokens, List *LIST)
+void fg_func(char *string[], char *correct_path, INT num_tokens, List *LIST,char* full_name)
 {
     pid_t forkReturn = fork();
     if (forkReturn == -1)
@@ -134,7 +134,7 @@ void fg_func(char *string[], char *correct_path, INT num_tokens, List *LIST)
             }
             int status;
             pid_t wpid;
-            insert(LIST, forkReturn, modify[0], find_index(LIST));
+            insert(LIST, forkReturn, modify[0],full_name,find_index(LIST));
             wpid = waitpid(forkReturn, &status, WSTOPPED);
             if (!WIFSTOPPED(status))
             {
@@ -150,14 +150,14 @@ void fg_func(char *string[], char *correct_path, INT num_tokens, List *LIST)
     }
 }
 
-void spec4_func(char *string[], char *correct, long long int last, List *LIST, INT num_tokens)
+void spec4_func(char *string[], char *correct, long long int last, List *LIST, INT num_tokens,char* full_name)
 {
     if (last)
     {
-        fg_func(string, correct, num_tokens,LIST);
+        fg_func(string, correct, num_tokens,LIST,full_name);
     }
     else
     {
-        bg_func(string, correct, LIST, num_tokens);
+        bg_func(string, correct, LIST, num_tokens,full_name);
     }
 }
