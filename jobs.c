@@ -17,10 +17,12 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
         if (strcmp(string[0], "-r") == 0)
         {
             running = 1;
+            // printf("running\n");
         }
         else if (strcmp(string[0], "-s") == 0)
         {
             stopped = 1;
+            //  printf("stopped\n");
         }
         else
         {
@@ -146,7 +148,7 @@ INT jobs(char *string[], INT num_tokens, List *LIST)
                     char *process_status = line[2];
                     char *print_process_status = (char *)calloc(15, sizeof(char));
                     print_process_status[0] = '\0';
-                    if (strcmp(process_status, "R") == 0)
+                    if (strcmp(process_status, "T") != 0)
                     {
                         strcat(print_process_status, "Running");
                         INT len3 = strlen(print_process_status);

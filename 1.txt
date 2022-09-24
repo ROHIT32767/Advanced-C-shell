@@ -1,0 +1,154 @@
+total 796
+-rw-r--r--   1        rohit172        rohit172       10 Sep 24 22:29 [37m               1.txt[0m
+-rw-rw-r--   1        rohit172        rohit172     6334 Sep 24 18:39 [37m    autocompletion.c[0m
+-rw-rw-r--   1        rohit172        rohit172      156 Sep 23 16:25 [37m    autocompletion.h[0m
+-rw-rw-r--   1        rohit172        rohit172    18736 Sep 24 20:31 [37m    autocompletion.o[0m
+-rw-rw-r--   1        rohit172        rohit172      753 Sep 23 16:25 [37m                bg.c[0m
+-rw-rw-r--   1        rohit172        rohit172      114 Sep 23 16:25 [37m                bg.h[0m
+-rw-rw-r--   1        rohit172        rohit172     8480 Sep 24 20:31 [37m                bg.o[0m
+-rw-rw-r--   1        rohit172        rohit172     3755 Sep 24 18:46 [37m                cd.c[0m
+-rw-rw-r--   1        rohit172        rohit172      126 Sep 23 16:25 [37m                cd.h[0m
+-rw-rw-r--   1        rohit172        rohit172    11032 Sep 24 20:31 [37m                cd.o[0m
+-rw-rw-r--   1        rohit172        rohit172      461 Sep 24 21:10 [37m             ctrlc.c[0m
+-rw-rw-r--   1        rohit172        rohit172       58 Sep 23 16:25 [37m             ctrlc.h[0m
+-rw-rw-r--   1        rohit172        rohit172     7944 Sep 24 21:10 [37m             ctrlc.o[0m
+-rw-rw-r--   1        rohit172        rohit172      459 Sep 24 21:10 [37m             ctrlz.c[0m
+-rw-rw-r--   1        rohit172        rohit172       58 Sep 23 16:25 [37m             ctrlz.h[0m
+-rw-rw-r--   1        rohit172        rohit172     7944 Sep 24 21:10 [37m             ctrlz.o[0m
+-rw-rw-r--   1        rohit172        rohit172    17966 Sep 23 16:25 [37m          discover.c[0m
+-rw-rw-r--   1        rohit172        rohit172      185 Sep 23 16:25 [37m          discover.h[0m
+-rw-rw-r--   1        rohit172        rohit172    27544 Sep 24 20:31 [37m          discover.o[0m
+-rw-rw-r--   1        rohit172        rohit172      432 Sep 23 16:25 [37m              echo.c[0m
+-rw-rw-r--   1        rohit172        rohit172       91 Sep 23 16:25 [37m              echo.h[0m
+-rw-rw-r--   1        rohit172        rohit172     7608 Sep 24 20:31 [37m              echo.o[0m
+-rw-rw-r--   1        rohit172        rohit172     1726 Sep 24 18:47 [37m                fg.c[0m
+-rw-rw-r--   1        rohit172        rohit172      116 Sep 23 16:25 [37m                fg.h[0m
+-rw-rw-r--   1        rohit172        rohit172     9728 Sep 24 20:31 [37m                fg.o[0m
+-rw-rw-r--   1        rohit172        rohit172     1129 Sep 24 18:43 [37m           headers.h[0m
+-rw-rw-r--   1        rohit172        rohit172     3835 Sep 23 16:25 [37m           history.c[0m
+-rw-rw-r--   1        rohit172        rohit172      163 Sep 23 16:25 [37m           history.h[0m
+-rw-rw-r--   1        rohit172        rohit172    13712 Sep 24 20:31 [37m           history.o[0m
+-rw-rw-r--   1        rohit172        rohit172      201 Sep 24 22:29 [37m         history.txt[0m
+-rw-rw-r--   1        rohit172        rohit172     7488 Sep 24 18:54 [37m    io_redirection.c[0m
+-rw-rw-r--   1        rohit172        rohit172      200 Sep 23 16:25 [37m    io_redirection.h[0m
+-rw-rw-r--   1        rohit172        rohit172    12976 Sep 24 20:31 [37m    io_redirection.o[0m
+-rw-rw-r--   1        rohit172        rohit172     8582 Sep 24 20:51 [37m              jobs.c[0m
+-rw-rw-r--   1        rohit172        rohit172      140 Sep 23 16:25 [37m              jobs.h[0m
+-rw-rw-r--   1        rohit172        rohit172    17736 Sep 24 20:51 [37m              jobs.o[0m
+-rw-rw-r--   1        rohit172        rohit172     2652 Sep 23 16:25 [37m       linked_list.c[0m
+-rw-rw-r--   1        rohit172        rohit172      651 Sep 23 16:25 [37m       linked_list.h[0m
+-rw-rw-r--   1        rohit172        rohit172    12488 Sep 24 20:31 [37m       linked_list.o[0m
+-rw-rw-r--   1        rohit172        rohit172     1110 Sep 23 16:25 [37m       linked_main.c[0m
+-rw-rw-r--   1        rohit172        rohit172    26712 Sep 23 16:25 [37m                ls.c[0m
+-rw-rw-r--   1        rohit172        rohit172      174 Sep 23 16:25 [37m                ls.h[0m
+-rw-rw-r--   1        rohit172        rohit172    42288 Sep 24 20:31 [37m                ls.o[0m
+-rwxrwxr-x   1        rohit172        rohit172   157768 Sep 24 22:27 [32m                main[0m
+-rw-rw-r--   1        rohit172        rohit172    12384 Sep 23 16:25 [37m              main.c[0m
+-rw-rw-r--   1        rohit172        rohit172     1818 Sep 24 18:42 [37m            makefile[0m
+-rw-rw-r--   1        rohit172        rohit172     5510 Sep 23 16:25 [37m             pinfo.c[0m
+-rw-rw-r--   1        rohit172        rohit172       96 Sep 23 16:25 [37m             pinfo.h[0m
+-rw-rw-r--   1        rohit172        rohit172    14544 Sep 24 20:31 [37m             pinfo.o[0m
+-rw-rw-r--   1        rohit172        rohit172     4212 Sep 24 20:21 [37m              pipe.c[0m
+-rw-rw-r--   1        rohit172        rohit172      254 Sep 23 16:25 [37m              pipe.h[0m
+-rw-rw-r--   1        rohit172        rohit172    12360 Sep 24 20:31 [37m              pipe.o[0m
+-rw-rw-r--   1        rohit172        rohit172    13289 Sep 24 21:03 [37m   process_command.c[0m
+-rw-rw-r--   1        rohit172        rohit172      275 Sep 23 16:25 [37m   process_command.h[0m
+-rw-rw-r--   1        rohit172        rohit172    19824 Sep 24 21:03 [37m   process_command.o[0m
+-rw-rw-r--   1        rohit172        rohit172      347 Sep 23 16:25 [37m            prompt.c[0m
+-rw-rw-r--   1        rohit172        rohit172       70 Sep 23 16:25 [37m            prompt.h[0m
+-rw-rw-r--   1        rohit172        rohit172     7624 Sep 24 20:31 [37m            prompt.o[0m
+-rw-rw-r--   1        rohit172        rohit172      242 Sep 24 22:25 [37m               PWD.c[0m
+-rw-rw-r--   1        rohit172        rohit172       74 Sep 23 16:25 [37m               PWD.h[0m
+-rw-rw-r--   1        rohit172        rohit172     7232 Sep 24 22:27 [37m               PWD.o[0m
+-rw-rw-r--   1        rohit172        rohit172     8542 Sep 24 20:16 [37m           README.md[0m
+-rw-rw-r--   1        rohit172        rohit172      855 Sep 24 21:04 [37m               sig.c[0m
+-rw-rw-r--   1        rohit172        rohit172      141 Sep 23 16:25 [37m               sig.h[0m
+-rw-rw-r--   1        rohit172        rohit172     8560 Sep 24 21:04 [37m               sig.o[0m
+-rw-rw-r--   1        rohit172        rohit172     1815 Sep 23 16:25 [37m       sig_handler.c[0m
+-rw-rw-r--   1        rohit172        rohit172       82 Sep 23 16:25 [37m       sig_handler.h[0m
+-rw-rw-r--   1        rohit172        rohit172    10832 Sep 24 20:31 [37m       sig_handler.o[0m
+-rw-rw-r--   1        rohit172        rohit172     4910 Sep 23 17:36 [37m             spec4.c[0m
+-rw-rw-r--   1        rohit172        rohit172      399 Sep 23 16:25 [37m             spec4.h[0m
+-rw-rw-r--   1        rohit172        rohit172    16080 Sep 24 20:31 [37m             spec4.o[0m
+-rw-rw-r--   1        rohit172        rohit172      809 Sep 23 16:25 [37m       str_tok_and.c[0m
+-rw-rw-r--   1        rohit172        rohit172      179 Sep 23 16:25 [37m       str_tok_and.h[0m
+-rw-rw-r--   1        rohit172        rohit172     8992 Sep 24 20:31 [37m       str_tok_and.o[0m
+[34m.[0m
+[34m..[0m
+[34m.git[0m
+[37m.gitignore[0m
+[34m.vscode[0m
+[37m1.txt[0m
+[37mautocompletion.c[0m
+[37mautocompletion.h[0m
+[37mautocompletion.o[0m
+[37mbg.c[0m
+[37mbg.h[0m
+[37mbg.o[0m
+[37mcd.c[0m
+[37mcd.h[0m
+[37mcd.o[0m
+[37mctrlc.c[0m
+[37mctrlc.h[0m
+[37mctrlc.o[0m
+[37mctrlz.c[0m
+[37mctrlz.h[0m
+[37mctrlz.o[0m
+[37mdiscover.c[0m
+[37mdiscover.h[0m
+[37mdiscover.o[0m
+[37mecho.c[0m
+[37mecho.h[0m
+[37mecho.o[0m
+[37mfg.c[0m
+[37mfg.h[0m
+[37mfg.o[0m
+[37mheaders.h[0m
+[37mhistory.c[0m
+[37mhistory.h[0m
+[37mhistory.o[0m
+[37mhistory.txt[0m
+[37mio_redirection.c[0m
+[37mio_redirection.h[0m
+[37mio_redirection.o[0m
+[37mjobs.c[0m
+[37mjobs.h[0m
+[37mjobs.o[0m
+[37mlinked_list.c[0m
+[37mlinked_list.h[0m
+[37mlinked_list.o[0m
+[37mlinked_main.c[0m
+[37mls.c[0m
+[37mls.h[0m
+[37mls.o[0m
+[32mmain[0m
+[37mmain.c[0m
+[37mmakefile[0m
+[37mpinfo.c[0m
+[37mpinfo.h[0m
+[37mpinfo.o[0m
+[37mpipe.c[0m
+[37mpipe.h[0m
+[37mpipe.o[0m
+[37mprocess_command.c[0m
+[37mprocess_command.h[0m
+[37mprocess_command.o[0m
+[37mprompt.c[0m
+[37mprompt.h[0m
+[37mprompt.o[0m
+[37mPWD.c[0m
+[37mPWD.h[0m
+[37mPWD.o[0m
+[37mREADME.md[0m
+[37msig.c[0m
+[37msig.h[0m
+[37msig.o[0m
+[37msig_handler.c[0m
+[37msig_handler.h[0m
+[37msig_handler.o[0m
+[37mspec4.c[0m
+[37mspec4.h[0m
+[37mspec4.o[0m
+[37mstr_tok_and.c[0m
+[37mstr_tok_and.h[0m
+[37mstr_tok_and.o[0m

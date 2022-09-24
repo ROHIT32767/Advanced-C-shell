@@ -10,7 +10,7 @@ INT str_tok_whitespaces(char *tokens[], char *input)
     }
     return Token_count;
 }
-void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last, List *LIST)
+long long int process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last, List *LIST)
 {
     char *token[1000];
     char *reuse_string = (char *)calloc(1000, sizeof(char));
@@ -38,12 +38,12 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 if (num_io_type > 1)
                 {
                     perror("Too many i/o redirection arguments in one token of command");
-                    return;
+                    return -1;
                 }
                 if (less_than)
                 {
                     perror("multiple instances of < are not allowed in a single command");
-                    return;
+                    return -1;
                 }
                 less_than = 1;
                 if (i != num_tokens - 1)
@@ -56,7 +56,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("last token is <,which is not valid");
-                    return;
+                    return -1;
                 }
             }
             else if (strcmp(token[i], ">") == 0)
@@ -64,12 +64,12 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 if (num_io_type > 1)
                 {
                     perror("Too many i/o redirection arguments in one token of command");
-                    return;
+                    return -1;
                 }
                 if (greater_than)
                 {
                     perror("multiple instances of > are not allowed in a single command");
-                    return;
+                    return -1;
                 }
                 greater_than = 1;
                 if (i != num_tokens - 1)
@@ -82,7 +82,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("last token is >,which is not valid");
-                    return;
+                    return -1;
                 }
             }
             else if (strcmp(token[i], ">>") == 0)
@@ -90,12 +90,12 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 if (num_io_type > 1)
                 {
                     perror("Too many i/o redirection arguments in one token of command");
-                    return;
+                    return -1;
                 }
                 if (double_greater_than)
                 {
                     perror("multiple instances of >> are not allowed in a single command");
-                    return;
+                    return -1;
                 }
                 double_greater_than = 1;
                 if (i != num_tokens - 1)
@@ -108,7 +108,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("last token is >>,which is not valid");
-                    return;
+                    return -1;
                 }
             }
         }
@@ -132,7 +132,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     perror(NULL);
                     return -1;
                 }
-                return;
+                return -1;
             }
             else if (io_return == 0)
             {
@@ -162,7 +162,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     else
                     {
                         perror("syntax error");
-                        return;
+                        return -1;
                     }
                 }
                 else if (strcmp(tokens_new[0], "pwd") == 0)
@@ -186,7 +186,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     else
                     {
                         perror("Too many arguments for history");
-                        return;
+                        return -1;
                     }
                 }
                 else if (strcmp(tokens_new[0], "discover") == 0)
@@ -203,7 +203,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     else
                     {
                         perror("Too many arguments for command pinfo");
-                        return;
+                        return -1;
                     }
                 }
                 else if (strcmp(tokens_new[0], "jobs") == 0)
@@ -214,8 +214,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     }
                     else
                     {
-                        perror("Too many arguments for command pinfo");
-                        return;
+                        perror("Too many arguments for command jobs");
+                        return -1;
                     }
                 }
                 else if (strcmp(tokens_new[0], "sig") == 0)
@@ -226,8 +226,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     }
                     else
                     {
-                        perror("Too many arguments for command pinfo");
-                        return;
+                        perror("Too many arguments for command sig");
+                        return -1;
                     }
                 }
                 else if (strcmp(tokens_new[0], "fg") == 0)
@@ -238,8 +238,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     }
                     else
                     {
-                        perror("Too many arguments for command pinfo");
-                        return;
+                        perror("Too many arguments for command fg");
+                        return -1;
                     }
                 }
                 else if (strcmp(tokens_new[0], "bg") == 0)
@@ -250,8 +250,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     }
                     else
                     {
-                        perror("Too many arguments for command pinfo");
-                        return;
+                        perror("Too many arguments for command bg");
+                        return -1;
                     }
                 }
                 else
@@ -263,7 +263,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     else
                     {
                         perror("syntax error");
-                        return;
+                        return -1;
                     }
                 }
                 fflush(stdout);
@@ -297,7 +297,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("syntax error");
-                    return;
+                    return -1;
                 }
             }
             else if (strcmp(token[0], "pwd") == 0)
@@ -321,7 +321,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("Too many arguments for history");
-                    return;
+                    return -1;
                 }
             }
             else if (strcmp(token[0], "discover") == 0)
@@ -338,7 +338,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("Too many arguments for command pinfo");
-                    return;
+                    return -1;
                 }
             }
             else if (strcmp(token[0], "jobs") == 0)
@@ -349,8 +349,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 }
                 else
                 {
-                    perror("Too many arguments for command pinfo");
-                    return;
+                    perror("Too many arguments for command jobs");
+                    return -1;
                 }
             }
             else if (strcmp(token[0], "sig") == 0)
@@ -361,8 +361,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 }
                 else
                 {
-                    perror("Too many arguments for command pinfo");
-                    return;
+                    perror("Too many arguments for command sig");
+                    return -1;
                 }
             }
             else if (strcmp(token[0], "fg") == 0)
@@ -373,8 +373,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 }
                 else
                 {
-                    perror("Too many arguments for command pinfo");
-                    return;
+                    perror("Too many arguments for command fg");
+                    return -1;
                 }
             }
             else if (strcmp(token[0], "bg") == 0)
@@ -385,8 +385,8 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 }
                 else
                 {
-                    perror("Too many arguments for command pinfo");
-                    return;
+                    perror("Too many arguments for command bg");
+                    return -1;
                 }
             }
             else
@@ -398,9 +398,10 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 else
                 {
                     perror("syntax error");
-                    return;
+                    return -1;
                 }
             }
         }
     }
+    return -1;
 }

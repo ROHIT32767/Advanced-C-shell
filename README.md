@@ -6,7 +6,7 @@
 
 >##### All these commands are tested on Ubuntu Version 20.04.3 LTS (Focal Fossa) 
 ```
-2021101113_Assignment3
+2021101113
 ├── autocompletion.c
 ├── autocompletion.h
 ├── bg.c

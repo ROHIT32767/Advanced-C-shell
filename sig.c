@@ -23,6 +23,8 @@ long long int sig_func(char *string[], long long int num_tokens, List *LIST)
             }
             head=head->Next;
         }
+        perror("Job with given job number is not found");
+        return -1;
     }
     return -1;
 }

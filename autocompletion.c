@@ -71,7 +71,7 @@ long long int autocomplete(char *dir, char *input_find, char *input, INT slash_i
     //  printf("found_strings_index is %lld\n",found_strings_index);
     if (found_strings_index == 0)
     {
-        return;
+        return 0;
     }
     else if (found_strings_index == 1)
     {
