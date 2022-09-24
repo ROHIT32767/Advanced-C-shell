@@ -7,16 +7,30 @@
 >##### All these commands are tested on Ubuntu Version 20.04.3 LTS (Focal Fossa) 
 ```
 2021101113_Assignment3
+├── autocompletion.c
+├── autocompletion.h
+├── bg.c
+├── bg.h
 ├── cd.c
 ├── cd.h
+├── ctrlc.c
+├── ctrlc.h
+├── ctrlz.c
+├── ctrlz.h
 ├── discover.c
 ├── discover.h
 ├── echo.c
 ├── echo.h
+├── fg.c
+├── fg.h
 ├── headers.h
 ├── history.c
 ├── history.h
 ├── history.txt
+├── io_redirection.c
+├── io_redirection.h
+├── jobs.c
+├── jobs.h
 ├── linked_list.c
 ├── linked_list.h
 ├── linked_main.c
@@ -26,6 +40,8 @@
 ├── makefile
 ├── pinfo.c
 ├── pinfo.h
+├── pipe.c
+├── pipe.h
 ├── process_command.c
 ├── process_command.h
 ├── prompt.c
@@ -33,12 +49,15 @@
 ├── PWD.c
 ├── PWD.h
 ├── README.md
+├── sig.c
+├── sig.h
 ├── sig_handler.c
 ├── sig_handler.h
 ├── spec4.c
 ├── spec4.h
 ├── str_tok_and.c
 └── str_tok_and.h
+
 ```
 
 * >Commands to be executed
