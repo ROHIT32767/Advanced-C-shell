@@ -41,7 +41,6 @@
 #include "fg.h"
 #include "bg.h"
 #include "ctrlc.h"
-#include "ctrld.h"
 #include "ctrlz.h"
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"

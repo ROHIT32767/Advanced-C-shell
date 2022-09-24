@@ -45,7 +45,7 @@ void FG(char *string[], long long int num_tokens, List *LIST)
             }
             head = head->Next;
         }
-        perror("No jub with given job number exists");
+        perror("No job with given job number exists");
         return;
     }
 }

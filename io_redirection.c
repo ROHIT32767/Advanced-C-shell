@@ -16,7 +16,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 else
                 {
 
-                    dup2(fd, 0);
+                    INT dup_return = dup2(fd, 0);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -39,7 +44,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 1);
+                    INT dup_return = dup2(fd, 1);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -62,7 +72,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 1);
+                    INT dup_return = dup2(fd, 1);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -86,7 +101,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 0);
+                    INT dup_return = dup2(fd, 0);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -109,7 +129,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 1);
+                    INT dup_return = dup2(fd, 1);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -132,7 +157,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 1);
+                    INT dup_return = dup2(fd, 1);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -158,7 +188,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 0);
+                    INT dup_return = dup2(fd, 0);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -181,7 +216,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 1);
+                    INT dup_return = dup2(fd, 1);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }
@@ -205,7 +245,12 @@ INT io_redirect(char *string[], INT num_tokens, INT type_io[2], INT io_index[2],
                 }
                 else
                 {
-                    dup2(fd, 1);
+                    INT dup_return = dup2(fd, 1);
+                    if (dup_return == -1)
+                    {
+                        perror(NULL);
+                        return -1;
+                    }
                     close(fd);
                     return 0;
                 }

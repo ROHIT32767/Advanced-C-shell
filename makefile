@@ -1,6 +1,6 @@
 flags = -pedantic -Wall -g
 
-main: main.c prompt.o cd.o str_tok_and.o process_command.o PWD.o echo.o ls.o spec4.o linked_list.o sig_handler.o history.o discover.o pinfo.o pipe.o io_redirection.o jobs.o sig.o fg.o bg.o ctrlz.o ctrlc.o ctrld.o autocompletion.o
+main: main.c prompt.o cd.o str_tok_and.o process_command.o PWD.o echo.o ls.o spec4.o linked_list.o sig_handler.o history.o discover.o pinfo.o pipe.o io_redirection.o jobs.o sig.o fg.o bg.o ctrlz.o ctrlc.o autocompletion.o
 	gcc main.c *.o -o main
 # main: main.c getinfo.o prompt.o cd.o print_error.o command_helper.o pwd.o echo.o ls.o process_creation.o my_dll.o node.o
 
@@ -66,9 +66,6 @@ bg.o: bg.c
 
 ctrlc.o: ctrlc.c
 	gcc $(flags) -c ctrlc.c
-
-ctrld.o: ctrld.c
-	gcc $(flags) -c ctrld.c
 
 ctrlz.o: ctrlz.c
 	gcc $(flags) -c ctrlz.c

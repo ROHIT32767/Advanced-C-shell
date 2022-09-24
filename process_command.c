@@ -13,10 +13,10 @@ INT str_tok_whitespaces(char *tokens[], char *input)
 void process_command(char *string, char *relative, char *correct, char *previous, INT len, INT last, List *LIST)
 {
     char *token[1000];
-    char* reuse_string=(char*)calloc(1000,sizeof(char));
-    strcpy(reuse_string,string);
-    INT reuse_len=strlen(reuse_string);
-    reuse_string[reuse_len]='\0';
+    char *reuse_string = (char *)calloc(1000, sizeof(char));
+    strcpy(reuse_string, string);
+    INT reuse_len = strlen(reuse_string);
+    reuse_string[reuse_len] = '\0';
     INT num_tokens = str_tok_whitespaces(token, string);
     if ((token[0] != NULL) || (len == 0))
     {
@@ -119,8 +119,19 @@ void process_command(char *string, char *relative, char *correct, char *previous
             INT io_return = io_redirect(&token[0], num_tokens, type_io, io_index, num_io_type);
             if (io_return == -1)
             {
-                dup2(std_in, 0);
-                dup2(std_out, 1);
+                INT dup_return;
+                dup_return = dup2(std_in, 0);
+                if (dup_return == -1)
+                {
+                    perror(NULL);
+                    return -1;
+                }
+                dup_return = dup2(std_out, 1);
+                if (dup_return == -1)
+                {
+                    perror(NULL);
+                    return -1;
+                }
                 return;
             }
             else if (io_return == 0)
@@ -247,7 +258,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
                 {
                     if ((strlen(tokens_new[0]) != 0))
                     {
-                        spec4_func(&tokens_new[0], correct, last, LIST, num_new_tokens,reuse_string);
+                        spec4_func(&tokens_new[0], correct, last, LIST, num_new_tokens, reuse_string);
                     }
                     else
                     {
@@ -256,8 +267,18 @@ void process_command(char *string, char *relative, char *correct, char *previous
                     }
                 }
                 fflush(stdout);
-                dup2(std_in, 0);
-                dup2(std_out, 1);
+                INT dup_return = dup2(std_in, 0);
+                if (dup_return == -1)
+                {
+                    perror(NULL);
+                    return -1;
+                }
+                dup_return = dup2(std_out, 1);
+                if (dup_return == -1)
+                {
+                    perror(NULL);
+                    return -1;
+                }
                 close(std_in);
                 close(std_out);
             }
@@ -372,7 +393,7 @@ void process_command(char *string, char *relative, char *correct, char *previous
             {
                 if ((strlen(token[0]) != 0))
                 {
-                    spec4_func(&token[0], correct, last, LIST, num_tokens,reuse_string);
+                    spec4_func(&token[0], correct, last, LIST, num_tokens, reuse_string);
                 }
                 else
                 {
