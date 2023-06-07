@@ -1,7 +1,6 @@
-# Assignment-3
 # 2021101113
 # Operating Systems and Networks, Monsoon 2022
-# creating a user-defined interactive shell program 
+# Creating a user-defined interactive shell program 
 # Gowlapalli Rohit
 
 >##### All these commands are tested on Ubuntu Version 20.04.3 LTS (Focal Fossa) 
